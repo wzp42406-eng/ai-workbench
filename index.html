@@ -792,7 +792,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
         if (!r.ok) throw new Error(r.status === 429 ? '请求太频繁，稍后再试' : `接口返回 ${r.status}`)
         return r.json()
       })
-      p.then(v => { p.done = v }, () => { delete intelCache[path] })   // done 给命令面板搜已读到的资讯
+      p.then(v => { p.done = v }, () => { if (intelCache[path] === p) delete intelCache[path] })   // done 给命令面板搜已读到的资讯
       intelCache[path] = p
     }
     return intelCache[path]
@@ -943,7 +943,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
       !groups.length && !gone.length ? el('div', { class: 'empty' }, playShow === 'all' ? '最近 7 天没有这类精选' : playShow === 'saved' ? '还没有收藏' : '还没有标记已尝试的') : null].filter(Boolean))
   }
   function setMark(x, patch) {
-    const m = { ...marks[x.id], ...patch, url: x.links?.original || x.links?.aihot || '', at: new Date().toISOString() }
+    const m = { ...marks[x.id], ...patch, url: safeUrl(x.links?.original || x.links?.aihot || ''), at: new Date().toISOString() }
     if (!m.status && !m.note) delete marks[x.id]; else marks[x.id] = m
     saveMarks(); renderPlay()
   }
@@ -1527,7 +1527,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     for (const p of Object.values(intelCache)) {
       const r = p.done
       for (const x of [...(r?.items || []), ...(r?.report?.sections?.flatMap(s => s.items) || [])]) {
-        const url = x.links?.original || x.links?.aihot
+        const url = safeUrl(x.links?.original || x.links?.aihot)
         if (url && !news.has(url)) news.set(url, { group: '资讯', label: x.title, hint: x.source?.name, text: x.summary, run: () => open(url, '_blank', 'noopener') })
       }
     }
