@@ -11,7 +11,7 @@
   --bg: #f6f5f1; --panel: #fffffe; --ink: #1b1a17; --ink-2: #57554f; --ink-3: #8e8b83;
   --line: #e7e4dc; --line-2: #efede7; --accent: #b5562f; --hover: #f1efe9;
   --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100;
-  --cli: #2a78d6; --desktop: #eb6834; --web: #1baf7a; --ring-5h: #8f8a80; --trend: #3d3b36;
+  --cli: #2a78d6; --desktop: #eb6834; --web: #1baf7a; --trend: #3d3b36;
   --good: #1f7a4d; --warn: #b26b00; --bad: #c0392b;
   --shadow: 0 1px 2px rgb(40 30 10 / 4%), 0 8px 24px rgb(40 30 10 / 5%);
 }
@@ -21,7 +21,7 @@
     --bg: #131312; --panel: #1b1b19; --ink: #efede8; --ink-2: #b9b6ad; --ink-3: #85827a;
     --line: #2c2b28; --line-2: #242321; --accent: #e07a4f; --hover: #23221f;
     --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500;
-    --cli: #3987e5; --desktop: #d95926; --web: #199e70; --ring-5h: #aaa59b; --trend: #d8d5cc;
+    --cli: #3987e5; --desktop: #d95926; --web: #199e70; --trend: #d8d5cc;
     --good: #4cbb84; --warn: #e0a33a; --bad: #e66767; --shadow: none;
   }
 }
@@ -30,7 +30,7 @@
   --bg: #131312; --panel: #1b1b19; --ink: #efede8; --ink-2: #b9b6ad; --ink-3: #85827a;
   --line: #2c2b28; --line-2: #242321; --accent: #e07a4f; --hover: #23221f;
   --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500;
-  --cli: #3987e5; --desktop: #d95926; --web: #199e70; --ring-5h: #aaa59b; --trend: #d8d5cc;
+  --cli: #3987e5; --desktop: #d95926; --web: #199e70; --trend: #d8d5cc;
   --good: #4cbb84; --warn: #e0a33a; --bad: #e66767; --shadow: none;
 }
 * { box-sizing: border-box; }
@@ -73,16 +73,6 @@ header.top .meta { color: var(--ink-3); font-size: 13px; display: flex; gap: 14p
 .hero .k { color: var(--ink-3); font-size: 12px; letter-spacing: 0.04em; }
 .hero .v { font-size: 34px; font-weight: 600; line-height: 1.1; margin-top: 6px; letter-spacing: -0.02em; }
 .hero .v small { font-size: 15px; font-weight: 500; color: var(--ink-2); margin-left: 1px; }
-.quota { display: flex; align-items: center; gap: 14px; }
-.quota svg { width: 46px; height: 46px; flex: none; transform: rotate(-90deg); }
-.quota circle { fill: none; stroke-width: 4; stroke-linecap: round; }
-.quota .track { stroke: var(--line-2); }
-.quota .arc { stroke: var(--ring-5h); transition: stroke-dashoffset 700ms ease; }
-.quota .arc.warn { stroke: var(--warn); }
-.quota .arc.bad { stroke: var(--bad); }
-.quota .v { margin-top: 0; font-size: 26px; }
-.quota .k { margin-bottom: 2px; }
-.quota .qsub { color: var(--ink-3); font-size: 10.5px; margin-top: 2px; white-space: nowrap; }
 
 .ends { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; padding: 22px 0 6px; }
 .end { min-width: 0; }
@@ -219,9 +209,6 @@ form.add .ex { grid-column: 1 / 3; }
   .hero > div:nth-child(odd) { padding-left: 0; border-left: 0; }
   .hero > div:nth-child(n+3) { border-top: 1px solid var(--line-2); }
   .hero .v { font-size: 26px; }
-  .quota { gap: 10px; }
-  .quota svg { width: 36px; height: 36px; }
-  .quota .v { font-size: 22px; }
   .ends { grid-template-columns: 1fr; gap: 18px; }
   .chart svg { height: 170px; }
   .head-right { width: 100%; justify-content: space-between; }
@@ -231,6 +218,82 @@ form.add .ex { grid-column: 1 / 3; }
   form.add { grid-template-columns: 1fr; }
   form.add .ex { grid-column: auto; }
 }
+
+[hidden] { display: none !important; }
+a { color: inherit; }
+.empty { color: var(--ink-3); font-size: 13px; padding: 10px 0; }
+
+/* 导航 */
+header.top { align-items: center; flex-wrap: wrap; }
+.tabs { margin-right: auto; }
+.tabs a { padding: 5px 12px; border-radius: 7px; color: var(--ink-2); font-size: 13px; text-decoration: none; white-space: nowrap; }
+.tabs a:hover { color: var(--ink); }
+.tabs a[aria-pressed="true"] { background: var(--panel); color: var(--ink); box-shadow: 0 1px 2px rgb(0 0 0 / 8%); }
+a.link { text-decoration: none; }
+
+/* 总览 */
+.overview { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.ov-side { display: grid; gap: 20px; min-width: 0; }
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.stat .k { color: var(--ink-3); font-size: 12px; }
+.stat .v { font-size: 28px; font-weight: 600; line-height: 1.15; margin-top: 4px; letter-spacing: -0.02em; }
+.stat .v small { font-size: 14px; font-weight: 500; color: var(--ink-2); margin-left: 1px; }
+.qsub { color: var(--ink-3); font-size: 11.5px; margin-top: 3px; }
+.share.stack { display: flex; gap: 2px; background: none; height: 6px; margin: 16px 0 10px; }
+.share.stack i { border-radius: 2px; }
+.lead { border-bottom: 1px solid var(--line-2); padding-bottom: 14px; margin-bottom: 4px; }
+.lead h3 { margin: 4px 0 6px; font-size: 19px; line-height: 1.4; font-weight: 600; }
+.lead h3 a { text-decoration: none; }
+.lead h3 a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.lead p { margin: 0; color: var(--ink-2); line-height: 1.7; }
+
+/* 资讯列表 */
+.news { list-style: none; margin: 0; padding: 0; }
+.news-item { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line-2); }
+.news-item:last-child { border-bottom: 0; }
+.news.compact .news-item { padding: 9px 0; }
+.rank { color: var(--ink-3); font-size: 13px; width: 18px; flex: none; text-align: right; padding-top: 1px; }
+.news-main { min-width: 0; flex: 1; }
+.news-title { font-size: 14.5px; font-weight: 500; line-height: 1.5; }
+.news-title a { text-decoration: none; }
+.news-title a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.news-sum { color: var(--ink-2); font-size: 13px; line-height: 1.65; margin-top: 4px; }
+.news-why { color: var(--ink-3); font-size: 12.5px; margin-top: 4px; }
+.news-meta { display: flex; flex-wrap: wrap; gap: 4px 12px; color: var(--ink-3); font-size: 12px; margin-top: 5px; }
+.news-meta a { color: var(--ink-3); }
+.news-meta a:hover { color: var(--ink); }
+.cats { margin-bottom: 8px; }
+.intel-note { margin-bottom: 4px; }
+.daily .sub a { color: var(--ink-2); }
+
+/* 趋势图 */
+.chart-filters { display: flex; align-items: center; gap: 10px 16px; flex-wrap: wrap; margin: 6px 0 4px; }
+.chart .missing { stroke: var(--line); stroke-width: 2; stroke-dasharray: 2 2; }
+
+/* Prompt Doctor */
+.pd-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 24px; align-items: start; }
+textarea.pd-input { min-height: 220px; }
+.dims { display: grid; gap: 6px; }
+.dim { display: grid; grid-template-columns: 44px 52px minmax(0, 1fr); gap: 8px; align-items: baseline; padding: 7px 10px; border: 1px solid var(--line-2); border-radius: 9px; font-size: 13px; }
+.dim .dn { font-weight: 600; }
+.dim .ds { font-size: 12px; }
+.dim .dh { color: var(--ink-3); font-size: 12.5px; }
+.dim.clear .ds { color: var(--good); }
+.dim.partial .ds { color: var(--warn); }
+.dim.missing .ds { color: var(--bad); }
+.dim.na { opacity: 0.6; }
+.dim.na .ds { color: var(--ink-3); }
+.pd-pre { white-space: pre-wrap; word-break: break-word; margin: 0; background: var(--bg); border: 1px solid var(--line-2); border-radius: 10px; padding: 12px 14px; font: 13px/1.65 ui-monospace, "SF Mono", Menlo, monospace; color: var(--ink-2); max-height: 360px; overflow: auto; }
+
+@media (max-width: 980px) {
+  .overview, .pd-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  header.top { gap: 10px; }
+  .tabs { order: 3; width: 100%; overflow-x: auto; }
+  .tabs a { flex: none; padding: 5px 10px; font-size: 12.5px; }
+  .dim { grid-template-columns: 40px 48px minmax(0, 1fr); }
+}
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 </head>
@@ -238,6 +301,7 @@ form.add .ex { grid-column: 1 / 3; }
 <div class="wrap">
   <header class="top">
     <h1>月之工作台</h1>
+    <nav class="seg tabs" id="nav" aria-label="页面"></nav>
     <div class="meta">
       <span id="today"></span>
       <button class="theme" id="theme" title="切换深浅色" aria-label="切换深浅色">◐</button>
@@ -245,8 +309,47 @@ form.add .ex { grid-column: 1 / 3; }
   </header>
 
   <div class="grid">
+    <!-- ==================== 总览 ==================== -->
+    <section class="view overview" data-view="overview" aria-label="总览">
+      <div class="panel ov-intel">
+        <div class="panel-head">
+          <h2>今日 AI 情报<span>当前热点</span></h2>
+          <a class="link" href="#intel">查看全部 →</a>
+        </div>
+        <div id="ov-daily"></div>
+        <ol class="news compact" id="ov-hot"><li class="empty">正在读取…</li></ol>
+      </div>
+      <div class="ov-side">
+        <div class="panel ov-usage">
+          <div class="panel-head"><h2>我的 AI 使用<span>今日</span></h2><a class="link" href="#usage">详细 →</a></div>
+          <div class="mini" id="ov-usage"><div class="empty">正在读取…</div></div>
+        </div>
+        <div class="panel ov-doctor">
+          <div class="panel-head"><h2>Prompt Doctor<span>提问优化</span></h2></div>
+          <form id="ov-doctor-form" class="custom">
+            <textarea class="field" name="text" placeholder="粘贴一个准备发给 AI 的问题"></textarea>
+            <div class="row-end"><span class="msg">只在这个页面里分析，不保存</span><button class="btn-sm" type="submit">诊断</button></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== AI 情报 ==================== -->
+    <section class="panel view" data-view="intel" aria-labelledby="intel-h">
+      <div class="panel-head">
+        <h2 id="intel-h">AI 情报</h2>
+        <div class="head-right">
+          <span class="update" id="intel-status"></span>
+          <div class="seg" id="intel-tab" role="group" aria-label="情报类型"></div>
+        </div>
+      </div>
+      <div class="seg small cats" id="intel-cat" role="group" aria-label="分类"></div>
+      <div id="intel-body"></div>
+      <div class="foot">内容来自 AIHOT 公开 API（aihot.news），在你的浏览器里实时读取，本站不保存副本。标题和摘要由 AIHOT 根据第三方来源生成，以原文为准；排序、热度和日报直接沿用 AIHOT 的结果。</div>
+    </section>
+
     <!-- ==================== AI 用量 ==================== -->
-    <section class="panel usage" aria-labelledby="ai-h">
+    <section class="panel usage view" data-view="usage" aria-labelledby="ai-h">
       <div class="panel-head">
         <h2 id="ai-h">AI 用量</h2>
         <div class="head-right">
@@ -258,24 +361,29 @@ form.add .ex { grid-column: 1 / 3; }
       <div class="hero">
         <div><div class="k" id="k-time">使用时长</div><div class="v num" id="h-time">—</div></div>
         <div><div class="k" id="k-tok">Token</div><div class="v num" id="h-tok">—</div></div>
-        <div class="quota" id="q-claude"></div>
-        <div class="quota" id="q-codex"></div>
+        <div><div class="k">累计 Token</div><div class="v num" id="h-all">—</div><div class="qsub" id="h-all-sub"></div></div>
+        <div><div class="k">Codex 账户累计 Token</div><div class="v num" id="h-life">—</div><div class="qsub" id="h-life-sub"></div></div>
       </div>
 
       <div class="ends" id="ends"></div>
 
       <div class="chart-head">
-        <h3>每日用量 · 近 30 天</h3>
-        <div class="legend" id="legend"></div>
+        <h3 id="chart-title">每日用量</h3>
+        <div class="seg small" id="range" role="group" aria-label="时间范围"></div>
         <div class="seg small" id="metric" role="group" aria-label="指标"></div>
       </div>
-      <div class="chart" id="chart"><svg id="svg" role="img" aria-label="近 30 天每日用量，按网页、终端、桌面堆叠，附 7 日均线"></svg><div class="tip" id="tip"></div></div>
+      <div class="chart-filters">
+        <div class="seg small" id="entry" role="group" aria-label="使用入口"></div>
+        <div class="seg small" id="vendor" role="group" aria-label="平台"></div>
+        <div class="legend" id="legend"></div>
+      </div>
+      <div class="chart" id="chart"><svg id="svg" role="img" aria-label="每日用量趋势"></svg><div class="tip" id="tip"></div></div>
       <details class="data"><summary>查看每日数据</summary><div class="scroll"><table id="table"></table></div></details>
       <div class="foot" id="foot"></div>
     </section>
 
     <!-- ==================== 英语 ==================== -->
-    <section class="panel" aria-labelledby="en-h">
+    <section class="panel view" data-view="english" aria-labelledby="en-h">
       <div class="panel-head">
         <h2 id="en-h">英语<span>跟读</span></h2>
         <div class="chips" id="chips"></div>
@@ -331,6 +439,25 @@ form.add .ex { grid-column: 1 / 3; }
       </details>
       </div></div>
     </section>
+
+    <!-- ==================== Prompt Doctor ==================== -->
+    <section class="panel view" data-view="doctor" aria-labelledby="pd-h">
+      <div class="panel-head">
+        <h2 id="pd-h">Prompt Doctor<span>提问诊断</span></h2>
+        <span class="sub">按规则检查，不调用模型、不保存输入</span>
+      </div>
+      <div class="pd-grid">
+        <div>
+          <textarea class="field pd-input" id="pd-input" placeholder="粘贴一个准备发给 AI 的问题，例如：帮我做一个记账小程序"></textarea>
+          <div class="row-end"><span class="msg" id="pd-meta"></span><button class="btn-sm" id="pd-clear" type="button">清空</button></div>
+        </div>
+        <div>
+          <div class="section-title" style="margin-top:0"><span>六个维度</span><span id="pd-level"></span></div>
+          <div class="dims" id="pd-dims"><div class="empty">输入问题后自动检查</div></div>
+        </div>
+      </div>
+      <div id="pd-out"></div>
+    </section>
   </div>
 </div>
 
@@ -379,58 +506,72 @@ form.add .ex { grid-column: 1 / 3; }
 
   // ================= AI 用量 =================
   // 三端：网页（扩展，token 估算）· 终端（会话记录，token 实际）· 桌面（前台时长 + Code 页实际 token）
+  // vendor：子来源属于哪家，用于“平台”筛选
   const ENDS = [
     { id: 'web_total', name: '网页', color: '--web', note: 'Token 估算', subs: [
-      { id: 'claude', name: 'Claude' }, { id: 'chatgpt', name: 'ChatGPT' }] },
+      { id: 'claude', name: 'Claude', vendor: 'claude' }, { id: 'chatgpt', name: 'ChatGPT', vendor: 'openai' }] },
     { id: 'cli_total', name: '终端', color: '--cli', note: 'Token 实际', subs: [
-      { id: 'claude_code', name: 'Claude Code' }, { id: 'codex', name: 'Codex CLI' }] },
+      { id: 'claude_code', name: 'Claude Code', vendor: 'claude' }, { id: 'codex', name: 'Codex CLI', vendor: 'openai' }] },
     { id: 'desktop_total', name: '桌面', color: '--desktop', note: '对话只计时长', subs: [
-      { id: 'claude_desktop', name: 'Claude 对话', only: 'time' }, { id: 'chatgpt_desktop', name: 'ChatGPT 对话', only: 'time' },
-      { id: 'claude_desktop_code', name: 'Claude Code 页', only: 'tok' }, { id: 'codex_desktop_code', name: 'Codex 会话', only: 'tok' }] },
+      { id: 'claude_desktop', name: 'Claude 对话', only: 'time', vendor: 'claude' }, { id: 'chatgpt_desktop', name: 'ChatGPT 对话', only: 'time', vendor: 'openai' },
+      { id: 'claude_desktop_code', name: 'Claude Code 页', only: 'tok', vendor: 'claude' }, { id: 'codex_desktop_code', name: 'Codex 会话', only: 'tok', vendor: 'openai' }] },
   ]
+  const SUB_COLORS = ['--s1', '--s2', '--s3', '--s4']
+  // 趋势图默认起点；之前的数据保留，只是默认不画，仍计入累计
+  const CHART_START = '2026-10-16'
   const PERIODS = [['day', '今日'], ['week', '本周'], ['month', '本月'], ['year', '今年'], ['all', '累计']]
   const METRICS = [['time', '时长'], ['tok', 'Token']]
-  const DAYS = 30
-  let period = store.get('wb-period', 'day')
-  if (!PERIODS.some(p => p[0] === period)) period = 'day'
-  let metric = store.get('wb-metric', 'time')
-  if (!METRICS.some(m => m[0] === metric)) metric = 'time'
+  const RANGES = [['since', `自 ${+CHART_START.slice(5, 7)}/${+CHART_START.slice(8)} 起`], ['30', '近 30 天'], ['all', '全部']]
+  const ENTRIES = [['all', '全部入口'], ...ENDS.map(e => [e.id, e.name])]
+  const VENDORS = [['all', '全部平台'], ['claude', 'Claude'], ['openai', 'ChatGPT / Codex']]
+  const pick = (key, list, d) => { const v = store.get(key, d); return list.some(x => x[0] === v) ? v : d }
+  let period = pick('wb-period', PERIODS, 'day')
+  let metric = pick('wb-metric', METRICS, 'time')
+  let range = pick('wb-range', RANGES, 'since')
+  let entry = pick('wb-entry', ENTRIES, 'all')
+  let vendor = pick('wb-vendor', VENDORS, 'all')
   let data = null
   let days = []
+  let series = []
   const ZERO = { minutes: 0, tokens: 0 }
-  const val = (v, m = metric) => m === 'time' ? (v?.minutes || 0) : (v?.tokens || 0)
 
   const segButtons = (box, items, cur, on) => box.replaceChildren(...items.map(([id, label]) =>
     el('button', { type: 'button', 'data-id': id, 'aria-pressed': String(id === cur), onclick: () => on(id) }, label)))
   const pressed = (box, cur) => { for (const b of box.children) b.setAttribute('aria-pressed', String(b.dataset.id === cur)) }
+  const chartControl = (id, items, get, set, key) => segButtons($(id), items, get(), v => { set(v); store.set(key, v); pressed($(id), v); redrawChart() })
   segButtons($('period'), PERIODS, period, id => { period = id; store.set('wb-period', id); renderUsage() })
-  segButtons($('metric'), METRICS, metric, id => { metric = id; store.set('wb-metric', id); pressed($('metric'), id); redrawMetric() })
-  $('legend').replaceChildren(...ENDS.map(s => el('span', {}, el('i', { style: `background:var(${s.color})` }), s.name)),
-    el('span', {}, el('i', { class: 'line' }), '7 日均线'))
+  chartControl('metric', METRICS, () => metric, v => { metric = v }, 'wb-metric')
+  chartControl('range', RANGES, () => range, v => { range = v }, 'wb-range')
+  chartControl('entry', ENTRIES, () => entry, v => { entry = v }, 'wb-entry')
+  chartControl('vendor', VENDORS, () => vendor, v => { vendor = v }, 'wb-vendor')
 
   const NS = 'http://www.w3.org/2000/svg'
   const svgEl = (tag, a = {}) => { const e = document.createElementNS(NS, tag); for (const k in a) e.setAttribute(k, a[k]); return e }
 
-  const resetText = iso => {
-    const d = iso && new Date(iso)
-    return d && Number.isFinite(d.getTime()) ? `${pad2(d.getHours())}:${pad2(d.getMinutes())} 重置` : ''
+  // 子来源在当前指标下有没有记录：桌面对话没有 token，Code 页没有时长
+  const subRecorded = s => !(s.only === 'time' && metric === 'tok') && !(s.only === 'tok' && metric === 'time')
+  const subVal = (r, s) => {
+    if (!subRecorded(s)) return null
+    const v = r?.[s.id]
+    if (!v) return 0
+    const x = metric === 'time' ? v.minutes : v.tokens
+    return x == null ? null : x
   }
-  function quota(box, title, w, tokenUsage) {
-    const left = w?.five_hour?.remaining_percent
-    const pct = left == null ? 0 : Math.max(0, Math.min(100, left))
-    const C = 2 * Math.PI * 19
-    const svg = svgEl('svg', { viewBox: '0 0 46 46', 'aria-hidden': 'true' })
-    svg.append(svgEl('circle', { class: 'track', cx: 23, cy: 23, r: 19 }),
-      svgEl('circle', { class: `arc${pct <= 10 ? ' bad' : pct <= 25 ? ' warn' : ''}`, cx: 23, cy: 23, r: 19,
-        'stroke-dasharray': C, 'stroke-dashoffset': C * (1 - pct / 100) }))
-    const reset = resetText(w?.five_hour?.resets_at)
-    const lifetime = tokenUsage?.lifetime_tokens
-    const detail = [reset, lifetime == null ? '' : `累计 ${fmtTokStr(lifetime)} Token`].filter(Boolean).join(' · ')
-    box.setAttribute('aria-label', `${title} 5 小时额度剩余 ${left == null ? '暂无' : Math.round(left) + '%'}${detail ? `，${detail}` : ''}`)
-    box.title = `${w?.five_hour?.source === 'codex_app_server' ? 'Codex CLI API' : '本地汇总'}${detail ? ` · ${detail}` : ''}`
-    box.replaceChildren(svg, el('div', {}, el('div', { class: 'k' }, `${title} · 5 小时`),
-      el('div', { class: 'v num' }, left == null ? '—' : `${Math.round(left)}%`),
-      detail ? el('div', { class: 'qsub num' }, detail) : null))
+  // 当前筛选下的系列：全部入口时按端堆叠；选了某个端时按它的子来源堆叠
+  function buildSeries() {
+    const okVendor = s => vendor === 'all' || s.vendor === vendor
+    if (entry === 'all') {
+      series = ENDS.map(e => ({ id: e.id, name: e.name, color: e.color, subs: e.subs.filter(okVendor) }))
+        .filter(s => s.subs.length)
+    } else {
+      const end = ENDS.find(e => e.id === entry)
+      series = end.subs.filter(okVendor).map((s, i) => ({ id: s.id, name: s.name, color: SUB_COLORS[end.subs.indexOf(s) % 4], subs: [s] }))
+    }
+  }
+  // 一天里某个系列的值：子来源都没有记录时返回 null
+  const seriesVal = (r, se) => {
+    const vs = se.subs.map(s => subVal(r, s)).filter(v => v != null)
+    return vs.length ? vs.reduce((a, b) => a + b, 0) : null
   }
 
   function renderUsage() {
@@ -442,16 +583,20 @@ form.add .ex { grid-column: 1 / 3; }
     $('k-tok').textContent = `${label} Token`
     $('h-time').replaceChildren(...big(fmtTime(p.total.minutes)))
     $('h-tok').replaceChildren(...big(fmtTok(p.total.tokens)))
-    quota($('q-claude'), 'Claude', data.quota?.claude)
-    quota($('q-codex'), 'Codex', data.quota?.codex, data.codex_api?.token_usage)
+    const first = (data.daily || [])[0]?.date
+    $('h-all').replaceChildren(...big(fmtTok(data.periods.all?.total?.tokens)))
+    $('h-all-sub').textContent = first ? `自 ${first} 起的全部记录` : ''
+    const life = data.codex_api?.token_usage?.lifetime_tokens
+    $('h-life').replaceChildren(...big(fmtTok(life)))
+    $('h-life-sub').textContent = life == null ? '无记录' : '来自 Codex app-server，含缓存'
 
     const totalMin = Math.max(1, p.total.minutes)
     $('ends').replaceChildren(...ENDS.map(end => {
       const g = p[end.id] || ZERO
       const subs = end.subs.map(s => {
         const v = p[s.id] || ZERO
-        const text = s.only === 'time' ? fmtTimeStr(v.minutes) : s.only === 'tok' ? fmtTokStr(v.tokens)
-          : `${fmtTimeStr(v.minutes)} · ${fmtTokStr(v.tokens)}`
+        const tok = v.tokens == null ? '无记录' : fmtTokStr(v.tokens)
+        const text = s.only === 'time' ? fmtTimeStr(v.minutes) : s.only === 'tok' ? tok : `${fmtTimeStr(v.minutes)} · ${tok}`
         return el('div', {}, el('span', {}, s.name), el('span', { class: 'num' }, text))
       })
       return el('div', { class: 'end' },
@@ -468,7 +613,8 @@ form.add .ex { grid-column: 1 / 3; }
     $('update-status').classList.toggle('stale', stale)
     $('update-status').textContent = ok ? `更新于 ${pad2(updated.getHours())}:${pad2(updated.getMinutes())}${stale ? '（已超过 2 小时）' : ''}` : '更新时间未知'
     const local = location.hostname === '127.0.0.1' || location.hostname === 'localhost'
-    $('foot').textContent = `${local ? '本机实时数据' : '公开数据每小时同步'}。Codex 余量与累计 Token 来自 Codex CLI app-server 只读 API；Codex CLI 使用时长和当前周期 Token 来自本机会话记录（缓存读取单列、不计入页面合计）。桌面对话只统计前台时长；网页 Token 按文字估算。`
+    $('foot').textContent = `${local ? '本机实时数据' : '公开数据每小时同步'}。终端 Token 来自本机会话记录（实际值，缓存读取不计入合计）；Codex 账户累计来自 Codex CLI app-server 只读接口；桌面对话只统计前台时长，没有 Token 记录；网页 Token 按文字估算。图上空白的日期表示那天没有任何记录，不等于 0。`
+    renderOverviewUsage()
   }
 
   // 每日堆叠柱 + 7 日均线（同一纵轴、同一单位）
@@ -478,32 +624,39 @@ form.add .ex { grid-column: 1 / 3; }
     const pow = 10 ** Math.floor(Math.log10(raw / unitStep)) * unitStep
     return [1, 2, 2.5, 5, 10].map(m => m * pow).find(s => s >= raw) || pow * 10
   }
+  const SLOT_MAX = 36 // 每天最多占多宽：天数少时柱子不会被拉得很散
+  const showMa = () => days.length >= 14
   function drawChart() {
     const svg = $('svg')
     const W = svg.clientWidth || 640, H = svg.clientHeight || 210, padL = 40, padB = 22, padT = 8
     svg.setAttribute('viewBox', `0 0 ${W} ${H}`)
     svg.replaceChildren()
     if (!days.length) return
-    const totals = days.map(d => ENDS.reduce((s, e) => s + val(d[e.id]), 0))
     const isTime = metric === 'time'
-    const max = Math.max(isTime ? 60 : 1000, ...totals, ...days.map(d => d.ma))
-    const step = isTime ? niceStep(max, 30) : niceStep(max, 1)
+    const max = Math.max(isTime ? 60 : 1000, ...days.map(d => d.total || 0), ...(showMa() ? days.map(d => d.ma || 0) : []))
+    const step = isTime ? [15, 30, 60, 120, 180, 240, 360, 480, 720].find(s => s >= max / 4) || 1440 : niceStep(max, 1)
     const top = Math.ceil(max / step) * step
     const y = v => padT + (H - padT - padB) * (1 - v / top)
     const tick = v => isTime ? (v >= 60 ? `${+(v / 60).toFixed(1)}h` : `${v}m`) : fmtTokStr(v)
+    const bw = Math.min(SLOT_MAX, (W - padL) / days.length)
+    const x0 = padL + ((W - padL) - bw * days.length) / 2 // 天数少时居中
     for (let v = 0; v <= top + 1e-9; v += step) {
       svg.append(svgEl('line', { x1: padL, x2: W, y1: y(v), y2: y(v), class: 'grid-line' }))
       const t = svgEl('text', { x: padL - 8, y: y(v) + 3.5, 'text-anchor': 'end', class: 'axis' }); t.textContent = tick(v); svg.append(t)
     }
-    const bw = (W - padL) / days.length
-    const barW = Math.max(3, Math.min(16, bw * 0.58))
+    const barW = Math.max(3, Math.min(18, bw * 0.6))
+    // 日期标签至少隔 48px（10 天以内全部标出）；从最后一天往前数，保证“今天”一定有标签
+    const every = days.length <= 10 ? 1 : Math.max(1, Math.ceil(48 / bw))
     const cursor = svgEl('line', { class: 'cursor', y1: padT, y2: H - padB, x1: 0, x2: 0, opacity: 0 })
     days.forEach((d, i) => {
-      const cx = padL + bw * i + bw / 2
+      const cx = x0 + bw * i + bw / 2
+      if (d.missing) {
+        svg.append(svgEl('line', { x1: cx - barW / 2, x2: cx + barW / 2, y1: y(0) - 1, y2: y(0) - 1, class: 'missing' }))
+      }
       let acc = 0
-      const parts = ENDS.filter(e => val(d[e.id]) > 0)
-      parts.forEach((e, k) => {
-        const v = val(d[e.id])
+      const parts = series.filter(se => (d.vals[se.id] || 0) > 0)
+      parts.forEach((se, k) => {
+        const v = d.vals[se.id]
         const y0 = y(acc), y1 = y(acc + v)
         const h = Math.max(0, y0 - y1 - (k > 0 ? 2 : 0))
         acc += v
@@ -511,34 +664,38 @@ form.add .ex { grid-column: 1 / 3; }
         // 只给最上面一段圆角，底部贴着基线
         const isTop = k === parts.length - 1
         const r = isTop ? Math.min(3, barW / 2, h) : 0
-        svg.append(svgEl('path', { fill: css(e.color), d:
+        svg.append(svgEl('path', { fill: css(se.color), d:
           `M${cx - barW / 2},${y1 + h} V${y1 + r} Q${cx - barW / 2},${y1} ${cx - barW / 2 + r},${y1} H${cx + barW / 2 - r} Q${cx + barW / 2},${y1} ${cx + barW / 2},${y1 + r} V${y1 + h} Z` }))
       })
-      const every = days.length > 20 ? 5 : 2
       if ((days.length - 1 - i) % every === 0) {
         const t = svgEl('text', { x: cx, y: H - 6, 'text-anchor': 'middle', class: 'axis' })
         t.textContent = d.date.slice(5).replace('-', '/'); svg.append(t)
       }
     })
-    const pts = days.map((d, i) => [padL + bw * i + bw / 2, y(d.ma)])
-    svg.append(svgEl('path', { class: 'trend', d: pts.map((p, i) => `${i ? 'L' : 'M'}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' ') }))
+    if (showMa()) {
+      const pts = days.map((d, i) => [x0 + bw * i + bw / 2, y(d.ma)])
+      svg.append(svgEl('path', { class: 'trend', d: pts.map((p, i) => `${i ? 'L' : 'M'}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' ') }))
+    }
     svg.append(cursor)
     days.forEach((d, i) => {
-      const cx = padL + bw * i + bw / 2
-      const hit = svgEl('rect', { x: padL + bw * i, y: 0, width: bw, height: H - padB, fill: 'transparent' })
-      hit.addEventListener('mouseenter', () => { cursor.setAttribute('x1', cx); cursor.setAttribute('x2', cx); cursor.setAttribute('opacity', 1); showTip(i, cx) })
+      const cx = x0 + bw * i + bw / 2
+      const hit = svgEl('rect', { x: x0 + bw * i, y: 0, width: bw, height: H - padB, fill: 'transparent' })
+      const on = () => { cursor.setAttribute('x1', cx); cursor.setAttribute('x2', cx); cursor.setAttribute('opacity', 1); showTip(i, cx) }
+      hit.addEventListener('mouseenter', on)
+      hit.addEventListener('touchstart', on, { passive: true })
       hit.addEventListener('mouseleave', () => { cursor.setAttribute('opacity', 0); $('tip').classList.remove('on') })
       svg.append(hit)
     })
   }
-  const fmtVal = v => metric === 'time' ? fmtTimeStr(v) : fmtTokStr(Math.round(v))
+  const fmtVal = v => v == null ? '无记录' : metric === 'time' ? fmtTimeStr(v) : fmtTokStr(Math.round(v))
   function showTip(i, cx) {
     const d = days[i], tip = $('tip')
-    const total = ENDS.reduce((s, e) => s + val(d[e.id]), 0)
-    tip.replaceChildren(el('div', { class: 'tt' }, d.date),
-      ...ENDS.map(e => el('div', { class: 'tr' }, el('i', { style: `background:var(${e.color})` }), el('span', {}, e.name), el('span', { class: 'num' }, fmtVal(val(d[e.id]))))),
-      el('div', { class: 'tr sum' }, el('span'), el('span', {}, '合计'), el('span', { class: 'num' }, fmtVal(total))),
-      el('div', { class: 'tr' }, el('i', { class: 'line' }), el('span', {}, '7 日均线'), el('span', { class: 'num' }, fmtVal(d.ma))))
+    const isToday = d.date === dayKey()
+    tip.replaceChildren(el('div', { class: 'tt' }, `${d.date}${isToday ? '（今天，进行中）' : ''}`),
+      ...(d.missing ? [el('div', { class: 'tr' }, el('span'), el('span', {}, '这天没有记录'), el('span'))] : [
+        ...series.map(se => el('div', { class: 'tr' }, el('i', { style: `background:var(${se.color})` }), el('span', {}, se.name), el('span', { class: 'num' }, fmtVal(d.vals[se.id])))),
+        el('div', { class: 'tr sum' }, el('span'), el('span', {}, '合计'), el('span', { class: 'num' }, fmtVal(d.total)))]),
+      ...(showMa() ? [el('div', { class: 'tr' }, el('i', { class: 'line' }), el('span', {}, '7 日均线'), el('span', { class: 'num' }, fmtVal(d.ma)))] : []))
     const W = $('chart').clientWidth
     tip.style.left = `${Math.min(Math.max(0, cx - 90), W - 190)}px`
     tip.style.top = '-6px'
@@ -548,27 +705,38 @@ form.add .ex { grid-column: 1 / 3; }
 
   function renderTable() {
     $('table').replaceChildren(
-      el('tr', {}, el('th', {}, '日期'), ...ENDS.map(e => el('th', {}, e.name)), el('th', {}, '合计'), el('th', {}, '7 日均线')),
+      el('tr', {}, el('th', {}, '日期'), ...series.map(se => el('th', {}, se.name)), el('th', {}, '合计'), showMa() ? el('th', {}, '7 日均线') : null),
       ...days.slice().reverse().map(d => el('tr', {}, el('td', {}, d.date),
-        ...ENDS.map(e => el('td', { class: 'num' }, fmtVal(val(d[e.id])))),
-        el('td', { class: 'num' }, fmtVal(ENDS.reduce((s, e) => s + val(d[e.id]), 0))),
-        el('td', { class: 'num' }, fmtVal(d.ma)))))
+        ...series.map(se => el('td', { class: 'num' }, d.missing ? '—' : fmtVal(d.vals[se.id]))),
+        el('td', { class: 'num' }, d.missing ? '无记录' : fmtVal(d.total)),
+        showMa() ? el('td', { class: 'num' }, fmtVal(d.ma)) : null)))
   }
 
+  // 连续的每一天都有一个点：data.daily 里没有的日期标为“无记录”，不当成 0
   function buildDays() {
-    const byDate = Object.fromEntries((data.daily || []).map(d => [d.date, d]))
-    const end = dayKey()
-    const span = DAYS + 6 // 多取 6 天，让第一天的均线也有完整窗口
-    const all = Array.from({ length: span }, (_, i) => {
-      const date = addDays(end, i - span + 1)
-      const r = byDate[date] || {}
-      return { date, ...Object.fromEntries(ENDS.map(e => [e.id, r[e.id] || ZERO])) }
-    })
-    const total = d => ENDS.reduce((s, e) => s + val(d[e.id]), 0)
+    buildSeries()
+    const daily = data.daily || []
+    const byDate = Object.fromEntries(daily.map(d => [d.date, d]))
+    const lastData = daily.length ? daily[daily.length - 1].date : dayKey()
+    const end = lastData > dayKey() ? lastData : dayKey()
+    const firstData = daily.length ? daily[0].date : end
+    const start = range === 'since' ? CHART_START : range === '30' ? addDays(end, -29) : firstData
+    const from = addDays(start < end ? start : end, -6) // 多取 6 天，让第一天的均线也有完整窗口
+    const all = []
+    for (let date = from; date <= end; date = addDays(date, 1)) {
+      const r = byDate[date]
+      const vals = Object.fromEntries(series.map(se => [se.id, r ? seriesVal(r, se) : null]))
+      const known = Object.values(vals).filter(v => v != null)
+      all.push({ date, missing: !r, vals, total: known.length ? known.reduce((a, b) => a + b, 0) : null })
+    }
     days = all.slice(6).map((d, i) => {
       const win = all.slice(i, i + 7)
-      return { ...d, ma: win.reduce((s, x) => s + total(x), 0) / win.length }
+      return { ...d, ma: win.reduce((s, x) => s + (x.total || 0), 0) / win.length }
     })
+    const rangeLabel = RANGES.find(r => r[0] === range)[1]
+    $('chart-title').textContent = `每日用量 · ${rangeLabel}`
+    $('legend').replaceChildren(...series.map(se => el('span', {}, el('i', { style: `background:var(${se.color})` }), se.name)),
+      ...(showMa() ? [el('span', {}, el('i', { class: 'line' }), '7 日均线')] : []))
   }
 
   async function loadUsage() {
@@ -579,10 +747,24 @@ form.add .ex { grid-column: 1 / 3; }
       buildDays(); renderUsage(); drawChart(); renderTable()
     } catch {
       $('update-status').textContent = '暂时读不到用量数据'
+      $('ov-usage').replaceChildren(el('div', { class: 'empty' }, '暂时读不到用量数据'))
     }
   }
-  // 切换指标：均线跟着重算
-  function redrawMetric() { if (data) { buildDays(); drawChart(); renderTable() } }
+  function redrawChart() { if (data) { buildDays(); drawChart(); renderTable() } }
+
+  // 总览里的今日用量
+  function renderOverviewUsage() {
+    const p = data.periods.day, w = data.periods.week
+    const stat = (k, v, sub) => el('div', { class: 'stat' }, el('div', { class: 'k' }, k), el('div', { class: 'v num' }, ...big(v)), sub ? el('div', { class: 'qsub' }, sub) : null)
+    const total = Math.max(1, p.total.minutes)
+    $('ov-usage').replaceChildren(
+      el('div', { class: 'stats' },
+        stat('使用时长', fmtTime(p.total.minutes), `本周 ${fmtTimeStr(w.total.minutes)}`),
+        stat('Token', fmtTok(p.total.tokens), `本周 ${fmtTokStr(w.total.tokens)}`)),
+      el('div', { class: 'share stack', title: '各入口占今日时长' }, ...ENDS.map(e =>
+        el('i', { style: `width:${((p[e.id]?.minutes || 0) / total * 100).toFixed(1)}%;background:var(${e.color})` }))),
+      el('div', { class: 'legend' }, ...ENDS.map(e => el('span', {}, el('i', { style: `background:var(${e.color})` }), `${e.name} ${fmtTimeStr(p[e.id]?.minutes || 0)}`))))
+  }
 
   // ================= 英语：跟读（主） =================
   const PASSAGES = [
@@ -831,7 +1013,7 @@ form.add .ex { grid-column: 1 / 3; }
   $('b-slow').addEventListener('click', () => { slow = !slow; store.set('en-slow', slow); syncToggles() })
   $('b-zh').addEventListener('click', () => { showZh = !showZh; store.set('en-zh', showZh); syncToggles(); renderRead() })
   addEventListener('keydown', e => {
-    if ((e.target instanceof Element && e.target.closest('input, textarea, select, button, summary')) || e.metaKey || e.ctrlKey || e.altKey) return
+    if (view !== 'english' || (e.target instanceof Element && e.target.closest('input, textarea, select, button, summary')) || e.metaKey || e.ctrlKey || e.altKey) return
     if (e.key === ' ') { e.preventDefault(); $('b-listen').click() }
     else if (e.key === 'r' || e.key === 'R') { e.preventDefault(); startRecording() }
     else if (e.key === 'ArrowRight') $('b-next').click()
@@ -939,8 +1121,246 @@ form.add .ex { grid-column: 1 / 3; }
     renderVocab()
   })
 
+
+  // ================= AI 情报（AIHOT 公开 API） =================
+  // 浏览器直接读 aihot.news 的公开只读接口（允许跨域，无需 Key），按它返回的 Cache-Control 走浏览器缓存。
+  // 不写进仓库、不存 localStorage：AIHOT 的条款不允许把缓存变成公开副本。
+  const AIHOT = 'https://aihot.news/api/v1'
+  const CATS = { 'ai-models': '模型', 'ai-products': '产品', industry: '行业', paper: '论文', tip: '教程', opinion: '观点' }
+  const INTEL_TABS = [['hot', '热点'], ['selected', '今日精选'], ['daily', '日报']]
+  let intelTab = pick('wb-intel-tab', INTEL_TABS, 'hot')
+  let intelCat = store.get('wb-intel-cat', '')
+  if (intelCat && !CATS[intelCat]) intelCat = ''
+  const intelCache = {}
+  async function aihot(path) {
+    if (!intelCache[path]) {
+      intelCache[path] = fetch(AIHOT + path, { headers: { Accept: 'application/json' } }).then(async r => {
+        if (!r.ok) throw new Error(r.status === 429 ? '请求太频繁，稍后再试' : `接口返回 ${r.status}`)
+        return r.json()
+      })
+      intelCache[path].catch(() => { delete intelCache[path] })
+    }
+    return intelCache[path]
+  }
+  const ago = iso => {
+    const t = new Date(iso).getTime()
+    if (!Number.isFinite(t)) return ''
+    const m = Math.round((Date.now() - t) / 60000)
+    if (m < 1) return '刚刚'
+    if (m < 60) return `${m} 分钟前`
+    if (m < 24 * 60) return `${Math.round(m / 60)} 小时前`
+    return `${Math.round(m / 1440)} 天前`
+  }
+  const fullTime = iso => { const d = new Date(iso); return Number.isFinite(d.getTime()) ? d.toLocaleString('zh-CN', { hour12: false }) : '' }
+  const extLink = (href, ...kids) => el('a', { href, target: '_blank', rel: 'noopener noreferrer' }, ...kids)
+
+  // 一条资讯：标题链接到原文，下面是来源、时间、分类和 AIHOT 详情页
+  function newsItem(x, { rank, summary = true, meta = [] } = {}) {
+    const when = x.publishedAt || x.latestAt || x.discoveredAt
+    return el('li', { class: 'news-item' },
+      rank ? el('span', { class: 'rank num' }, String(rank)) : null,
+      el('div', { class: 'news-main' },
+        el('div', { class: 'news-title' }, extLink(x.links?.original || x.links?.aihot, x.title)),
+        summary && x.summary ? el('div', { class: 'news-sum' }, x.summary) : null,
+        summary && x.reason ? el('div', { class: 'news-why' }, `推荐理由：${x.reason}`) : null,
+        el('div', { class: 'news-meta' },
+          el('span', {}, x.source?.name || '未知来源'),
+          when ? el('span', { title: fullTime(when) }, ago(when)) : null,
+          x.category && CATS[x.category] ? el('span', {}, CATS[x.category]) : null,
+          ...meta,
+          x.links?.aihot ? extLink(x.links.aihot, '详情') : null)))
+  }
+  const hotMeta = x => [el('span', { title: '报道这件事的独立来源数；同一来源多篇只算一次' }, `${x.sourceCount} 个来源`),
+    x.signalCount ? el('span', { title: '社区讨论信号数（如 X 上的讨论）' }, `${x.signalCount} 条讨论`) : null]
+  const intelError = (box, err) => box.replaceChildren(el('div', { class: 'empty' }, `暂时读不到 AI 情报（${err.message || '网络错误'}）。`,
+    el('button', { class: 'link', type: 'button', onclick: () => { renderIntel(); renderOverviewIntel() } }, '重试')))
+
+  function renderIntelControls() {
+    segButtons($('intel-tab'), INTEL_TABS, intelTab, id => { intelTab = id; store.set('wb-intel-tab', id); renderIntel() })
+    segButtons($('intel-cat'), [['', '全部'], ...Object.entries(CATS)], intelCat, id => { intelCat = id; store.set('wb-intel-cat', id); renderIntel() })
+  }
+  async function renderIntel() {
+    pressed($('intel-tab'), intelTab); pressed($('intel-cat'), intelCat)
+    $('intel-cat').hidden = intelTab !== 'selected'
+    const box = $('intel-body')
+    box.replaceChildren(el('div', { class: 'empty' }, '正在读取…'))
+    $('intel-status').textContent = ''
+    try {
+      if (intelTab === 'hot') {
+        const r = await aihot('/hot-topics')
+        if (intelTab !== 'hot') return
+        box.replaceChildren(el('div', { class: 'sub intel-note' }, 'AIHOT 按事件算热度：48 小时内每个独立来源只算一次，超过 24 小时的权重减半。'),
+          r.items.length ? el('ol', { class: 'news' }, ...r.items.map(x => newsItem(x, { rank: x.rank, summary: false, meta: hotMeta(x) })))
+            : el('div', { class: 'empty' }, '现在没有热点'))
+      } else if (intelTab === 'selected') {
+        const cat = intelCat
+        const r = await aihot(`/items?mode=selected&window=24h&limit=50${cat ? `&category=${cat}` : ''}`)
+        if (intelTab !== 'selected' || cat !== intelCat) return
+        box.replaceChildren(r.items.length ? el('ol', { class: 'news' }, ...r.items.map(x => newsItem(x)))
+          : el('div', { class: 'empty' }, '最近 24 小时这个分类没有精选'))
+        $('intel-status').textContent = `最近 24 小时 · ${r.items.length} 条`
+      } else {
+        const r = await aihot('/dailies/latest')
+        if (intelTab !== 'daily') return
+        box.replaceChildren(dailyView(r.report))
+        $('intel-status').textContent = `${r.report.date} 日报`
+      }
+    } catch (e) { intelError(box, e) }
+  }
+  function dailyView(rep) {
+    return el('div', { class: 'daily' },
+      rep.lead ? el('div', { class: 'lead' }, el('h3', { class: 'serif' }, rep.lead.title), el('p', {}, rep.lead.leadParagraph)) : null,
+      ...rep.sections.map(s => el('div', {},
+        el('div', { class: 'section-title' }, el('span', {}, s.label)),
+        el('ol', { class: 'news' }, ...s.items.map(x => newsItem({ ...x, links: { original: x.links?.original, aihot: x.links?.aihot } })))),
+      ),
+      rep.flashes?.length ? el('div', {}, el('div', { class: 'section-title' }, el('span', {}, '快讯')),
+        el('ol', { class: 'news compact' }, ...rep.flashes.map(x => newsItem(x, { summary: false })))) : null,
+      el('div', { class: 'sub' }, extLink(rep.links.aihot, '在 AIHOT 阅读完整日报 →')))
+  }
+  async function renderOverviewIntel() {
+    const box = $('ov-hot')
+    try {
+      const [hot, daily] = await Promise.all([aihot('/hot-topics'), aihot('/dailies/latest').catch(() => null)])
+      box.replaceChildren(...hot.items.slice(0, 6).map(x => newsItem(x, { rank: x.rank, summary: false, meta: hotMeta(x) })))
+      const lead = daily?.report?.lead
+      $('ov-daily').replaceChildren(lead ? el('div', { class: 'lead' },
+        el('div', { class: 'sub' }, `${daily.report.date} 日报头条`),
+        el('h3', { class: 'serif' }, extLink(daily.report.links.aihot, lead.title)),
+        el('p', {}, lead.leadParagraph)) : '')
+    } catch (e) { intelError(box, e) }
+  }
+
+  // ================= Prompt Doctor（规则检查，不调模型） =================
+  // 每个维度用几组关键词判断：命中 2 组以上算明确，1 组算部分。任务越复杂，要求的维度越多。
+  const DIMS = [
+    { id: 'goal', name: '目标', hint: '要完成什么、做到什么程度',
+      ask: '最终想得到什么？做到什么程度算完成？',
+      re: [/帮我|请你?|能否|可以|如何|怎么|怎样|为什么|是否|哪[个些种]|\?|？/i, /写|做|生成|设计|开发|分析|总结|翻译|润色|改写|优化|规划|解释|对比|比较|推荐|整理|搭建|修复|实现|列出|计算|评估|调研|研究/, /目标|目的|希望|想要|为了|最终|结果/] },
+    { id: 'context', name: '背景', hint: '现状、对象、为什么要做',
+      ask: '现在是什么情况？给谁用、在什么场景下用？',
+      re: [/背景|现状|目前|现在|已经|之前|项目|场景/, /我是|我们|公司|团队|客户|用户|读者|面向|给.{1,8}(用|看)/, /因为|由于|遇到|问题是|痛点/] },
+    { id: 'constraints', name: '约束', hint: '预算、时间、技术、不能做的事',
+      ask: '有哪些限制？比如预算、时间、技术栈、不能改动的部分。',
+      re: [/不要|不能|不允许|禁止|避免|别/, /必须|只能|只用|仅|限制|限定|要求/, /预算|时间|期限|截止|以内|不超过|最多|至少|字数|技术栈|版本/] },
+    { id: 'output', name: '输出', hint: '交付形式和格式',
+      ask: '希望以什么形式交付？表格、列表、代码、文档，大概多长？',
+      re: [/格式|形式|输出|交付|返回/, /表格|列表|清单|要点|markdown|json|代码|脚本|文档|报告|邮件|ppt|幻灯片|大纲|步骤/i, /\d+\s*(字|条|点|段|页|行|个)|一句话|简短|详细/] },
+    { id: 'criteria', name: '验收', hint: '怎样算合格、哪些错误不能接受',
+      ask: '怎样算做好了？哪些错误不能接受？',
+      re: [/验收|标准|合格|达标|成功/, /确保|保证|检查|验证|测试|通过/, /不能出现|不可接受|必须满足|评价|衡量|指标/] },
+    { id: 'evidence', name: '参考', hint: '数据、原文、链接、示例',
+      ask: '有没有可以提供的资料、数据、原文或示例？',
+      re: [/https?:\/\//i, /参考|资料|附件|原文|数据|示例|例子|样例|如下|以下|下面/, /```|「|“.{20,}”|"/] },
+  ]
+  // 任务复杂度：简单任务只要求目标，中等再加输出，复杂任务六项里除参考外都要
+  const SIMPLE = /^(请)?(帮我)?(翻译|润色|解释|总结|改写|纠错|查一下|什么是)|是什么[？?]?$|什么意思/
+  const COMPLEX = /开发|系统|网站|应用|app|小程序|架构|项目|方案|产品|策略|规划|计划|调研|研究报告|重构|自动化|工作流|agent/i
+  function complexity(t) {
+    if (t.length > 400 || (COMPLEX.test(t) && t.length > 15)) return 'complex'
+    if (t.length < 60 && SIMPLE.test(t.trim())) return 'simple'
+    return COMPLEX.test(t) ? 'complex' : 'medium'
+  }
+  const NEEDED = { simple: ['goal'], medium: ['goal', 'output'], complex: ['goal', 'context', 'constraints', 'output', 'criteria'] }
+  const LEVEL_TEXT = { simple: '简单任务：说清目标就够了', medium: '一般任务：目标和输出要清楚', complex: '复杂任务：建议补齐目标、背景、约束、输出和验收' }
+  const STATE = { clear: '明确', partial: '部分', missing: '缺失', na: '不需要' }
+
+  function diagnose(text) {
+    const level = complexity(text)
+    const dims = DIMS.map(d => {
+      const hits = d.re.filter(r => r.test(text)).length
+      const needed = NEEDED[level].includes(d.id)
+      const state = hits >= 2 ? 'clear' : hits === 1 ? 'partial' : needed ? 'missing' : 'na'
+      return { ...d, hits, needed, state }
+    })
+    return { level, dims }
+  }
+  function skeleton(text, r) {
+    const lines = [text.trim(), '']
+    for (const d of r.dims) if (d.needed && d.state !== 'clear') lines.push(`【${d.name}】${d.ask}`)
+    return lines.join('\n').trim()
+  }
+  function metaPrompt(text, r) {
+    const gaps = r.dims.filter(d => d.needed && d.state !== 'clear').map(d => `${d.name}（${STATE[d.state]}）`)
+    return [
+      '请帮我优化下面这个准备发给 AI 的提问。',
+      '',
+      '<原始问题>',
+      text.trim(),
+      '</原始问题>',
+      '',
+      `规则检查的结果：这是一个${({ simple: '简单', medium: '一般', complex: '复杂' })[r.level]}任务${gaps.length ? `，可能不够清楚的地方：${gaps.join('、')}` : '，主要信息已经齐了'}。这只是关键词检查，请你自己判断哪些真的会影响结果。`,
+      '',
+      '请按顺序输出：',
+      '1. 只有缺了会明显影响结果的信息，才列出要我补充的问题（最多 3 个）；信息够了就跳过这一步。',
+      '2. 精简版：保留完成任务所需的最少信息。',
+      r.level === 'simple' ? '3. 简单任务不需要完整版，直接说明即可。' : '3. 完整版：包含目标、背景、约束、输出形式和验收标准，可以直接执行。',
+      '4. 用几句话说明改了什么、为什么改，删掉了哪些、补了哪些。',
+      '',
+      '不要为了凑齐格式添加我没提到的要求；不确定的地方用【待确认】标出来。',
+    ].join('\n')
+  }
+  const copyBtn = (label, getText) => {
+    const b = el('button', { class: 'btn-sm', type: 'button', onclick: async () => {
+      try { await navigator.clipboard.writeText(getText()); b.textContent = '已复制' } catch { b.textContent = '复制失败，请手动选择' }
+      setTimeout(() => { b.textContent = label }, 1600)
+    } }, label)
+    return b
+  }
+  function renderDoctor() {
+    const text = $('pd-input').value
+    const t = text.trim()
+    $('pd-meta').textContent = t ? `${[...t].length} 字` : ''
+    if (!t) {
+      $('pd-level').textContent = ''
+      $('pd-dims').replaceChildren(el('div', { class: 'empty' }, '输入问题后自动检查'))
+      $('pd-out').replaceChildren()
+      return
+    }
+    const r = diagnose(t)
+    $('pd-level').textContent = LEVEL_TEXT[r.level]
+    $('pd-dims').replaceChildren(...r.dims.map(d => el('div', { class: `dim ${d.state}` },
+      el('span', { class: 'dn' }, d.name),
+      el('span', { class: 'ds' }, STATE[d.state]),
+      el('span', { class: 'dh' }, d.state === 'missing' || (d.needed && d.state === 'partial') ? d.ask : d.hint))))
+    const sk = skeleton(t, r), mp = metaPrompt(t, r)
+    const gaps = r.dims.some(d => d.needed && d.state !== 'clear')
+    $('pd-out').replaceChildren(
+      gaps ? el('div', { class: 'pd-block' },
+        el('div', { class: 'section-title' }, el('span', {}, '补充骨架 · 在原问题后面补上这几行再发'), copyBtn('复制', () => sk)),
+        el('pre', { class: 'pd-pre' }, sk)) : '',
+      el('div', { class: 'pd-block' },
+        el('div', { class: 'section-title' }, el('span', {}, '优化请求 · 复制到 Claude，让它给出精简版和完整版'), copyBtn('复制', () => mp)),
+        el('pre', { class: 'pd-pre' }, mp)))
+  }
+  $('pd-input').addEventListener('input', renderDoctor)
+  $('pd-clear').addEventListener('click', () => { $('pd-input').value = ''; renderDoctor(); $('pd-input').focus() })
+  $('ov-doctor-form').addEventListener('submit', e => {
+    e.preventDefault()
+    $('pd-input').value = new FormData(e.target).get('text')
+    location.hash = '#doctor'
+    renderDoctor()
+  })
+
+  // ================= 页面切换 =================
+  const VIEWS = [['overview', '总览'], ['intel', 'AI 情报'], ['usage', '使用分析'], ['doctor', 'Prompt Doctor'], ['english', '英语跟读']]
+  let view = 'overview'
+  let intelReady = false
+  $('nav').replaceChildren(...VIEWS.map(([id, label]) => el('a', { href: `#${id}`, 'data-id': id, 'aria-pressed': 'false' }, label)))
+  function showView() {
+    const id = location.hash.slice(1)
+    view = VIEWS.some(v => v[0] === id) ? id : 'overview'
+    for (const s of document.querySelectorAll('.view')) s.hidden = s.dataset.view !== view
+    for (const a of $('nav').children) a.setAttribute('aria-pressed', String(a.dataset.id === view))
+    if (view === 'usage') drawChart()
+    if ((view === 'intel' || view === 'overview') && !intelReady) { intelReady = true; renderIntelControls(); renderIntel(); renderOverviewIntel() }
+    if (view !== 'english') speechSynthesis?.cancel?.()
+  }
+  addEventListener('hashchange', () => { showView(); scrollTo(0, 0) })
+
   // ================= 启动 =================
   syncToggles(); renderTopics(); idx = firstUndone(); renderRead(); renderChips(); renderVocab()
+  showView()
   loadUsage()
   document.addEventListener('visibilitychange', () => { if (!document.hidden) loadUsage() })
 })()
