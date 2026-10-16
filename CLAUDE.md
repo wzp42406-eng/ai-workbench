@@ -1,9 +1,9 @@
 # 月之工作台
 
-个人 AI 工作台：AI 情报、AI 使用分析、Prompt Doctor、英语跟读。GitHub Pages 静态部署，没有后端。
+个人 AI 工作台：AI 情报、AI 使用分析、Prompt Doctor。GitHub Pages 静态部署，没有后端。
 
 ## 文件
-- `index.html`：整个页面（样式和脚本都在里面），用 `#overview` `#intel` `#usage` `#doctor` `#english` 切换视图。
+- `index.html`：整个页面（样式和脚本都在里面），用 `#overview` `#intel` `#usage` `#doctor` 切换视图。
 - `data.json`：用量数据，由本机脚本每小时生成并推送。**不要手改、不要改字段结构**，页面只读。
   - `periods.{day,week,month,year,all}`：各区间合计，`all` 含全部历史。
   - `daily[]`：按天的明细；没有出现的日期表示那天没有记录（页面显示“无记录”，不当 0）。
@@ -23,4 +23,4 @@
 ```bash
 python3 -m http.server 8000   # 打开 http://localhost:8000/
 ```
-改动后在桌面（1280px）和手机（390px）宽度、深浅色下各看一遍五个视图，并确认控制台没有报错。
+改动后在桌面（1280px）和手机（390px）宽度、深浅色下各看一遍四个视图，并确认控制台没有报错。
