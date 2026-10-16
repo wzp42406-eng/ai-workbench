@@ -735,7 +735,9 @@ textarea.pd-input { min-height: 220px; }
     return `${Math.round(m / 1440)} 天前`
   }
   const fullTime = iso => { const d = new Date(iso); return Number.isFinite(d.getTime()) ? d.toLocaleString('zh-CN', { hour12: false }) : '' }
-  const extLink = (href, ...kids) => el('a', { href, target: '_blank', rel: 'noopener noreferrer' }, ...kids)
+  // 外部链接只认 http(s)，防止第三方数据里混进 javascript: 之类的地址
+  const safeUrl = u => { try { return ['http:', 'https:'].includes(new URL(u).protocol) ? u : '' } catch { return '' } }
+  const extLink = (href, ...kids) => safeUrl(href) ? el('a', { href, target: '_blank', rel: 'noopener noreferrer' }, ...kids) : el('span', {}, ...kids)
 
   // 一条资讯：标题链接到原文，下面是来源、时间、分类和 AIHOT 详情页
   function newsItem(x, { rank, summary = true, meta = [] } = {}) {
