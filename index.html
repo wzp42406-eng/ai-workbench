@@ -10,7 +10,7 @@
   color-scheme: light;
   --bg: #f6f5f1; --panel: #fffffe; --ink: #1b1a17; --ink-2: #57554f; --ink-3: #8e8b83;
   --line: #e7e4dc; --line-2: #efede7; --accent: #b5562f; --hover: #f1efe9;
-  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100;
+  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100; --s5: #8b5cf6;
   --cli: #2a78d6; --desktop: #eb6834; --web: #1baf7a; --trend: #3d3b36;
   --good: #1f7a4d; --warn: #b26b00; --bad: #c0392b;
   --shadow: 0 1px 2px rgb(40 30 10 / 4%), 0 8px 24px rgb(40 30 10 / 5%);
@@ -20,7 +20,7 @@
     color-scheme: dark;
     --bg: #131312; --panel: #1b1b19; --ink: #efede8; --ink-2: #b9b6ad; --ink-3: #85827a;
     --line: #2c2b28; --line-2: #242321; --accent: #e07a4f; --hover: #23221f;
-    --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500;
+    --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #9b7bf0;
     --cli: #3987e5; --desktop: #d95926; --web: #199e70; --trend: #d8d5cc;
     --good: #4cbb84; --warn: #e0a33a; --bad: #e66767; --shadow: none;
   }
@@ -29,7 +29,7 @@
   color-scheme: dark;
   --bg: #131312; --panel: #1b1b19; --ink: #efede8; --ink-2: #b9b6ad; --ink-3: #85827a;
   --line: #2c2b28; --line-2: #242321; --accent: #e07a4f; --hover: #23221f;
-  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500;
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #9b7bf0;
   --cli: #3987e5; --desktop: #d95926; --web: #199e70; --trend: #d8d5cc;
   --good: #4cbb84; --warn: #e0a33a; --bad: #e66767; --shadow: none;
 }
@@ -519,19 +519,20 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     { id: 'web_total', name: '网页', color: '--web', note: 'Token 估算', subs: [
       { id: 'claude', name: 'Claude', vendor: 'claude' }, { id: 'chatgpt', name: 'ChatGPT', vendor: 'openai' }] },
     { id: 'cli_total', name: '终端', color: '--cli', note: 'Token 实际', subs: [
-      { id: 'claude_code', name: 'Claude Code', vendor: 'claude' }, { id: 'codex', name: 'Codex CLI', vendor: 'openai' }] },
+      { id: 'claude_code', name: 'Claude Code', vendor: 'claude' }, { id: 'codex', name: 'Codex CLI', vendor: 'openai' }, { id: 'kimi', name: 'Kimi Code', vendor: 'kimi' }] },
     { id: 'desktop_total', name: '桌面', color: '--desktop', note: '对话只计时长', subs: [
       { id: 'claude_desktop', name: 'Claude 对话', only: 'time', vendor: 'claude' }, { id: 'chatgpt_desktop', name: 'ChatGPT 对话', only: 'time', vendor: 'openai' },
+      { id: 'kimi_desktop', name: 'Kimi 对话', only: 'time', vendor: 'kimi' },
       { id: 'claude_desktop_code', name: 'Claude Code 页', only: 'tok', vendor: 'claude' }, { id: 'codex_desktop_code', name: 'Codex 会话', only: 'tok', vendor: 'openai' }] },
   ]
-  const SUB_COLORS = ['--s1', '--s2', '--s3', '--s4']
+  const SUB_COLORS = ['--s1', '--s2', '--s3', '--s4', '--s5']
   // 趋势图默认起点；之前的数据保留，只是默认不画，仍计入累计
   const CHART_START = '2026-10-16'
   const PERIODS = [['day', '今日'], ['week', '本周'], ['month', '本月'], ['year', '今年'], ['all', '累计']]
   const METRICS = [['time', '时长'], ['tok', 'Token']]
   const RANGES = [['since', `自 ${+CHART_START.slice(5, 7)}/${+CHART_START.slice(8)} 起`], ['30', '近 30 天'], ['all', '全部']]
   const ENTRIES = [['all', '全部入口'], ...ENDS.map(e => [e.id, e.name])]
-  const VENDORS = [['all', '全部平台'], ['claude', 'Claude'], ['openai', 'ChatGPT / Codex']]
+  const VENDORS = [['all', '全部平台'], ['claude', 'Claude'], ['openai', 'ChatGPT / Codex'], ['kimi', 'Kimi']]
   const pick = (key, list, d) => { const v = store.get(key, d); return list.some(x => x[0] === v) ? v : d }
   let period = pick('wb-period', PERIODS, 'day')
   let metric = pick('wb-metric', METRICS, 'time')
@@ -573,7 +574,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
         .filter(s => s.subs.length)
     } else {
       const end = ENDS.find(e => e.id === entry)
-      series = end.subs.filter(okVendor).map((s, i) => ({ id: s.id, name: s.name, color: SUB_COLORS[end.subs.indexOf(s) % 4], subs: [s] }))
+      series = end.subs.filter(okVendor).map((s, i) => ({ id: s.id, name: s.name, color: SUB_COLORS[end.subs.indexOf(s) % SUB_COLORS.length], subs: [s] }))
     }
   }
   // 一天里某个系列的值：子来源都没有记录时返回 null
@@ -621,7 +622,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     $('update-status').classList.toggle('stale', stale)
     $('update-status').textContent = ok ? `更新于 ${pad2(updated.getHours())}:${pad2(updated.getMinutes())}${stale ? '（已超过 2 小时）' : ''}` : '更新时间未知'
     const local = location.hostname === '127.0.0.1' || location.hostname === 'localhost'
-    $('foot').textContent = `${local ? '本机实时数据' : '公开数据每小时同步'}。终端 Token 来自本机会话记录（实际值，缓存读取不计入合计）；Codex 账户累计来自 Codex CLI app-server 只读接口；桌面对话只统计前台时长，没有 Token 记录；网页 Token 按文字估算。图上空白的日期表示那天没有任何记录，不等于 0。`
+    $('foot').textContent = `${local ? '本机实时数据' : '公开数据每小时同步'}。终端（Claude Code、Codex CLI、Kimi Code）的 Token 来自本机会话记录（实际值，缓存读取不计入合计）；Codex 账户累计来自 Codex CLI app-server 只读接口；桌面对话只统计前台时长，没有 Token 记录；网页 Token 按文字估算。图上空白的日期表示那天没有任何记录，不等于 0。`
     renderOverviewUsage()
   }
 
