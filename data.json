@@ -1,204 +1,208 @@
 {
- "updated_at": "2026-10-16T23:49:28+08:00",
+ "updated_at": "2026-10-17T00:29:10+08:00",
  "note": "tokens = 未命中缓存的输入 + 写缓存 + 输出；cache_read_tokens 为命中缓存的输入，另计",
  "quota": {
   "claude": {
    "five_hour": {
-    "used_percent": 10.0,
-    "remaining_percent": 90.0,
+    "used_percent": 18.0,
+    "remaining_percent": 82.0,
     "resets_at": "2026-10-16T20:40:00.000Z",
-    "observed_at": "2026-10-16T23:49:24+08:00"
+    "observed_at": "2026-10-17T00:29:10+08:00",
+    "reset_since": false
    },
    "seven_day": {
-    "used_percent": 1.0,
-    "remaining_percent": 99.0,
+    "used_percent": 2.0,
+    "remaining_percent": 98.0,
     "resets_at": "2026-10-20T19:00:00.000Z",
-    "observed_at": "2026-10-16T23:49:24+08:00"
+    "observed_at": "2026-10-17T00:29:10+08:00",
+    "reset_since": false
    }
   },
   "codex": {
    "five_hour": {
-    "used_percent": 46.0,
-    "remaining_percent": 54.0,
+    "used_percent": 70.0,
+    "remaining_percent": 30.0,
     "resets_at": "2026-10-17T00:35:47+08:00",
-    "observed_at": "2026-10-16T23:47:11+08:00"
+    "observed_at": "2026-10-17T00:27:59+08:00",
+    "reset_since": false
    },
    "seven_day": {
-    "used_percent": 9.0,
-    "remaining_percent": 91.0,
+    "used_percent": 12.0,
+    "remaining_percent": 88.0,
     "resets_at": "2026-10-23T09:21:23+08:00",
-    "observed_at": "2026-10-16T23:47:11+08:00"
+    "observed_at": "2026-10-17T00:27:59+08:00",
+    "reset_since": false
    }
   }
  },
  "periods": {
   "day": {
    "claude": {
-    "minutes": 2.5,
-    "tokens": 0
-   },
-   "chatgpt": {
     "minutes": 0.3,
     "tokens": 0
    },
+   "chatgpt": {
+    "minutes": 0.4,
+    "tokens": 0
+   },
    "claude_code": {
-    "minutes": 249.7,
-    "tokens": 1973925,
-    "cache_read_tokens": 93858014
+    "minutes": 17.9,
+    "tokens": 54803,
+    "cache_read_tokens": 6160963
    },
    "codex": {
-    "minutes": 86.5,
-    "tokens": 739836,
-    "cache_read_tokens": 9353088
+    "minutes": 13.9,
+    "tokens": 186654,
+    "cache_read_tokens": 4546688
    },
    "web_total": {
-    "minutes": 2.8,
+    "minutes": 0.7,
     "tokens": 0
    },
    "cli_total": {
-    "minutes": 336.2,
-    "tokens": 2713761,
-    "cache_read_tokens": 103211102
+    "minutes": 31.9,
+    "tokens": 241457,
+    "cache_read_tokens": 10707651
    },
    "total": {
-    "minutes": 339.0,
-    "tokens": 2713761
+    "minutes": 32.6,
+    "tokens": 241457
    },
-   "from": "2026-10-16"
+   "from": "2026-10-17"
   },
   "week": {
    "claude": {
-    "minutes": 2.5,
-    "tokens": 0
-   },
-   "chatgpt": {
-    "minutes": 0.3,
-    "tokens": 0
-   },
-   "claude_code": {
-    "minutes": 249.7,
-    "tokens": 1973925,
-    "cache_read_tokens": 93858014
-   },
-   "codex": {
-    "minutes": 121.7,
-    "tokens": 1133278,
-    "cache_read_tokens": 18002432
-   },
-   "web_total": {
     "minutes": 2.8,
     "tokens": 0
    },
+   "chatgpt": {
+    "minutes": 1.1,
+    "tokens": 0
+   },
+   "claude_code": {
+    "minutes": 282.6,
+    "tokens": 2057154,
+    "cache_read_tokens": 105062553
+   },
+   "codex": {
+    "minutes": 136.8,
+    "tokens": 1362935,
+    "cache_read_tokens": 22731776
+   },
+   "web_total": {
+    "minutes": 3.8,
+    "tokens": 0
+   },
    "cli_total": {
-    "minutes": 371.4,
-    "tokens": 3107203,
-    "cache_read_tokens": 111860446
+    "minutes": 419.4,
+    "tokens": 3420089,
+    "cache_read_tokens": 127794329
    },
    "total": {
-    "minutes": 374.2,
-    "tokens": 3107203
+    "minutes": 423.2,
+    "tokens": 3420089
    },
    "from": "2026-10-12"
   },
   "month": {
    "claude": {
-    "minutes": 2.5,
-    "tokens": 0
-   },
-   "chatgpt": {
-    "minutes": 0.3,
-    "tokens": 0
-   },
-   "claude_code": {
-    "minutes": 249.7,
-    "tokens": 1973925,
-    "cache_read_tokens": 93858014
-   },
-   "codex": {
-    "minutes": 121.7,
-    "tokens": 1133278,
-    "cache_read_tokens": 18002432
-   },
-   "web_total": {
     "minutes": 2.8,
     "tokens": 0
    },
+   "chatgpt": {
+    "minutes": 1.1,
+    "tokens": 0
+   },
+   "claude_code": {
+    "minutes": 282.6,
+    "tokens": 2057154,
+    "cache_read_tokens": 105062553
+   },
+   "codex": {
+    "minutes": 136.8,
+    "tokens": 1362935,
+    "cache_read_tokens": 22731776
+   },
+   "web_total": {
+    "minutes": 3.8,
+    "tokens": 0
+   },
    "cli_total": {
-    "minutes": 371.4,
-    "tokens": 3107203,
-    "cache_read_tokens": 111860446
+    "minutes": 419.4,
+    "tokens": 3420089,
+    "cache_read_tokens": 127794329
    },
    "total": {
-    "minutes": 374.2,
-    "tokens": 3107203
+    "minutes": 423.2,
+    "tokens": 3420089
    },
    "from": "2026-10-01"
   },
   "year": {
    "claude": {
-    "minutes": 2.5,
-    "tokens": 0
-   },
-   "chatgpt": {
-    "minutes": 0.3,
-    "tokens": 0
-   },
-   "claude_code": {
-    "minutes": 306.0,
-    "tokens": 2501707,
-    "cache_read_tokens": 118042377
-   },
-   "codex": {
-    "minutes": 741.8,
-    "tokens": 4434785,
-    "cache_read_tokens": 107143424
-   },
-   "web_total": {
     "minutes": 2.8,
     "tokens": 0
    },
+   "chatgpt": {
+    "minutes": 1.1,
+    "tokens": 0
+   },
+   "claude_code": {
+    "minutes": 338.9,
+    "tokens": 2584936,
+    "cache_read_tokens": 129246916
+   },
+   "codex": {
+    "minutes": 756.9,
+    "tokens": 4664442,
+    "cache_read_tokens": 111872768
+   },
+   "web_total": {
+    "minutes": 3.8,
+    "tokens": 0
+   },
    "cli_total": {
-    "minutes": 1047.8,
-    "tokens": 6936492,
-    "cache_read_tokens": 225185801
+    "minutes": 1095.8,
+    "tokens": 7249378,
+    "cache_read_tokens": 241119684
    },
    "total": {
-    "minutes": 1050.7,
-    "tokens": 6936492
+    "minutes": 1099.6,
+    "tokens": 7249378
    },
    "from": "2026-01-01"
   },
   "all": {
    "claude": {
-    "minutes": 2.5,
-    "tokens": 0
-   },
-   "chatgpt": {
-    "minutes": 0.3,
-    "tokens": 0
-   },
-   "claude_code": {
-    "minutes": 306.0,
-    "tokens": 2501707,
-    "cache_read_tokens": 118042377
-   },
-   "codex": {
-    "minutes": 741.8,
-    "tokens": 4434785,
-    "cache_read_tokens": 107143424
-   },
-   "web_total": {
     "minutes": 2.8,
     "tokens": 0
    },
+   "chatgpt": {
+    "minutes": 1.1,
+    "tokens": 0
+   },
+   "claude_code": {
+    "minutes": 338.9,
+    "tokens": 2584936,
+    "cache_read_tokens": 129246916
+   },
+   "codex": {
+    "minutes": 756.9,
+    "tokens": 4664442,
+    "cache_read_tokens": 111872768
+   },
+   "web_total": {
+    "minutes": 3.8,
+    "tokens": 0
+   },
    "cli_total": {
-    "minutes": 1047.8,
-    "tokens": 6936492,
-    "cache_read_tokens": 225185801
+    "minutes": 1095.8,
+    "tokens": 7249378,
+    "cache_read_tokens": 241119684
    },
    "total": {
-    "minutes": 1050.7,
-    "tokens": 6936492
+    "minutes": 1099.6,
+    "tokens": 7249378
    },
    "from": null
   }
@@ -721,31 +725,65 @@
     "tokens": 0
    },
    "chatgpt": {
-    "minutes": 0.3,
+    "minutes": 0.7,
     "tokens": 0
    },
    "claude_code": {
-    "minutes": 249.7,
-    "tokens": 1973925,
-    "cache_read_tokens": 93858014
+    "minutes": 264.7,
+    "tokens": 2002351,
+    "cache_read_tokens": 98901590
    },
    "codex": {
-    "minutes": 86.5,
-    "tokens": 739836,
-    "cache_read_tokens": 9353088
+    "minutes": 87.6,
+    "tokens": 782839,
+    "cache_read_tokens": 9535744
    },
    "web_total": {
-    "minutes": 2.8,
+    "minutes": 3.1,
     "tokens": 0
    },
    "cli_total": {
-    "minutes": 336.2,
-    "tokens": 2713761,
-    "cache_read_tokens": 103211102
+    "minutes": 352.3,
+    "tokens": 2785190,
+    "cache_read_tokens": 108437334
    },
    "total": {
-    "minutes": 339.0,
-    "tokens": 2713761
+    "minutes": 355.5,
+    "tokens": 2785190
+   }
+  },
+  {
+   "date": "2026-10-17",
+   "claude": {
+    "minutes": 0.3,
+    "tokens": 0
+   },
+   "chatgpt": {
+    "minutes": 0.4,
+    "tokens": 0
+   },
+   "claude_code": {
+    "minutes": 17.9,
+    "tokens": 54803,
+    "cache_read_tokens": 6160963
+   },
+   "codex": {
+    "minutes": 13.9,
+    "tokens": 186654,
+    "cache_read_tokens": 4546688
+   },
+   "web_total": {
+    "minutes": 0.7,
+    "tokens": 0
+   },
+   "cli_total": {
+    "minutes": 31.9,
+    "tokens": 241457,
+    "cache_read_tokens": 10707651
+   },
+   "total": {
+    "minutes": 32.6,
+    "tokens": 241457
    }
   }
  ]
