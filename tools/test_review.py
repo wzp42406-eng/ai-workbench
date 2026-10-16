@@ -49,8 +49,11 @@ class ParseTest(unittest.TestCase):
             user(sid, '2026-10-15T10:02:00Z', '<command-name>/clear</command-name>'),
             user(sid, '2026-10-15T10:03:00Z', '页面报错了'),
             user(sid, '2026-10-15T10:03:10Z', '系统提示', isMeta=True),
+            user(sid, '2026-10-15T10:03:20Z', 'This session is being continued from a previous conversation. Summary: ...', isCompactSummary=True),
+            user(sid, '2026-10-15T10:03:30Z', '   '),
             user(sid, '2026-10-15T11:00:00Z', '好的'),
         ])
+        write(self.tmp / 'claude' / 'p' / 's2.jsonl', [user('s2', '2026-10-15T09:00:00Z', [{'type': 'text', 'text': '  '}])])
         write(self.tmp / 'codex' / '2026' / '10' / '15' / 'rollout-x.jsonl', [
             {'timestamp': '2026-10-15T12:00:00Z', 'type': 'session_meta', 'payload': {'id': 'abc', 'cwd': '/u/p/wb'}},
             {'timestamp': '2026-10-15T12:00:01Z', 'type': 'event_msg', 'payload': {'type': 'user_message', 'message': '修复趋势图'}},
@@ -66,7 +69,8 @@ class ParseTest(unittest.TestCase):
         self.assertEqual(c['revisions'], 1)
         self.assertEqual(c['tokens']['output'], 500)
         self.assertEqual(c['tokens']['total'], 10 + 500 + 100)
-        self.assertEqual(c['active_minutes'], 3.2)  # 10:00 到 10:03:10 计入，之后到 11:00 的空闲不算
+        self.assertNotIn('claude:s2', tasks)  # 只有空白的会话不算任务，也不报错
+        self.assertEqual(c['active_minutes'], 3.5)  # 10:00 到 10:03:10 计入，之后到 11:00 的空闲不算
         self.assertNotIn('_full', c['turns'][0])
         x = tasks['codex:abc']
         self.assertEqual(x['tokens']['total'], 200 + 40)
@@ -82,7 +86,7 @@ class KimiParseTest(unittest.TestCase):
         t = {'turns': [{'_full': '做个网站'}, {'_full': '页面报错了'}, {'_full': '再加个按钮'}]}
         raw = '说明\n{"summary": "s", "lesson": "l", "turns": [{"i": 1, "labels": ["error"], "quote": "报错"}, {"i": 2, "labels": ["added", "bogus"], "quote": "编的"}, {"i": 9, "labels": ["error"]}]}'
         r = review.kimi_parse(raw, t, {'error', 'added'})
-        self.assertEqual(r['turns'], {'1': {'labels': ['error'], 'evidence': ['报错']}, '2': {'labels': ['added'], 'evidence': []}})
+        self.assertEqual(r['turns'], {'1': {'labels': ['error'], 'evidence': ['报错']}})  # 引用对不上原文的整条丢掉
 
 
 if __name__ == '__main__':

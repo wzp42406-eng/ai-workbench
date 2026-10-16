@@ -44,7 +44,7 @@ RULES_RE = [(k, name, side, re.compile(p, re.I)) for k, name, side, p in RULES]
 SECRET = re.compile(r'(sk-[A-Za-z0-9_\-]{16,}|gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|AKIA[0-9A-Z]{16}|xox[abprs]-[A-Za-z0-9\-]{10,}'
                     r'|-----BEGIN [A-Z ]*PRIVATE KEY-----[\s\S]*?-----END [A-Z ]*PRIVATE KEY-----|Bearer\s+[A-Za-z0-9._\-]{20,})')
 # 不是人发的消息：斜杠命令输出、系统提醒、后台通知等
-NOT_HUMAN = re.compile(r'^\s*(<command-|<local-command|<task-notification|<system-reminder|<bash-|<user-prompt-submit-hook|Caveat:|\[Request interrupted)')
+NOT_HUMAN = re.compile(r'^\s*(<command-|<local-command|<task-notification|<system-reminder|<bash-|<user-prompt-submit-hook|Caveat:|\[Request interrupted|This session is being continued from a previous conversation)')
 
 
 def clean(text):
@@ -131,7 +131,8 @@ def read_claude(base, since):
                         s['usage'][msg['id']] = msg['usage']
                     if msg.get('model') and not str(msg['model']).startswith('<'):
                         s['models'].add(msg['model'])
-                elif d.get('type') == 'user' and not d.get('isMeta') and not d.get('isSidechain'):
+                # 压缩摘要（isCompactSummary）是 AI 写的，不算用户消息
+                elif d.get('type') == 'user' and not any(d.get(k) for k in ('isMeta', 'isSidechain', 'isCompactSummary', 'isVisibleInTranscriptOnly')):
                     text = text_of(msg.get('content'))
                     if text and not NOT_HUMAN.match(text):
                         s['turns'].append((ts, text))
@@ -218,8 +219,11 @@ def finish(s, tokens, since):
     if since and end.date() < since:
         return None
     turns = []
-    for i, (ts, text) in enumerate(sorted(s['turns'], key=lambda x: x[0] or start)):
-        text = clean(text)
+    texts = [(ts, clean(text)) for ts, text in sorted(s['turns'], key=lambda x: x[0] or start)]
+    texts = [(ts, text) for ts, text in texts if text]  # 只有空白（比如只贴了图）的消息跳过
+    if not texts:
+        return None
+    for i, (ts, text) in enumerate(texts):
         labels, evidence = label_turn(text, i)
         turns.append({'at': (ts or start).isoformat(), 'text': text[:EXCERPT], 'length': len(text), 'labels': labels, 'evidence': evidence, '_full': text})
     revisions = sum(1 for t in turns[1:] if any(l not in ('ack', 'other') for l in t['labels']))
@@ -277,6 +281,17 @@ def kimi_call(cmd, prompt):
     return ''
 
 
+def write_private(path, text):
+    """只有自己能读：目录 700，文件一创建就是 600，写完再替换，不会出现半个文件"""
+    path.parent.mkdir(mode=0o700, parents=True, exist_ok=True)
+    tmp = path.with_name(path.name + '.tmp')
+    fd = os.open(tmp, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+    with os.fdopen(fd, 'w', encoding='utf-8') as f:
+        f.write(text)
+    os.chmod(tmp, 0o600)
+    os.replace(tmp, path)
+
+
 def kimi_parse(raw, t, keys):
     a, b = raw.find('{'), raw.rfind('}')
     d = json.loads(raw[a:b + 1])
@@ -290,10 +305,9 @@ def kimi_parse(raw, t, keys):
             continue
         labels = [l for l in x.get('labels') or [] if l in keys]
         quote = str(x.get('quote') or '').strip()
-        if quote and quote not in t['turns'][i]['_full']:
-            quote = ''  # 引用对不上原文就不要，防止编造
-        if labels:
-            turns[str(i)] = {'labels': labels, 'evidence': [quote] if quote else []}
+        # 没有引用或引用对不上原文，整条归类都不要，回到关键词规则，防止编造
+        if labels and quote and quote in t['turns'][i]['_full']:
+            turns[str(i)] = {'labels': labels, 'evidence': [quote]}
     return {'source': 'kimi', 'summary': str(d.get('summary') or '')[:200], 'lesson': str(d.get('lesson') or '')[:300], 'turns': turns}
 
 
@@ -328,9 +342,7 @@ def run_kimi(tasks, args):
         except Exception as e:  # 单个任务失败不影响其他任务
             note['failed'] += 1
             note['error'] = str(e)[:200]
-    KIMI_CACHE.parent.mkdir(parents=True, exist_ok=True)
-    KIMI_CACHE.write_text(json.dumps(cache, ensure_ascii=False), encoding='utf-8')
-    os.chmod(KIMI_CACHE, 0o600)
+    write_private(KIMI_CACHE, json.dumps(cache, ensure_ascii=False))
     return note
 
 
@@ -356,10 +368,34 @@ def build(args):
     }
 
 
+# 只提供页面需要的文件，不把整个仓库（包括 .git）暴露出去
+PUBLIC_FILES = {'/', '/index.html', '/data.json'}
+
+
 class Handler(http.server.SimpleHTTPRequestHandler):
     review_path = OUT_DEFAULT
 
+    def local_host(self):
+        # 防 DNS 重绑定：只接受用本机地址访问
+        host = (self.headers.get('Host') or '').rsplit(':', 1)[0].strip('[]')
+        return host in ('127.0.0.1', 'localhost', '::1')
+
+    def allowed(self):
+        if not self.local_host():
+            self.send_error(403)
+            return False
+        if self.path.split('?')[0] not in PUBLIC_FILES | {'/review.local.json'}:
+            self.send_error(404)
+            return False
+        return True
+
+    def do_HEAD(self):
+        if self.allowed():
+            super().do_HEAD()
+
     def do_GET(self):
+        if not self.allowed():
+            return
         if self.path.split('?')[0] == '/review.local.json':
             try:
                 body = self.review_path.read_bytes()
@@ -397,9 +433,7 @@ def main():
     if ROOT in out.resolve().parents:
         sys.exit('为了不把对话记录推送到 GitHub，--out 不能放在仓库目录里。')
     data = build(args)
-    out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(data, ensure_ascii=False), encoding='utf-8')
-    os.chmod(out, 0o600)
+    write_private(out, json.dumps(data, ensure_ascii=False))
     src = data['sources']
     print(f"Claude Code：{src['claude_code']['files']} 个文件，{src['claude_code']['tasks']} 个任务")
     print(f"Codex：{src['codex']['files']} 个文件，{src['codex']['tasks']} 个任务")
