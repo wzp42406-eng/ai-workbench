@@ -291,6 +291,32 @@ textarea.pd-input { min-height: 220px; }
 textarea.pb-area { min-height: 140px; }
 .pd-save { margin-top: 12px; }
 @media (max-width: 560px) { .pb-row { grid-template-columns: 1fr 1fr; } .pb-row input { grid-column: 1 / -1; } .pb-list { grid-template-columns: 1fr; } }
+/* AI 玩法 */
+.play-jump { display: flex; flex-wrap: wrap; gap: 2px 4px; margin: 4px 0 -8px; }
+.play-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+.play-card { border: 1px solid var(--line-2); border-radius: 12px; padding: 12px 14px; display: grid; gap: 6px; align-content: start; }
+.play-card .news-sum { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.play-note { background: var(--bg); border-radius: 9px; padding: 8px 10px; color: var(--ink-2); font-size: 12.5px; white-space: pre-wrap; word-break: break-word; }
+.play-noteform { display: grid; gap: 6px; }
+.play-noteform textarea { min-height: 72px; }
+.play-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 2px; }
+.play-foot .btn-sm { padding: 3px 10px; font-size: 12px; }
+.play-tools { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+/* 命令面板 */
+.cmd-open { border: 1px solid var(--line); background: none; color: var(--ink-3); border-radius: 7px; padding: 1px 8px; font-size: 12px; cursor: pointer; }
+.cmd-open:hover { color: var(--ink); background: var(--hover); }
+dialog.cmd { border: 1px solid var(--line); border-radius: 14px; padding: 0; width: min(560px, calc(100vw - 32px)); margin: 12vh auto auto; background: var(--panel); color: var(--ink); box-shadow: 0 20px 60px rgb(0 0 0 / 25%); }
+dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
+.cmd-input { border: 0; border-bottom: 1px solid var(--line); border-radius: 14px 14px 0 0; padding: 14px 16px; font-size: 15px; background: none; }
+.cmd-input:focus { background: none; border-color: var(--line); }
+.cmd-list { list-style: none; margin: 0; padding: 6px; max-height: min(420px, 60vh); overflow: auto; }
+.cmd-group { color: var(--ink-3); font-size: 11.5px; letter-spacing: 0.06em; padding: 8px 10px 4px; }
+.cmd-item { display: flex; justify-content: space-between; gap: 12px; padding: 7px 10px; border-radius: 8px; cursor: pointer; }
+.cmd-item[aria-selected="true"] { background: var(--hover); }
+.cmd-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cmd-item .sub { flex: none; max-width: 40%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cmd-foot { border-top: 1px solid var(--line-2); padding: 8px 14px; }
+@media (max-width: 560px) { .cmd-open .kbd { display: none; } .play-grid { grid-template-columns: 1fr; } dialog.cmd { margin-top: 8vh; } }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 </head>
@@ -301,6 +327,7 @@ textarea.pb-area { min-height: 140px; }
     <nav class="seg tabs" id="nav" aria-label="页面"></nav>
     <div class="meta">
       <span id="today"></span>
+      <button class="cmd-open" id="cmd-open" type="button" title="搜索页面、方法库和资讯（Ctrl/⌘ + K）">搜索<span class="kbd"> ⌘K</span></button>
       <button class="theme" id="theme" title="切换深浅色" aria-label="切换深浅色">◐</button>
     </div>
   </header>
@@ -398,6 +425,21 @@ textarea.pb-area { min-height: 140px; }
       </div>
       <div id="pd-out"></div>
     </section>
+    <!-- ==================== AI 玩法 ==================== -->
+    <section class="panel view" data-view="playground" aria-labelledby="play-h">
+      <div class="panel-head">
+        <h2 id="play-h">AI 玩法<span>按想做的事整理</span></h2>
+        <span class="update" id="play-status"></span>
+      </div>
+      <div class="play-tools">
+        <div class="seg small" id="play-kind" role="group" aria-label="类型"></div>
+        <div class="seg small" id="play-show" role="group" aria-label="筛选"></div>
+        <div class="seg small" id="play-sort" role="group" aria-label="排序"></div>
+      </div>
+      <div id="play-body"></div>
+      <div class="foot">来自 AIHOT 公开 API 最近 7 天精选里的教程和产品，在你的浏览器里实时读取。分组按标题和摘要里的关键词自动归类，可能不准；收藏、已尝试和备注只存在这个浏览器里，不存标题和摘要。</div>
+    </section>
+
     <!-- ==================== 方法库 ==================== -->
     <section class="panel view" data-view="playbook" aria-labelledby="pb-h">
       <div class="panel-head">
@@ -420,6 +462,12 @@ textarea.pb-area { min-height: 140px; }
     </section>
   </div>
 </div>
+
+<dialog class="cmd" id="cmd" aria-label="命令面板">
+  <input class="field cmd-input" id="cmd-input" type="text" placeholder="搜索页面、方法库、资讯、任务，或输入一个问题" autocomplete="off" role="combobox" aria-controls="cmd-list" aria-expanded="true">
+  <ul class="cmd-list" id="cmd-list" role="listbox"></ul>
+  <div class="cmd-foot sub">↑↓ 选择 · Enter 打开 · Esc 关闭</div>
+</dialog>
 
 <script>
 (() => {
@@ -739,11 +787,12 @@ textarea.pb-area { min-height: 140px; }
   const intelCache = {}
   async function aihot(path) {
     if (!intelCache[path]) {
-      intelCache[path] = fetch(AIHOT + path, { headers: { Accept: 'application/json' } }).then(async r => {
+      const p = fetch(AIHOT + path, { headers: { Accept: 'application/json' } }).then(async r => {
         if (!r.ok) throw new Error(r.status === 429 ? '请求太频繁，稍后再试' : `接口返回 ${r.status}`)
         return r.json()
       })
-      intelCache[path].catch(() => { delete intelCache[path] })
+      p.then(v => { p.done = v }, () => { delete intelCache[path] })   // done 给命令面板搜已读到的资讯
+      intelCache[path] = p
     }
     return intelCache[path]
   }
@@ -823,6 +872,112 @@ textarea.pb-area { min-height: 140px; }
         el('ol', { class: 'news compact' }, ...rep.flashes.map(x => newsItem(x, { summary: false })))) : null,
       el('div', { class: 'sub' }, extLink(rep.links.aihot, '在 AIHOT 阅读完整日报 →')))
   }
+  // ================= AI 玩法：AIHOT 最近 7 天精选里的教程和产品，按“想用 AI 做什么”分组 =================
+  // 分组只看标题和摘要里的关键词，猜不出来归“其他”。排序只用发布时间或 AIHOT 自己的评分，不另外编“实用度”。
+  // 本机只记你的标记（条目 id、状态、备注、原文链接），不存标题和摘要，避免变成 AIHOT 内容的副本。
+  const JOBS = [
+    ['auto', '自动化日常工作', /自动化|工作流|workflow|n8n|zapier|定时|批量|脚本|邮件|日程|浏览器操作|computer use|rpa/i],
+    ['code', '用 AI 写代码', /代码|编程|coding|coder|claude code|codex|cursor|copilot|ide|开发者|debug|github|vibe/i],
+    ['agent', '构建 AI Agent', /agent|智能体|mcp|多智能体|工具调用|tool use|function call|sdk|skill/i],
+    ['know', '整理信息与知识库', /知识库|笔记|notion|obsidian|rag|检索|阅读|总结|记忆|整理/i],
+    ['data', '数据分析', /数据|分析|表格|excel|sql|图表|可视化|bi\b|报表/i],
+    ['doc', '做 PPT 和文档', /ppt|幻灯|演示|slides|文档|word|pdf|报告|简历/i],
+    ['media', '做视频和图片', /视频|图片|图像|生图|绘画|设计|video|image|sora|midjourney|音乐|语音|配音|播客/i],
+    ['write', '研究与写作', /写作|文章|研究|论文|调研|翻译|文案|deep research|深度研究/i],
+    ['other', '其他', /$^/],
+  ]
+  const PLAY_KINDS = [['', '全部'], ['tip', '教程'], ['ai-products', '产品']]
+  const PLAY_SHOW = [['all', '全部'], ['saved', '收藏'], ['tried', '已尝试']]
+  const PLAY_SORT = [['new', '最新'], ['score', 'AIHOT 评分']]
+  let playKind = pick('wb-play-kind', PLAY_KINDS, '')
+  let playShow = 'all'
+  let playSort = pick('wb-play-sort', PLAY_SORT, 'new')
+  let playItems = null
+  let playNote = ''      // 正在写备注的条目 id
+  const marks = store.get('wb-play-marks', {})   // { id: { status: 'saved' | 'tried', note, url, at } }
+  const saveMarks = () => store.set('wb-play-marks', marks)
+  // 先看标题，标题看不出来再看摘要
+  const jobOf = x => (JOBS.find(([, , re]) => re.test(x.title)) || JOBS.find(([, , re]) => re.test(x.summary || '')) || JOBS[JOBS.length - 1])[0]
+
+  async function loadPlay() {
+    const box = $('play-body')
+    box.replaceChildren(el('div', { class: 'empty' }, '正在读取…'))
+    const rs = await Promise.allSettled(['tip', 'ai-products'].map(c => aihot(`/items?mode=selected&window=7d&limit=100&category=${c}`)))
+    const ok = rs.filter(r => r.status === 'fulfilled')
+    if (!ok.length) return box.replaceChildren(el('div', { class: 'empty' }, `暂时读不到 AI 玩法（${rs[0].reason?.message || '网络错误'}）。`,
+      el('button', { class: 'link', type: 'button', onclick: loadPlay }, '重试')))
+    const seen = new Set()
+    playItems = ok.flatMap(r => r.value.items).filter(x => !seen.has(x.id) && seen.add(x.id))
+    $('play-status').textContent = `最近 7 天 · ${playItems.length} 条${ok.length < rs.length ? '（部分分类没读到）' : ''}`
+    renderPlay()
+  }
+  function renderPlayControls() {
+    segButtons($('play-kind'), PLAY_KINDS, playKind, id => { playKind = id; store.set('wb-play-kind', id); renderPlay() })
+    segButtons($('play-show'), PLAY_SHOW, playShow, id => { playShow = id; renderPlay() })
+    segButtons($('play-sort'), PLAY_SORT, playSort, id => { playSort = id; store.set('wb-play-sort', id); renderPlay() })
+  }
+  function renderPlay() {
+    pressed($('play-kind'), playKind); pressed($('play-show'), playShow); pressed($('play-sort'), playSort)
+    const box = $('play-body')
+    if (!playItems) return
+    const time = x => x.publishedAt || x.discoveredAt || ''
+    const list = playItems.filter(x => (!playKind || x.category === playKind) && (playShow === 'all' || marks[x.id]?.status === playShow))
+      .sort((a, b) => playSort === 'score' ? (b.score ?? -1) - (a.score ?? -1) : time(b).localeCompare(time(a)))
+    // 标记过、但已经不在最近 7 天里的条目：只剩你的备注和原文链接
+    const gone = playShow === 'all' ? [] : Object.entries(marks).filter(([id, m]) => m.status === playShow && !playItems.some(x => x.id === id))
+    const groups = JOBS.map(([id, name]) => [name, list.filter(x => jobOf(x) === id)]).filter(([, xs]) => xs.length)
+    box.replaceChildren(...[
+      groups.length ? el('nav', { class: 'play-jump' }, ...groups.map(([name, xs], i) =>
+        el('a', { class: 'link', href: `#playground`, onclick: e => { e.preventDefault(); $(`job-${i}`).scrollIntoView({ behavior: 'smooth' }) } }, `${name} ${xs.length}`))) : null,
+      ...groups.map(([name, xs], i) => el('div', { id: `job-${i}`, class: 'play-group' },
+        el('div', { class: 'section-title' }, el('span', {}, name), el('span', {}, `${xs.length} 条`)),
+        el('div', { class: 'play-grid' }, ...xs.map(playCard)))),
+      gone.length ? el('div', { class: 'play-group' },
+        el('div', { class: 'section-title' }, el('span', {}, '已不在最近 7 天里'), el('span', {}, `${gone.length} 条`)),
+        el('div', { class: 'play-grid' }, ...gone.map(([id, m]) => el('div', { class: 'play-card' },
+          el('div', { class: 'play-note' }, m.note || '（没写备注）'),
+          el('div', { class: 'play-foot' }, m.url ? extLink(m.url, '打开原文') : el('span', {}), el('button', { class: 'link', type: 'button', onclick: () => { delete marks[id]; saveMarks(); renderPlay() } }, '移除')))))) : null,
+      !groups.length && !gone.length ? el('div', { class: 'empty' }, playShow === 'all' ? '最近 7 天没有这类精选' : playShow === 'saved' ? '还没有收藏' : '还没有标记已尝试的') : null].filter(Boolean))
+  }
+  function setMark(x, patch) {
+    const m = { ...marks[x.id], ...patch, url: x.links?.original || x.links?.aihot || '', at: new Date().toISOString() }
+    if (!m.status && !m.note) delete marks[x.id]; else marks[x.id] = m
+    saveMarks(); renderPlay()
+  }
+  function playCard(x) {
+    const m = marks[x.id] || {}
+    const when = x.publishedAt || x.discoveredAt
+    const toggle = (s, label) => el('button', { class: 'link', type: 'button', 'aria-pressed': String(m.status === s), onclick: () => setMark(x, { status: m.status === s ? '' : s }) }, label)
+    return el('div', { class: 'play-card' },
+      el('div', { class: 'news-title' }, extLink(x.links?.original || x.links?.aihot, x.title)),
+      x.summary ? el('div', { class: 'news-sum' }, x.summary) : null,
+      el('div', { class: 'news-meta' },
+        el('span', {}, x.source?.name || '未知来源'),
+        when ? el('span', { title: fullTime(when) }, ago(when)) : null,
+        el('span', {}, CATS[x.category] || ''),
+        x.score != null ? el('span', { title: 'AIHOT 给这条资讯的评分' }, `评分 ${x.score}`) : null,
+        x.links?.aihot ? extLink(x.links.aihot, '详情') : null),
+      playNote === x.id ? noteForm(x, m) : m.note ? el('div', { class: 'play-note' }, m.note) : null,
+      el('div', { class: 'play-foot' },
+        el('span', { class: 'pb-actions' },
+          toggle('saved', m.status === 'saved' ? '★ 已收藏' : '☆ 收藏'),
+          toggle('tried', m.status === 'tried' ? '✓ 已尝试' : '已尝试'),
+          el('button', { class: 'link', type: 'button', onclick: () => { playNote = playNote === x.id ? '' : x.id; renderPlay() } }, m.note ? '改备注' : '备注')),
+        pbButton('存入方法库', () => ({ kind: 'method', title: x.title, text: [m.note, x.links?.original || x.links?.aihot].filter(Boolean).join('\n'), source: 'AI 玩法' }))))
+  }
+  function noteForm(x, m) {
+    const f = el('form', { class: 'play-noteform' },
+      el('textarea', { class: 'field', name: 'note', placeholder: '试了什么、效果怎样、下次怎么用（只存在这个浏览器里）' }),
+      el('div', { class: 'row-end' }, el('span', {}),
+        el('span', { class: 'pb-actions' },
+          el('button', { class: 'link', type: 'button', onclick: () => { playNote = ''; renderPlay() } }, '取消'),
+          el('button', { class: 'btn-sm', type: 'submit' }, '保存'))))
+    f.note.value = m.note || ''
+    f.addEventListener('submit', e => { e.preventDefault(); playNote = ''; setMark(x, { note: f.note.value.trim() }) })
+    queueMicrotask(() => f.note.focus())
+    return f
+  }
+
   async function renderOverviewIntel() {
     const box = $('ov-hot')
     try {
@@ -1337,7 +1492,7 @@ textarea.pb-area { min-height: 140px; }
   }
 
   // ================= 页面切换 =================
-  const VIEWS = [['overview', '总览'], ['intel', 'AI 情报'], ['usage', '使用分析'], ['doctor', 'Prompt Doctor'], ['review', '任务复盘'], ['playbook', '方法库']]
+  const VIEWS = [['overview', '总览'], ['intel', 'AI 情报'], ['playground', 'AI 玩法'], ['usage', '使用分析'], ['doctor', 'Prompt Doctor'], ['review', '任务复盘'], ['playbook', '方法库']]
   let view = 'overview'
   let intelReady = false
   $('nav').replaceChildren(...VIEWS.map(([id, label]) => el('a', { href: `#${id}`, 'data-id': id, 'aria-pressed': 'false' }, label)))
@@ -1349,9 +1504,91 @@ textarea.pb-area { min-height: 140px; }
     if (view === 'usage') drawChart()
     if (view === 'review' && !rv) loadReview()
     if (['playbook', 'doctor', 'review'].includes(view)) { if (!pbTried) { pbTried = true; loadPlaybook() } else renderPlaybook() }
+    if (view === 'playground' && !playItems) { renderPlayControls(); loadPlay() }
     if ((view === 'intel' || view === 'overview') && !intelReady) { intelReady = true; renderIntelControls(); renderIntel(); renderOverviewIntel() }
   }
   addEventListener('hashchange', () => { showView(); scrollTo(0, 0) })
+
+  // ================= 命令面板（Ctrl/⌘ + K） =================
+  // 搜页面、操作、方法库、已经读到的资讯和本机任务；都没有就把输入交给 Prompt Doctor
+  let cmdSel = 0
+  let cmdHits = []
+  function cmdSources() {
+    const out = VIEWS.map(([id, label]) => ({ group: '页面', label, run: () => { location.hash = `#${id}` } }))
+    out.push({ group: '操作', label: '切换深浅色', run: () => $('theme').click() },
+      { group: '操作', label: '刷新数据', run: () => { for (const k in intelCache) delete intelCache[k]; loadUsage(); if (intelReady) { renderIntel(); renderOverviewIntel() } if (playItems) loadPlay() } })
+    for (const it of pb?.items || []) out.push({ group: '方法库', label: it.title || '（无标题）', hint: it.category, text: it.text,
+      run: () => { pbQuery = it.title; pbCat = ''; location.hash = '#playbook'; renderPlaybook() } })
+    // 只搜这次已经读到的资讯，不额外请求
+    const news = new Map()
+    for (const p of Object.values(intelCache)) {
+      const r = p.done
+      for (const x of [...(r?.items || []), ...(r?.report?.sections?.flatMap(s => s.items) || [])]) {
+        const url = x.links?.original || x.links?.aihot
+        if (url && !news.has(url)) news.set(url, { group: '资讯', label: x.title, hint: x.source?.name, text: x.summary, run: () => open(url, '_blank', 'noopener') })
+      }
+    }
+    out.push(...news.values())
+    if (rv) for (const t of rvTasks()) out.push({ group: '任务', label: t.title, hint: t.project, run: () => { location.hash = '#review'; openTask(t.id) } })
+    return out
+  }
+  function cmdSearch(q) {
+    q = q.trim().toLowerCase()
+    const all = cmdSources()
+    if (!q) return all.filter(x => x.group === '页面' || x.group === '操作')
+    const words = q.split(/\s+/)
+    const hit = all.map(x => {
+      const label = x.label.toLowerCase(), rest = `${x.hint || ''} ${x.text || ''}`.toLowerCase()
+      if (!words.every(w => label.includes(w) || rest.includes(w))) return null
+      return { x, s: (label.startsWith(q) ? 3 : label.includes(q) ? 2 : words.every(w => label.includes(w)) ? 1 : 0) + (x.group === '页面' ? 0.5 : 0) }
+    }).filter(Boolean).sort((a, b) => b.s - a.s).slice(0, 30).map(h => h.x)
+    hit.push({ group: '提问', label: `用 Prompt Doctor 优化：${q.length > 40 ? q.slice(0, 40) + '…' : q}`,
+      run: () => { $('pd-input').value = $('cmd-input').value.trim(); location.hash = '#doctor'; renderDoctor() } })
+    return hit
+  }
+  function renderCmd() {
+    cmdHits = cmdSearch($('cmd-input').value)
+    cmdSel = Math.min(cmdSel, cmdHits.length - 1)
+    let last = ''
+    $('cmd-list').replaceChildren(...cmdHits.flatMap((x, i) => {
+      const head = x.group !== last ? el('li', { class: 'cmd-group', role: 'presentation' }, x.group) : null
+      last = x.group
+      return [head, el('li', { id: `cmd-${i}`, role: 'option', class: 'cmd-item', 'aria-selected': String(i === cmdSel),
+        onmousemove: () => { if (cmdSel !== i) { cmdSel = i; markCmd() } }, onclick: () => runCmd(i) },
+        el('span', { class: 'cmd-label' }, x.label), x.hint ? el('span', { class: 'sub' }, x.hint) : null)]
+    }))
+    markCmd()
+  }
+  function markCmd() {
+    for (const li of $('cmd-list').querySelectorAll('.cmd-item')) li.setAttribute('aria-selected', String(li.id === `cmd-${cmdSel}`))
+    $('cmd-input').setAttribute('aria-activedescendant', `cmd-${cmdSel}`)
+    $(`cmd-${cmdSel}`)?.scrollIntoView({ block: 'nearest' })
+  }
+  function runCmd(i) {
+    const x = cmdHits[i]
+    if (!x) return
+    $('cmd').close()
+    x.run()
+  }
+  function openCmd() {
+    if ($('cmd').open) return
+    $('cmd-input').value = ''; cmdSel = 0
+    $('cmd').showModal(); renderCmd()
+  }
+  $('cmd-open').addEventListener('click', openCmd)
+  $('cmd-input').addEventListener('input', () => { cmdSel = 0; renderCmd() })
+  $('cmd-input').addEventListener('keydown', e => {
+    if (e.isComposing) return
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault()
+      cmdSel = (cmdSel + (e.key === 'ArrowDown' ? 1 : -1) + cmdHits.length) % cmdHits.length
+      markCmd()
+    } else if (e.key === 'Enter') { e.preventDefault(); runCmd(cmdSel) }
+  })
+  $('cmd').addEventListener('click', e => { if (e.target === $('cmd')) $('cmd').close() })
+  addEventListener('keydown', e => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); $('cmd').open ? $('cmd').close() : openCmd() }
+  })
 
   // ================= 启动 =================
   showView()
