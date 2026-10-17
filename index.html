@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>月之工作台</title>
-<meta name="description" content="个人 AI 工作台：AI 情报、AI 使用分析、Prompt Doctor。">
+<meta name="description" content="个人 AI 工作台：AI 情报、AI 玩法、AI 使用分析、任务复盘、方法库。">
 <style>
 :root {
   color-scheme: light;
@@ -198,29 +198,15 @@ a.link { text-decoration: none; }
 .chart-filters { display: flex; align-items: center; gap: 10px 16px; flex-wrap: wrap; margin: 6px 0 4px; }
 .chart .missing { stroke: var(--line); stroke-width: 2; stroke-dasharray: 2 2; }
 
-/* Prompt Doctor */
-.pd-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 24px; align-items: start; }
-textarea.pd-input { min-height: 220px; }
-.dims { display: grid; gap: 6px; }
-.dim { display: grid; grid-template-columns: 44px 52px minmax(0, 1fr); gap: 8px; align-items: baseline; padding: 7px 10px; border: 1px solid var(--line-2); border-radius: 9px; font-size: 13px; }
-.dim .dn { font-weight: 600; }
-.dim .ds { font-size: 12px; }
-.dim .dh { color: var(--ink-3); font-size: 12.5px; }
-.dim.clear .ds { color: var(--good); }
-.dim.partial .ds { color: var(--warn); }
-.dim.missing .ds { color: var(--bad); }
-.dim.na { opacity: 0.6; }
-.dim.na .ds { color: var(--ink-3); }
 .pd-pre { white-space: pre-wrap; word-break: break-word; margin: 0; background: var(--bg); border: 1px solid var(--line-2); border-radius: 10px; padding: 12px 14px; font: 13px/1.65 ui-monospace, "SF Mono", Menlo, monospace; color: var(--ink-2); max-height: 360px; overflow: auto; }
 
 @media (max-width: 980px) {
-  .overview, .pd-grid { grid-template-columns: 1fr; }
+  .overview { grid-template-columns: 1fr; }
 }
 @media (max-width: 560px) {
   header.top { gap: 10px; }
   .tabs { order: 3; width: 100%; overflow-x: auto; }
   .tabs a { flex: none; padding: 5px 10px; font-size: 12.5px; }
-  .dim { grid-template-columns: 40px 48px minmax(0, 1fr); }
 }
 /* 任务复盘 */
 .rv-empty { max-width: 640px; color: var(--ink-2); line-height: 1.7; }
@@ -289,7 +275,6 @@ textarea.pd-input { min-height: 220px; }
 .pb-editor { display: grid; gap: 8px; border: 1px solid var(--line); border-radius: 12px; padding: 14px; margin-bottom: 14px; background: var(--bg); }
 .pb-row { display: grid; grid-template-columns: minmax(0, 1fr) 120px 120px; gap: 8px; }
 textarea.pb-area { min-height: 140px; }
-.pd-save { margin-top: 12px; }
 @media (max-width: 560px) { .pb-row { grid-template-columns: 1fr 1fr; } .pb-row input { grid-column: 1 / -1; } .pb-list { grid-template-columns: 1fr; } }
 /* AI 玩法 */
 .play-jump { display: flex; flex-wrap: wrap; gap: 2px 4px; margin: 4px 0 -8px; }
@@ -337,23 +322,15 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     <section class="view overview" data-view="overview" aria-label="总览">
       <div class="panel ov-intel">
         <div class="panel-head">
-          <h2>今日 AI 情报<span>当前热点</span></h2>
-          <a class="link" href="#intel">查看全部 →</a>
+          <h2>今日 AI 情报<span>按价值排序</span></h2>
+          <a class="link" href="#intel">看摘要 →</a>
         </div>
-        <div id="ov-daily"></div>
         <ol class="news compact" id="ov-hot"><li class="empty">正在读取…</li></ol>
       </div>
       <div class="ov-side">
         <div class="panel ov-usage">
           <div class="panel-head"><h2>我的 AI 使用<span>今日</span></h2><a class="link" href="#usage">详细 →</a></div>
           <div class="mini" id="ov-usage"><div class="empty">正在读取…</div></div>
-        </div>
-        <div class="panel ov-doctor">
-          <div class="panel-head"><h2>Prompt Doctor<span>提问优化</span></h2></div>
-          <form id="ov-doctor-form" class="custom">
-            <textarea class="field" name="text" placeholder="粘贴一个准备发给 AI 的问题"></textarea>
-            <div class="row-end"><span class="msg">只在这个页面里分析，不保存</span><button class="btn-sm" type="submit">诊断</button></div>
-          </form>
         </div>
       </div>
     </section>
@@ -367,9 +344,8 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
           <div class="seg" id="intel-tab" role="group" aria-label="情报类型"></div>
         </div>
       </div>
-      <div class="seg small cats" id="intel-cat" role="group" aria-label="分类"></div>
       <div id="intel-body"></div>
-      <div class="foot">内容来自 AIHOT 公开 API（aihot.news），在你的浏览器里实时读取，本站不保存副本。标题和摘要由 AIHOT 根据第三方来源生成，以原文为准；排序、热度和日报直接沿用 AIHOT 的结果。</div>
+      <div class="foot">内容来自 AIHOT 公开 API（aihot.news），在你的浏览器里实时读取，本站不保存副本。标题和摘要由 AIHOT 根据第三方来源生成，以原文为准。“今日推荐”从最近 24 小时的精选里按 AIHOT 评分挑出 5 到 10 条；热度和日报直接沿用 AIHOT 的结果。</div>
     </section>
 
     <!-- ==================== AI 用量 ==================== -->
@@ -407,37 +383,18 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     </section>
 
 
-    <!-- ==================== Prompt Doctor ==================== -->
-    <section class="panel view" data-view="doctor" aria-labelledby="pd-h">
-      <div class="panel-head">
-        <h2 id="pd-h">Prompt Doctor<span>提问诊断</span></h2>
-        <span class="sub">按规则检查，不调用模型、不保存输入</span>
-      </div>
-      <div class="pd-grid">
-        <div>
-          <textarea class="field pd-input" id="pd-input" placeholder="粘贴一个准备发给 AI 的问题，例如：帮我做一个记账小程序"></textarea>
-          <div class="row-end"><span class="msg" id="pd-meta"></span><button class="btn-sm" id="pd-clear" type="button">清空</button></div>
-        </div>
-        <div>
-          <div class="section-title" style="margin-top:0"><span>六个维度</span><span id="pd-level"></span></div>
-          <div class="dims" id="pd-dims"><div class="empty">输入问题后自动检查</div></div>
-        </div>
-      </div>
-      <div id="pd-out"></div>
-    </section>
     <!-- ==================== AI 玩法 ==================== -->
     <section class="panel view" data-view="playground" aria-labelledby="play-h">
       <div class="panel-head">
-        <h2 id="play-h">AI 玩法<span>按想做的事整理</span></h2>
+        <h2 id="play-h">AI 玩法<span>能直接上手的</span></h2>
         <span class="update" id="play-status"></span>
       </div>
       <div class="play-tools">
-        <div class="seg small" id="play-kind" role="group" aria-label="类型"></div>
         <div class="seg small" id="play-show" role="group" aria-label="筛选"></div>
-        <div class="seg small" id="play-sort" role="group" aria-label="排序"></div>
+        <div class="seg small" id="play-range" role="group" aria-label="GitHub 时间范围"></div>
       </div>
       <div id="play-body"></div>
-      <div class="foot">来自 AIHOT 公开 API 最近 7 天精选里的教程和产品，在你的浏览器里实时读取。分组按标题和摘要里的关键词自动归类，可能不准；收藏、已尝试和备注（连同标题和原文链接）只存在这个浏览器里，换手机或换浏览器要重新收藏。</div>
+      <div class="foot">GitHub 项目来自 GitHub 公开搜索（名称、简介或标签里有 AI、LLM、Agent、MCP 等词，按星数排序，结果在这个浏览器里缓存 6 小时）；教程来自 AIHOT 公开 API 最近 7 天的精选，实时读取、不保存。用途和“能配合你常用的工具”按关键词判断，可能不准。收藏、已尝试和备注（连同标题和链接）只存在这个浏览器里，换手机或换浏览器要重新收藏。</div>
     </section>
 
     <!-- ==================== 方法库 ==================== -->
@@ -781,10 +738,18 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
   // 不写进仓库、不存 localStorage：AIHOT 的条款不允许把缓存变成公开副本。
   const AIHOT = 'https://aihot.news/api/v1'
   const CATS = { 'ai-models': '模型', 'ai-products': '产品', industry: '行业', paper: '论文', tip: '教程', opinion: '观点' }
-  const INTEL_TABS = [['hot', '热点'], ['selected', '今日精选'], ['daily', '日报']]
-  let intelTab = pick('wb-intel-tab', INTEL_TABS, 'hot')
-  let intelCat = store.get('wb-intel-cat', '')
-  if (intelCat && !CATS[intelCat]) intelCat = ''
+  const INTEL_TABS = [['pick', '今日推荐'], ['hot', '热点'], ['daily', '日报']]
+  let intelTab = pick('wb-intel-tab2', INTEL_TABS, 'pick')
+  const PICK_PATH = '/items?mode=selected&window=24h&limit=50'
+  // 今日推荐：按 AIHOT 评分从高到低，取和最高分差不多的（不低于最高分的 80%），至少 5 条、最多 10 条。
+  // 评分少于 5 条时沿用 AIHOT 自己的顺序，不另外编分数。
+  function topPicks(items) {
+    const scored = items.filter(x => typeof x.score === 'number').sort((a, b) => b.score - a.score)
+    if (scored.length < 5) return items.slice(0, 10)
+    const near = scored.filter(x => x.score >= scored[0].score * 0.8).length
+    return scored.slice(0, Math.min(10, Math.max(5, near)))
+  }
+  const scoreMeta = x => x.score != null ? [el('span', { title: 'AIHOT 给这条资讯的评分，推荐按它排序' }, `评分 ${x.score}`)] : []
   const intelCache = {}
   async function aihot(path) {
     if (!intelCache[path]) {
@@ -833,12 +798,10 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     el('button', { class: 'link', type: 'button', onclick: () => { renderIntel(); renderOverviewIntel() } }, '重试')))
 
   function renderIntelControls() {
-    segButtons($('intel-tab'), INTEL_TABS, intelTab, id => { intelTab = id; store.set('wb-intel-tab', id); renderIntel() })
-    segButtons($('intel-cat'), [['', '全部'], ...Object.entries(CATS)], intelCat, id => { intelCat = id; store.set('wb-intel-cat', id); renderIntel() })
+    segButtons($('intel-tab'), INTEL_TABS, intelTab, id => { intelTab = id; store.set('wb-intel-tab2', id); renderIntel() })
   }
   async function renderIntel() {
-    pressed($('intel-tab'), intelTab); pressed($('intel-cat'), intelCat)
-    $('intel-cat').hidden = intelTab !== 'selected'
+    pressed($('intel-tab'), intelTab)
     const box = $('intel-body')
     box.replaceChildren(el('div', { class: 'empty' }, '正在读取…'))
     $('intel-status').textContent = ''
@@ -849,13 +812,13 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
         box.replaceChildren(el('div', { class: 'sub intel-note' }, 'AIHOT 按事件算热度：48 小时内每个独立来源只算一次，超过 24 小时的权重减半。'),
           r.items.length ? el('ol', { class: 'news' }, ...r.items.map(x => newsItem(x, { rank: x.rank, summary: false, meta: hotMeta(x) })))
             : el('div', { class: 'empty' }, '现在没有热点'))
-      } else if (intelTab === 'selected') {
-        const cat = intelCat
-        const r = await aihot(`/items?mode=selected&window=24h&limit=50${cat ? `&category=${cat}` : ''}`)
-        if (intelTab !== 'selected' || cat !== intelCat) return
-        box.replaceChildren(r.items.length ? el('ol', { class: 'news' }, ...r.items.map(x => newsItem(x)))
-          : el('div', { class: 'empty' }, '最近 24 小时这个分类没有精选'))
-        $('intel-status').textContent = `最近 24 小时 · ${r.items.length} 条`
+      } else if (intelTab === 'pick') {
+        const r = await aihot(PICK_PATH)
+        if (intelTab !== 'pick') return
+        const top = topPicks(r.items)
+        box.replaceChildren(top.length ? el('ol', { class: 'news' }, ...top.map((x, i) => newsItem(x, { rank: i + 1, meta: scoreMeta(x) })))
+          : el('div', { class: 'empty' }, '最近 24 小时还没有精选'))
+        $('intel-status').textContent = top.length ? `从最近 24 小时 ${r.items.length} 条精选里挑出 ${top.length} 条` : ''
       } else {
         const r = await aihot('/dailies/latest')
         if (intelTab !== 'daily') return
@@ -875,104 +838,131 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
         el('ol', { class: 'news compact' }, ...rep.flashes.map(x => newsItem(x, { summary: false })))) : null,
       el('div', { class: 'sub' }, extLink(rep.links.aihot, '在 AIHOT 阅读完整日报 →')))
   }
-  // ================= AI 玩法：AIHOT 最近 7 天精选里的教程和产品，按“想用 AI 做什么”分组 =================
-  // 分组只看标题和摘要里的关键词，猜不出来归“其他”。排序只用发布时间或 AIHOT 自己的评分，不另外编“实用度”。
+  // ================= AI 玩法：能直接上手的 GitHub 新项目 + AIHOT 本周教程 =================
+  // GitHub：浏览器直接读公开搜索接口（允许跨域，不用登录，每分钟限 10 次），结果在本浏览器缓存 6 小时。
+  // 教程：AIHOT 最近 7 天精选里的“教程”，只留看起来能照着做的（有开源地址或上手步骤），按 AIHOT 评分排序。
   // 浏览器里只记你标记过的条目（id、标题、状态、备注、原文链接），不存摘要，也不进仓库。
   const JOBS = [
-    ['auto', '自动化日常工作', /自动化|工作流|workflow|n8n|zapier|定时|批量|脚本|邮件|日程|浏览器操作|computer use|rpa/i],
-    ['code', '用 AI 写代码', /代码|编程|coding|coder|claude code|codex|cursor|copilot|ide|开发者|debug|github|vibe/i],
-    ['agent', '构建 AI Agent', /agent|智能体|mcp|多智能体|工具调用|tool use|function call|sdk|skill/i],
-    ['know', '整理信息与知识库', /知识库|笔记|notion|obsidian|rag|检索|阅读|总结|记忆|整理/i],
-    ['data', '数据分析', /数据|分析|表格|excel|sql|图表|可视化|bi\b|报表/i],
-    ['doc', '做 PPT 和文档', /ppt|幻灯|演示|slides|文档|word|pdf|报告|简历/i],
-    ['media', '做视频和图片', /视频|图片|图像|生图|绘画|设计|video|image|sora|midjourney|音乐|语音|配音|播客/i],
-    ['write', '研究与写作', /写作|文章|研究|论文|调研|翻译|文案|deep research|深度研究/i],
-    ['other', '其他', /$^/],
+    ['auto', '自动化日常工作', /自动化|工作流|workflow|n8n|zapier|定时|批量|脚本|邮件|日程|浏览器操作|browser|computer use|rpa/i],
+    ['code', '写代码', /代码|编程|coding|coder|claude code|codex|cursor|copilot|\bide\b|开发者|debug|github|vibe|terminal|cli\b/i],
+    ['agent', '做 AI Agent', /agent|智能体|mcp|多智能体|工具调用|tool use|function call|sdk|skill/i],
+    ['know', '知识库与笔记', /知识库|笔记|notion|obsidian|rag|检索|阅读|总结|记忆|memory|整理|knowledge/i],
+    ['data', '数据分析', /数据|分析|表格|excel|sql|图表|可视化|\bbi\b|报表|dashboard/i],
+    ['doc', 'PPT 和文档', /ppt|幻灯|演示|slides|文档|word|pdf|报告|简历|document/i],
+    ['media', '视频、图片和语音', /视频|图片|图像|生图|绘画|设计|video|image|sora|midjourney|音乐|语音|配音|播客|speech|voice|tts/i],
+    ['write', '研究与写作', /写作|文章|研究|论文|调研|翻译|文案|deep research|深度研究|research|writing/i],
   ]
-  const PLAY_KINDS = [['', '全部'], ['tip', '教程'], ['ai-products', '产品']]
-  const PLAY_SHOW = [['all', '全部'], ['saved', '收藏'], ['tried', '已尝试']]
-  const PLAY_SORT = [['new', '最新'], ['score', 'AIHOT 评分']]
-  let playKind = pick('wb-play-kind', PLAY_KINDS, '')
+  const jobName = text => (JOBS.find(([, , re]) => re.test(text)) || [, ''])[1]
+  // 和你常用的工具（Claude Code、Codex、Kimi）能直接配合的
+  const MY_TOOLS = /claude|codex|kimi|\bmcp\b|skill|agents\.md|claude\.md/i
+  const GH_RANGES = [['7', '本周新项目'], ['30', '本月新项目']]
+  const PLAY_SHOW = [['all', '推荐'], ['saved', '收藏'], ['tried', '已尝试']]
+  const GH_TTL = 6 * 3600e3
+  let ghRange = pick('wb-gh-range', GH_RANGES, '30')
   let playShow = 'all'
-  let playSort = pick('wb-play-sort', PLAY_SORT, 'new')
-  let playItems = null
+  let playItems = null   // 推荐里的条目：GitHub 项目 + 教程，统一成 { id, title, url, ... }
   let playNote = ''      // 正在写备注的条目 id
   const marks = store.get('wb-play-marks', {})   // { id: { status: 'saved' | 'tried', title, note, url, at } }
   const saveMarks = () => store.set('wb-play-marks', marks)
-  // 先看标题，标题看不出来再看摘要
-  const jobOf = x => (JOBS.find(([, , re]) => re.test(x.title)) || JOBS.find(([, , re]) => re.test(x.summary || '')) || JOBS[JOBS.length - 1])[0]
+
+  async function ghRepos(days) {
+    const cache = store.get('wb-gh-cache', {})
+    const hit = cache[days]
+    if (hit && Date.now() - hit.at < GH_TTL) return hit
+    const since = addDays(dayKey(), -days)
+    // 关键词在名称、简介和标签里找；GitHub 规定一次最多 5 个 OR
+    const q = `llm OR agent OR mcp OR ai OR gpt OR claude created:>=${since} stars:>=20 archived:false fork:false`
+    try {
+      const r = await fetch(`https://api.github.com/search/repositories?q=${encodeURIComponent(q)}&sort=stars&order=desc&per_page=40`, { headers: { Accept: 'application/vnd.github+json' } })
+      if (!r.ok) throw new Error(r.status === 403 || r.status === 429 ? 'GitHub 请求太频繁，稍后再试' : `GitHub 返回 ${r.status}`)
+      const items = (await r.json()).items.map(x => ({ name: x.full_name, url: x.html_url, desc: x.description || '', stars: x.stargazers_count, lang: x.language,
+        topics: (x.topics || []).slice(0, 8), created: x.created_at, pushed: x.pushed_at, license: x.license?.spdx_id && x.license.spdx_id !== 'NOASSERTION' ? x.license.spdx_id : '', home: x.homepage || '' }))
+      const v = { at: Date.now(), items }
+      store.set('wb-gh-cache', { ...cache, [days]: v })
+      return v
+    } catch (e) {
+      if (hit) return { ...hit, stale: e.message || '网络错误' }   // 读不到就用上次的结果
+      throw e
+    }
+  }
+  // 能直接落地：有简介、最近两周还在更新、不是“资源合集”类列表
+  const usableRepo = x => x.desc && !/^awesome|awesome-|资源合集|curated list|list of/i.test(`${x.name.split('/')[1]} ${x.desc}`) && Date.now() - new Date(x.pushed) < 14 * 864e5
+  const DOABLE = /github\.com|开源|教程|技巧|指南|上手|实战|实操|手把手|步骤|一键|部署|模板|提示词|prompt|工作流|workflow|skill|插件|本地|免费|how to|guide/i
 
   async function loadPlay() {
     const box = $('play-body')
     box.replaceChildren(el('div', { class: 'empty' }, '正在读取…'))
-    const rs = await Promise.allSettled(['tip', 'ai-products'].map(c => aihot(`/items?mode=selected&window=7d&limit=100&category=${c}`)))
-    const ok = rs.filter(r => r.status === 'fulfilled')
-    if (!ok.length) {
-      // 读不到新内容时，收藏和已尝试仍然可以看
-      playItems = []
-      $('play-status').textContent = `暂时读不到最新内容（${rs[0].reason instanceof TypeError ? '网络错误' : rs[0].reason?.message || '网络错误'}），先显示你存下的`
-      if (playShow === 'all') playShow = 'saved'
-      return renderPlay()
-    }
-    const seen = new Set()
-    playItems = ok.flatMap(r => r.value.items).filter(x => !seen.has(x.id) && seen.add(x.id))
-    $('play-status').textContent = `最近 7 天 · ${playItems.length} 条${ok.length < rs.length ? '（部分分类没读到）' : ''}`
+    const [gh, tip] = await Promise.allSettled([ghRepos(+ghRange), aihot('/items?mode=selected&window=7d&limit=100&category=tip')])
+    const repos = gh.status === 'fulfilled' ? gh.value.items.filter(usableRepo).slice(0, 8).map(x => ({
+      id: `gh:${x.name}`, kind: 'repo', title: x.name, url: x.url, summary: x.desc, mine: MY_TOOLS.test(`${x.name} ${x.desc} ${x.topics.join(' ')}`),
+      job: jobName(`${x.name} ${x.desc} ${x.topics.join(' ')}`), repo: x })) : []
+    const tips = tip.status === 'fulfilled' ? tip.value.items.filter(x => DOABLE.test(`${x.links?.original || ''} ${x.title} ${x.summary || ''}`))
+      .sort((a, b) => (b.score ?? -1) - (a.score ?? -1)).slice(0, 6).map(x => ({
+        id: x.id, kind: 'tip', title: x.title, url: x.links?.original || x.links?.aihot, summary: x.summary, mine: MY_TOOLS.test(`${x.title} ${x.summary || ''}`),
+        job: jobName(`${x.title} ${x.summary || ''}`), tip: x })) : []
+    playItems = { repos, tips, ghError: gh.status === 'rejected' ? gh.reason?.message || '网络错误' : gh.value.stale ? `GitHub 暂时读不到（${gh.value.stale}），显示的是上次的结果` : '',
+      tipError: tip.status === 'rejected' ? (tip.reason instanceof TypeError ? '网络错误' : tip.reason?.message || '网络错误') : '', ghAt: gh.value?.at }
+    if (!repos.length && !tips.length && playShow === 'all' && Object.keys(marks).length) playShow = 'saved'
+    $('play-status').textContent = [repos.length ? `GitHub ${repos.length} 个项目` : '', tips.length ? `教程 ${tips.length} 篇` : ''].filter(Boolean).join(' · ')
     renderPlay()
   }
   function renderPlayControls() {
-    segButtons($('play-kind'), PLAY_KINDS, playKind, id => { playKind = id; store.set('wb-play-kind', id); renderPlay() })
     segButtons($('play-show'), PLAY_SHOW, playShow, id => { playShow = id; renderPlay() })
-    segButtons($('play-sort'), PLAY_SORT, playSort, id => { playSort = id; store.set('wb-play-sort', id); renderPlay() })
+    segButtons($('play-range'), GH_RANGES, ghRange, id => { ghRange = id; store.set('wb-gh-range', id); pressed($('play-range'), id); loadPlay() })
   }
   function renderPlay() {
-    pressed($('play-kind'), playKind); pressed($('play-show'), playShow); pressed($('play-sort'), playSort)
+    pressed($('play-show'), playShow); pressed($('play-range'), ghRange)
+    $('play-range').hidden = playShow !== 'all'
     const box = $('play-body')
     if (!playItems) return
-    const time = x => x.publishedAt || x.discoveredAt || ''
-    const list = playItems.filter(x => (!playKind || x.category === playKind) && (playShow === 'all' || marks[x.id]?.status === playShow))
-      .sort((a, b) => playSort === 'score' ? (b.score ?? -1) - (a.score ?? -1) : time(b).localeCompare(time(a)))
-    // 标记过、但已经不在最近 7 天里的条目：用存下的标题、备注和原文链接显示
-    const gone = playShow === 'all' ? [] : Object.entries(marks).filter(([id, m]) => m.status === playShow && !playItems.some(x => x.id === id))
-    const groups = JOBS.map(([id, name]) => [name, list.filter(x => jobOf(x) === id)]).filter(([, xs]) => xs.length)
+    if (playShow !== 'all') {
+      const list = Object.entries(marks).filter(([, m]) => m.status === playShow).sort((a, b) => (b[1].at || '').localeCompare(a[1].at || ''))
+      const current = new Map([...playItems.repos, ...playItems.tips].map(x => [x.id, x]))
+      return box.replaceChildren(list.length ? el('div', { class: 'play-grid' }, ...list.map(([id, m]) => current.has(id) ? playCard(current.get(id)) : playCard({ id, title: m.title || '（无标题）', url: m.url, gone: true })))
+        : el('div', { class: 'empty' }, playShow === 'saved' ? '还没有收藏' : '还没有标记已尝试的'))
+    }
+    const { repos, tips, ghError, tipError } = playItems
     box.replaceChildren(...[
-      groups.length ? el('nav', { class: 'play-jump' }, ...groups.map(([name, xs], i) =>
-        el('a', { class: 'link', href: `#playground`, onclick: e => { e.preventDefault(); $(`job-${i}`).scrollIntoView({ behavior: 'smooth' }) } }, `${name} ${xs.length}`))) : null,
-      ...groups.map(([name, xs], i) => el('div', { id: `job-${i}`, class: 'play-group' },
-        el('div', { class: 'section-title' }, el('span', {}, name), el('span', {}, `${xs.length} 条`)),
-        el('div', { class: 'play-grid' }, ...xs.map(playCard)))),
-      gone.length ? el('div', { class: 'play-group' },
-        el('div', { class: 'section-title' }, el('span', {}, playItems.length ? '已不在最近 7 天里' : playShow === 'saved' ? '我的收藏' : '已尝试'), el('span', {}, `${gone.length} 条`)),
-        el('div', { class: 'play-grid' }, ...gone.map(([id, m]) => el('div', { class: 'play-card' },
-          el('div', { class: 'news-title' }, m.url ? extLink(m.url, m.title || '（无标题）') : (m.title || '（无标题）')),
-          m.note ? el('div', { class: 'play-note' }, m.note) : null,
-          el('div', { class: 'play-foot' }, el('span', { class: 'sub' }, m.status === 'tried' ? '已尝试' : '已收藏'), el('button', { class: 'link', type: 'button', onclick: () => { delete marks[id]; saveMarks(); renderPlay() } }, '移除')))))) : null,
-      !groups.length && !gone.length ? el('div', { class: 'empty' }, playShow === 'all' ? '最近 7 天没有这类精选' : playShow === 'saved' ? '还没有收藏' : '还没有标记已尝试的') : null].filter(Boolean))
+      el('div', { class: 'section-title' }, el('span', {}, `GitHub ${GH_RANGES.find(r => r[0] === ghRange)[1]} · 按星数`), el('span', {}, '只留有简介、最近两周还在更新的，去掉资源合集')),
+      repos.length ? el('div', { class: 'play-grid' }, ...repos.map(playCard)) : el('div', { class: 'empty' }, ghError ? `暂时读不到 GitHub（${ghError}）` : '这段时间没有符合条件的新项目'),
+      ghError && repos.length ? el('div', { class: 'qsub' }, ghError) : null,
+      el('div', { class: 'section-title' }, el('span', {}, '本周可以照着做的教程 · 按 AIHOT 评分'), el('span', {}, '只留有开源地址或上手步骤的')),
+      tips.length ? el('div', { class: 'play-grid' }, ...tips.map(playCard)) : el('div', { class: 'empty' }, tipError ? `暂时读不到教程（${tipError}）` : '最近 7 天没有符合条件的教程')].filter(Boolean))
   }
   function setMark(x, patch) {
-    const m = { ...marks[x.id], ...patch, title: x.title, url: safeUrl(x.links?.original || x.links?.aihot || ''), at: new Date().toISOString() }
+    const m = { ...marks[x.id], ...patch, title: x.title, url: safeUrl(x.url || ''), at: new Date().toISOString() }
     if (!m.status && !m.note) delete marks[x.id]; else marks[x.id] = m
     saveMarks(); renderPlay()
   }
   function playCard(x) {
     const m = marks[x.id] || {}
-    const when = x.publishedAt || x.discoveredAt
     const toggle = (s, label) => el('button', { class: 'link', type: 'button', 'aria-pressed': String(m.status === s), onclick: () => setMark(x, { status: m.status === s ? '' : s }) }, label)
+    const r = x.repo, t = x.tip
+    const when = t && (t.publishedAt || t.discoveredAt)
     return el('div', { class: 'play-card' },
-      el('div', { class: 'news-title' }, extLink(x.links?.original || x.links?.aihot, x.title)),
+      el('div', { class: 'news-title' }, extLink(x.url, x.title)),
       x.summary ? el('div', { class: 'news-sum' }, x.summary) : null,
-      el('div', { class: 'news-meta' },
-        el('span', {}, x.source?.name || '未知来源'),
+      x.gone ? null : el('div', { class: 'news-meta' },
+        x.mine ? el('span', { class: 'chip', style: '--c: var(--accent)', title: '标题或简介里提到 Claude、Codex、Kimi、MCP 或 Skill' }, '能配合你常用的工具') : null,
+        x.job ? el('span', {}, x.job) : null,
+        r ? el('span', { title: 'GitHub 星数' }, `★ ${r.stars.toLocaleString()}`) : null,
+        r?.lang ? el('span', {}, r.lang) : null,
+        r ? el('span', { title: fullTime(r.created) }, `${ago(r.created)}创建`) : null,
+        r ? el('span', { title: r.license ? '开源许可' : '没写开源许可，商用前先确认' }, r.license || '未写许可') : null,
+        t ? el('span', {}, t.source?.name || '未知来源') : null,
         when ? el('span', { title: fullTime(when) }, ago(when)) : null,
-        el('span', {}, CATS[x.category] || ''),
-        x.score != null ? el('span', { title: 'AIHOT 给这条资讯的评分' }, `评分 ${x.score}`) : null,
-        x.links?.aihot ? extLink(x.links.aihot, '详情') : null),
+        t?.score != null ? el('span', { title: 'AIHOT 给这条资讯的评分' }, `评分 ${t.score}`) : null,
+        r ? extLink(`${r.url}#readme`, '怎么用') : null,
+        r?.home && safeUrl(r.home) ? extLink(r.home, '官网') : null,
+        t?.links?.aihot ? extLink(t.links.aihot, '详情') : null),
       playNote === x.id ? noteForm(x, m) : m.note ? el('div', { class: 'play-note' }, m.note) : null,
       el('div', { class: 'play-foot' },
         el('span', { class: 'pb-actions' },
           toggle('saved', m.status === 'saved' ? '★ 已收藏' : '☆ 收藏'),
           toggle('tried', m.status === 'tried' ? '✓ 已尝试' : '已尝试'),
-          el('button', { class: 'link', type: 'button', onclick: () => { playNote = playNote === x.id ? '' : x.id; renderPlay() } }, m.note ? '改备注' : '备注')),
-        pbButton('存入方法库', () => ({ kind: 'method', title: x.title, text: [m.note, x.links?.original || x.links?.aihot].filter(Boolean).join('\n'), source: 'AI 玩法' }))))
+          el('button', { class: 'link', type: 'button', onclick: () => { playNote = playNote === x.id ? '' : x.id; renderPlay() } }, m.note ? '改备注' : '备注'),
+          x.gone ? el('button', { class: 'link', type: 'button', onclick: () => { delete marks[x.id]; saveMarks(); renderPlay() } }, '移除') : null),
+        pbButton('存入方法库', () => ({ kind: 'method', title: x.title, text: [m.note, x.url].filter(Boolean).join('\n'), source: 'AI 玩法' }))))
   }
   function noteForm(x, m) {
     const f = el('form', { class: 'play-noteform' },
@@ -990,17 +980,13 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
   async function renderOverviewIntel() {
     const box = $('ov-hot')
     try {
-      const [hot, daily] = await Promise.all([aihot('/hot-topics'), aihot('/dailies/latest').catch(() => null)])
-      box.replaceChildren(...hot.items.slice(0, 6).map(x => newsItem(x, { rank: x.rank, summary: false, meta: hotMeta(x) })))
-      const lead = daily?.report?.lead
-      $('ov-daily').replaceChildren(lead ? el('div', { class: 'lead' },
-        el('div', { class: 'sub' }, `${daily.report.date} 日报头条`),
-        el('h3', { class: 'serif' }, extLink(daily.report.links.aihot, lead.title)),
-        el('p', {}, lead.leadParagraph)) : '')
+      const top = topPicks((await aihot(PICK_PATH)).items)
+      box.replaceChildren(...top.length ? top.map((x, i) => newsItem(x, { rank: i + 1, summary: false, meta: scoreMeta(x) }))
+        : [el('li', { class: 'empty' }, '最近 24 小时还没有精选')])
     } catch (e) { intelError(box, e) }
   }
 
-  // ================= Prompt Doctor（规则检查，不调模型） =================
+  // ================= 提问规则（任务复盘的“提问习惯”用，只做关键词检查，不调模型） =================
   // 每个维度用几组关键词判断：命中 2 组以上算明确，1 组算部分。任务越复杂，要求的维度越多。
   const DIMS = [
     { id: 'goal', name: '目标', hint: '要完成什么、做到什么程度',
@@ -1031,7 +1017,6 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     return COMPLEX.test(t) ? 'complex' : 'medium'
   }
   const NEEDED = { simple: ['goal'], medium: ['goal', 'output'], complex: ['goal', 'context', 'constraints', 'output', 'criteria'] }
-  const LEVEL_TEXT = { simple: '简单任务：说清目标就够了', medium: '一般任务：目标和输出要清楚', complex: '复杂任务：建议补齐目标、背景、约束、输出和验收' }
   const STATE = { clear: '明确', partial: '部分', missing: '缺失', na: '不需要' }
 
   function diagnose(text) {
@@ -1044,31 +1029,6 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     })
     return { level, dims }
   }
-  function skeleton(text, r) {
-    const lines = [text.trim(), '']
-    for (const d of r.dims) if (d.needed && d.state !== 'clear') lines.push(`【${d.name}】${d.ask}`)
-    return lines.join('\n').trim()
-  }
-  function metaPrompt(text, r) {
-    const gaps = r.dims.filter(d => d.needed && d.state !== 'clear').map(d => `${d.name}（${STATE[d.state]}）`)
-    return [
-      '请帮我优化下面这个准备发给 AI 的提问。',
-      '',
-      '<原始问题>',
-      text.trim(),
-      '</原始问题>',
-      '',
-      `规则检查的结果：这是一个${({ simple: '简单', medium: '一般', complex: '复杂' })[r.level]}任务${gaps.length ? `，可能不够清楚的地方：${gaps.join('、')}` : '，主要信息已经齐了'}。这只是关键词检查，请你自己判断哪些真的会影响结果。`,
-      '',
-      '请按顺序输出：',
-      '1. 只有缺了会明显影响结果的信息，才列出要我补充的问题（最多 3 个）；信息够了就跳过这一步。',
-      '2. 精简版：保留完成任务所需的最少信息。',
-      r.level === 'simple' ? '3. 简单任务不需要完整版，直接说明即可。' : '3. 完整版：包含目标、背景、约束、输出形式和验收标准，可以直接执行。',
-      '4. 用几句话说明改了什么、为什么改，删掉了哪些、补了哪些。',
-      '',
-      '不要为了凑齐格式添加我没提到的要求；不确定的地方用【待确认】标出来。',
-    ].join('\n')
-  }
   const copyBtn = (label, getText) => {
     const b = el('button', { class: 'btn-sm', type: 'button', onclick: async () => {
       try { await navigator.clipboard.writeText(getText()); b.textContent = '已复制' } catch { b.textContent = '复制失败，请手动选择' }
@@ -1076,52 +1036,6 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     } }, label)
     return b
   }
-  function renderDoctor() {
-    const text = $('pd-input').value
-    const t = text.trim()
-    $('pd-meta').textContent = t ? `${[...t].length} 字` : ''
-    if (!t) {
-      $('pd-level').textContent = ''
-      $('pd-dims').replaceChildren(el('div', { class: 'empty' }, '输入问题后自动检查'))
-      $('pd-out').replaceChildren()
-      return
-    }
-    const r = diagnose(t)
-    $('pd-level').textContent = LEVEL_TEXT[r.level]
-    $('pd-dims').replaceChildren(...r.dims.map(d => el('div', { class: `dim ${d.state}` },
-      el('span', { class: 'dn' }, d.name),
-      el('span', { class: 'ds' }, STATE[d.state]),
-      el('span', { class: 'dh' }, d.state === 'missing' || (d.needed && d.state === 'partial') ? d.ask : d.hint))))
-    const sk = skeleton(t, r), mp = metaPrompt(t, r)
-    const gaps = r.dims.some(d => d.needed && d.state !== 'clear')
-    $('pd-out').replaceChildren(
-      gaps ? el('div', { class: 'pd-block' },
-        el('div', { class: 'section-title' }, el('span', {}, '补充骨架 · 在原问题后面补上这几行再发'), copyBtn('复制', () => sk)),
-        el('pre', { class: 'pd-pre' }, sk)) : '',
-      el('div', { class: 'pd-block' },
-        el('div', { class: 'section-title' }, el('span', {}, '优化请求 · 复制到 Claude，让它给出精简版和完整版'), copyBtn('复制', () => mp)),
-        el('pre', { class: 'pd-pre' }, mp)),
-      pb ? el('div', { class: 'row-end pd-save' }, el('span', { class: 'msg' }, '这个问题以后还会用到？'),
-        pbButton('存入方法库', () => ({ kind: 'prompt', title: t.split('\n')[0].slice(0, 40), text: gaps ? sk : t, source: 'Prompt Doctor' }))) : '',
-      related(t))
-  }
-  // 方法库里和这个问题相关的内容：只给简短推荐，不自动塞进提示词
-  function related(t) {
-    const hits = relatedMethods(t)
-    if (!hits.length) return ''
-    return el('div', { class: 'pd-block' },
-      el('div', { class: 'section-title' }, el('span', {}, '方法库里可能有用'), el('a', { class: 'link', href: '#playbook' }, '打开方法库 →')),
-      ...hits.map(it => el('div', { class: 'rule-text' }, el('span', {}, el('b', {}, `${it.title}（${PB_KINDS[it.kind] || it.kind}）`), `：${it.text.slice(0, 120)}${it.text.length > 120 ? '…' : ''}`),
-        copyBtn('复制', () => { markUsed(it); return it.text }))))
-  }
-  $('pd-input').addEventListener('input', renderDoctor)
-  $('pd-clear').addEventListener('click', () => { $('pd-input').value = ''; renderDoctor(); $('pd-input').focus() })
-  $('ov-doctor-form').addEventListener('submit', e => {
-    e.preventDefault()
-    $('pd-input').value = new FormData(e.target).get('text')
-    location.hash = '#doctor'
-    renderDoctor()
-  })
 
   // ================= 任务复盘（只读本机生成的 review.local.json） =================
   // 数据由 tools/review.py 在本机生成，经 127.0.0.1 的本机服务提供；公开网站上没有这个文件。
@@ -1139,6 +1053,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
   }
   const OTHER_LABELS = { ack: '确认/继续', other: '其他追问' }
   let rv = null
+  let rvLoaded = false   // 试过读本机数据（公开网站上读不到）
   let rvRange = pick('wb-rv-range', RV_RANGES, '30')
   let rvFilter = ''
   let rvOpen = ''
@@ -1153,7 +1068,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
   const median = xs => { if (!xs.length) return null; const s = [...xs].sort((a, b) => a - b), m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2 }
   const pct = (a, b) => b ? `${Math.round(a / b * 100)}%` : '—'
   const fmtDay = iso => { const d = new Date(iso); return `${d.getMonth() + 1}/${d.getDate()} ${pad2(d.getHours())}:${pad2(d.getMinutes())}` }
-  const PROVIDER = { claude_code: 'Claude Code', codex: 'Codex' }
+  const PROVIDER = { claude_code: 'Claude Code', codex: 'Codex', chatgpt: 'ChatGPT', claude_ai: 'Claude 对话' }
 
   segButtons($('rv-range'), RV_RANGES, rvRange, id => { rvRange = id; store.set('wb-rv-range', id); pressed($('rv-range'), id); renderReview() })
 
@@ -1167,6 +1082,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     } catch {
       rv = null
     }
+    rvLoaded = true
     renderReview()
   }
   function rvTasks() {
@@ -1178,11 +1094,11 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     const box = $('rv-body')
     if (!rv) {
       box.replaceChildren(el('div', { class: 'rv-empty' },
-        el('p', {}, '任务复盘需要读取你电脑上的 Claude Code 和 Codex 会话记录，所以只在本机运行，不会出现在公开网站上，也不会上传。'),
+        el('p', {}, '任务复盘需要读取你电脑上的 Claude Code、Codex 会话记录和 ChatGPT、Claude 的导出记录，所以只在本机运行，不会出现在公开网站上，也不会上传。'),
         el('p', {}, '在仓库目录里运行：'),
         el('pre', { class: 'pd-pre' }, 'python3 tools/review.py'),
         el('p', { class: 'sub' }, '默认会把长对话交给本机的 Kimi CLI 归类和总结（只发你发出的消息，不发 AI 回复）；加 --no-kimi 可以关掉，没装 Kimi 时自动跳过。'),
-        el('p', { class: 'sub' }, '它会分析 ~/.claude/projects 和 ~/.codex/sessions，把结果写到 ~/.ai-workbench/review.json（仓库外面），然后打开 http://127.0.0.1:8787/#review。只保存你发出的消息和 Token 计数，不保存 AI 的回复，常见密钥会被隐藏。')))
+        el('p', { class: 'sub' }, '它会分析 ~/.claude/projects、~/.codex/sessions 和“下载”文件夹里 ChatGPT / Claude 的官方导出压缩包，把结果写到 ~/.ai-workbench/review.json（仓库外面），然后打开 http://127.0.0.1:8787/#review。只保存你发出的消息和 Token 计数，不保存 AI 的回复，常见密钥会被隐藏。')))
       return
     }
     const tasks = rvTasks()
@@ -1196,7 +1112,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     const stat = (k, v, sub) => el('div', {}, el('div', { class: 'k' }, k), el('div', { class: 'v num' }, v), sub ? el('div', { class: 'qsub' }, sub) : null)
     return el('div', {},
       el('div', { class: 'hero rv-hero' },
-        stat('任务', String(tasks.length), `Claude Code ${tasks.filter(t => t.provider === 'claude_code').length} · Codex ${tasks.filter(t => t.provider === 'codex').length}`),
+        stat('任务', String(tasks.length), Object.keys(PROVIDER).map(k => [PROVIDER[k], tasks.filter(t => t.provider === k).length]).filter(([, n]) => n).map(([k, n]) => `${k} ${n}`).join(' · ')),
         stat('有返工的任务', pct(revised.length, tasks.length), `${revised.length} 个任务至少返工一次`),
         stat('平均返工次数', (tasks.reduce((s, t) => s + revCount(t), 0) / tasks.length).toFixed(1), '每个任务'),
         stat('每任务 Token 中位数', real.length ? fmtTokStr(median(real)) : '无记录', real.length ? `${real.length} 个任务有实际计量，不含缓存读取` : '')),
@@ -1253,7 +1169,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     }
     return el('div', {}, title,
       bars(rows.map(r => ({ ...r, label: `缺${r.label}` })), 0),
-      el('div', { class: 'qsub' }, '只统计这类任务需要的维度；按关键词检查，和 Prompt Doctor 用的是同一套规则。'),
+      el('div', { class: 'qsub' }, '只统计这类任务需要的维度；按关键词检查，看目标、背景、约束、输出、验收、参考六项。'),
       insight)
   }
 
@@ -1335,7 +1251,6 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
           el('div', { class: 'step-text' }, turn.text, turn.length > turn.text.length ? el('span', { class: 'sub' }, `（共 ${turn.length} 字，只保留前 ${turn.text.length} 字）`) : null),
           i === 0 ? el('div', { class: 'step-diag' },
             ...first.dims.filter(d => d.needed).map(d => el('span', { class: `chip ${d.state}` }, `${d.name}${STATE[d.state]}`)),
-            el('button', { class: 'link', type: 'button', onclick: () => { $('pd-input').value = turn.text; location.hash = '#doctor'; renderDoctor() } }, '用 Prompt Doctor 看看 →'),
             pb ? pbButton('存入方法库', { kind: 'prompt', title: t.title.slice(0, 40), text: turn.text, source: `任务复盘：${t.title}（返工 ${revCount(t)} 次${turn.length > turn.text.length ? '，原文较长只存了开头' : ''}）` }) : null) : null)
       })))
   }
@@ -1385,7 +1300,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
       pb = await r.json()
       if (!Array.isArray(pb.items)) pb = { items: [] }
     } catch { pb = null }
-    renderPlaybook(); renderDoctor(); if (rv) renderReview()
+    renderPlaybook(); if (rv) renderReview()
   }
   async function savePlaybook() {
     const r = await fetch('playbook.local.json', { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Workbench': '1' }, body: JSON.stringify(pb) })
@@ -1400,22 +1315,6 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
   }
   const pbButton = (label, d) => el('button', { class: 'btn-sm', type: 'button', onclick: () => draftToPlaybook(typeof d === 'function' ? d() : d) }, label)
 
-  function bigrams(text) {
-    const s = new Set(), t = text.toLowerCase().replace(/\s+/g, '')
-    for (let i = 0; i < t.length - 1; i++) s.add(t.slice(i, i + 2))
-    return s
-  }
-  // 给新问题找相关的方法：同分类加分，再看两字词重合度；不够相关就不推荐
-  function relatedMethods(text, n = 2) {
-    if (!pb?.items.length || text.length < 6) return []
-    const cat = guessCat(text), q = bigrams(text)
-    return pb.items.map(it => {
-      const b = bigrams(`${it.title} ${it.text}`)
-      let common = 0
-      for (const g of q) if (b.has(g)) common++
-      return { it, score: common / Math.max(8, q.size) + (it.category === cat ? 0.15 : 0) }
-    }).filter(x => x.score >= 0.25).sort((a, b) => b.score - a.score).slice(0, n).map(x => x.it)
-  }
   async function markUsed(it) {
     it.uses = (it.uses || 0) + 1
     it.used_at = new Date().toISOString()
@@ -1455,7 +1354,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     $('pb-list').replaceChildren(...pbCards(shown, pb.items.length))
   }
   function pbCards(shown, total) {
-    if (!total) return [el('div', { class: 'empty' }, '还没有内容。可以在任务复盘的“反复出现的问题”、任务路径或 Prompt Doctor 里点“存入方法库”，也可以直接新建。')]
+    if (!total) return [el('div', { class: 'empty' }, '还没有内容。可以在任务复盘的“反复出现的问题”、任务路径或 AI 玩法里点“存入方法库”，也可以直接新建。')]
     if (!shown.length) return [el('div', { class: 'empty' }, '没有符合条件的内容')]
     return shown.map(it => el('div', { class: 'pb-card' },
       el('div', { class: 'rule-head' }, el('b', {}, it.title || '（无标题）'),
@@ -1501,7 +1400,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
   }
 
   // ================= 页面切换 =================
-  const VIEWS = [['overview', '总览'], ['intel', 'AI 情报'], ['playground', 'AI 玩法'], ['usage', '使用分析'], ['doctor', 'Prompt Doctor'], ['review', '任务复盘'], ['playbook', '方法库']]
+  const VIEWS = [['overview', '总览'], ['intel', 'AI 情报'], ['playground', 'AI 玩法'], ['usage', '使用分析'], ['review', '任务复盘'], ['playbook', '方法库']]
   let view = 'overview'
   let intelReady = false
   $('nav').replaceChildren(...VIEWS.map(([id, label]) => el('a', { href: `#${id}`, 'data-id': id, 'aria-pressed': 'false' }, label)))
@@ -1512,14 +1411,14 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     for (const a of $('nav').children) a.setAttribute('aria-pressed', String(a.dataset.id === view))
     if (view === 'usage') drawChart()
     if (view === 'review' && !rv) loadReview()
-    if (['playbook', 'doctor', 'review'].includes(view)) { if (!pbTried) { pbTried = true; loadPlaybook() } else renderPlaybook() }
-    if (view === 'playground' && !playItems?.length) { renderPlayControls(); loadPlay() }
+    if (['playbook', 'review'].includes(view)) { if (!pbTried) { pbTried = true; loadPlaybook() } else renderPlaybook() }
+    if (view === 'playground' && !playItems) { renderPlayControls(); loadPlay() }
     if ((view === 'intel' || view === 'overview') && !intelReady) { intelReady = true; renderIntelControls(); renderIntel(); renderOverviewIntel() }
   }
   addEventListener('hashchange', () => { showView(); scrollTo(0, 0) })
 
   // ================= 命令面板（Ctrl/⌘ + K） =================
-  // 搜页面、操作、方法库、已经读到的资讯和本机任务；都没有就把输入交给 Prompt Doctor
+  // 搜页面、操作、方法库、已经读到的资讯和本机任务
   let cmdSel = 0
   let cmdHits = []
   function cmdSources() {
@@ -1538,6 +1437,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
       }
     }
     out.push(...news.values())
+    for (const x of playItems?.repos || []) out.push({ group: 'GitHub 项目', label: x.title, hint: x.job, text: x.summary, run: () => open(x.url, '_blank', 'noopener') })
     if (rv) for (const t of rvTasks()) out.push({ group: '任务', label: t.title, hint: t.project, run: () => { location.hash = '#review'; openTask(t.id) } })
     return out
   }
@@ -1551,8 +1451,6 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
       if (!words.every(w => label.includes(w) || rest.includes(w))) return null
       return { x, s: (label.startsWith(q) ? 3 : label.includes(q) ? 2 : words.every(w => label.includes(w)) ? 1 : 0) + (x.group === '页面' ? 0.5 : 0) }
     }).filter(Boolean).sort((a, b) => b.s - a.s).slice(0, 30).map(h => h.x)
-    hit.push({ group: '提问', label: `用 Prompt Doctor 优化：${q.length > 40 ? q.slice(0, 40) + '…' : q}`,
-      run: () => { $('pd-input').value = $('cmd-input').value.trim(); location.hash = '#doctor'; renderDoctor() } })
     return hit
   }
   function renderCmd() {

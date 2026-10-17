@@ -59,7 +59,7 @@ class ParseTest(unittest.TestCase):
             {'timestamp': '2026-10-15T12:00:01Z', 'type': 'event_msg', 'payload': {'type': 'user_message', 'message': '修复趋势图'}},
             {'timestamp': '2026-10-15T12:03:00Z', 'type': 'event_msg', 'payload': {'type': 'token_count', 'info': {'total_token_usage': {'input_tokens': 500, 'cached_input_tokens': 300, 'output_tokens': 40}}}},
         ])
-        self.args = SimpleNamespace(claude_dir=str(self.tmp / 'claude'), codex_dir=str(self.tmp / 'codex'), since=None, kimi=False)
+        self.args = SimpleNamespace(claude_dir=str(self.tmp / 'claude'), codex_dir=str(self.tmp / 'codex'), since=None, kimi=False, export_dirs=[])
 
     def test_build(self):
         data = review.build(self.args)
@@ -79,6 +79,67 @@ class ParseTest(unittest.TestCase):
     def test_since(self):
         self.args.since = '2026-10-16'
         self.assertEqual(review.build(self.args)['tasks'], [])
+
+
+def chatgpt_conv():
+    def node(i, parent, role, text, t, **meta):
+        return {'id': i, 'parent': parent, 'message': {'author': {'role': role}, 'create_time': t, 'metadata': meta,
+                                                      'content': {'content_type': 'text', 'parts': [text]}}}
+    nodes = [
+        {'id': 'root', 'parent': None, 'message': None},
+        node('sys', 'root', 'user', '我的自定义指令', 1760518800, is_visually_hidden_from_conversation=True),
+        node('u1', 'sys', 'user', '帮我写一封请假邮件', 1760518800),
+        node('a1', 'u1', 'assistant', 'AI 的回复不应该被读', 1760518860, model_slug='gpt-x'),
+        node('old', 'a1', 'user', '编辑前的旧问题', 1760518900),
+        node('u2', 'a1', 'user', '语气再正式一点', 1760518920),
+    ]
+    return {'id': 'c1', 'title': '请假邮件', 'create_time': 1760518800, 'current_node': 'u2', 'mapping': {n['id']: n for n in nodes}}
+
+
+def claude_conv():
+    return {'uuid': 'k1', 'name': '读书笔记', 'created_at': '2026-10-15T08:00:00Z', 'chat_messages': [
+        {'sender': 'human', 'created_at': '2026-10-15T08:00:00Z', 'text': '总结这本书', 'content': []},
+        {'sender': 'assistant', 'created_at': '2026-10-15T08:00:30Z', 'text': 'AI 回复'},
+        {'sender': 'human', 'created_at': '2026-10-15T08:02:00Z', 'text': '', 'content': [{'type': 'text', 'text': '我的意思是只要三点'}]},
+    ]}
+
+
+class ExportTest(unittest.TestCase):
+    def setUp(self):
+        import zipfile
+        self.tmp = Path(tempfile.mkdtemp())
+        dl = self.tmp / 'Downloads'
+        dl.mkdir()
+        with zipfile.ZipFile(dl / 'chatgpt-export.zip', 'w') as z:
+            z.writestr('conversations.json', json.dumps([chatgpt_conv()]))
+            z.writestr('chat.html', '<html>')
+        (dl / 'data-2026-10-15').mkdir()  # 解压后的 Claude 导出
+        (dl / 'data-2026-10-15' / 'conversations.json').write_text(json.dumps([claude_conv()]), encoding='utf-8')
+        (dl / 'other.zip').write_bytes(b'not a zip')
+        self.args = SimpleNamespace(claude_dir=str(self.tmp / 'none'), codex_dir=str(self.tmp / 'none'), since=None, kimi=False,
+                                    export_dirs=[str(dl)])
+
+    def test_reads_only_user_messages_on_current_branch(self):
+        data = review.build(self.args)
+        tasks = {t['id']: t for t in data['tasks']}
+        g = tasks['chatgpt:c1']
+        self.assertEqual([t['text'] for t in g['turns']], ['帮我写一封请假邮件', '语气再正式一点'])
+        self.assertEqual(g['title'], '请假邮件')
+        self.assertEqual(g['tokens']['measurement'], 'unavailable')
+        c = tasks['claude_ai:k1']
+        self.assertEqual([t['text'] for t in c['turns']], ['总结这本书', '我的意思是只要三点'])
+        self.assertIn('clarify', c['turns'][1]['labels'])
+        self.assertEqual(data['sources']['chatgpt']['tasks'], 1)
+        self.assertEqual(data['sources']['claude_ai']['file'], 'data-2026-10-15')
+        dumped = json.dumps(data, ensure_ascii=False)
+        for text in ('AI 的回复不应该被读', 'AI 回复', '编辑前的旧问题', '我的自定义指令'):  # AI 回复、旧分支、自定义指令都不读
+            self.assertNotIn(text, dumped)
+
+    def test_no_exports(self):
+        self.args.export_dirs = []
+        data = review.build(self.args)
+        self.assertEqual(data['tasks'], [])
+        self.assertIsNone(data['sources']['chatgpt'])
 
 
 class KimiParseTest(unittest.TestCase):

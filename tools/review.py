@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""任务复盘：在本机分析 Claude Code / Codex 的会话记录，生成只给自己看的复盘数据。
+"""任务复盘：在本机分析 Claude Code / Codex 的会话记录，以及 ChatGPT / Claude 的导出记录，生成只给自己看的复盘数据。
 
 用法（在仓库目录下）：
     python3 tools/review.py              # 分析并打开 http://127.0.0.1:8787/#review
@@ -7,7 +7,7 @@
     python3 tools/review.py --since 2026-09-01
 
 隐私：
-- 只读本机的 ~/.claude/projects 和 ~/.codex/sessions，不联网、不调模型。
+- 只读本机的 ~/.claude/projects、~/.codex/sessions，和“下载”文件夹里 ChatGPT / Claude 的官方导出（--no-exports 关掉）；除了交给 Kimi 的部分，不联网。
 - 结果写到 ~/.ai-workbench/review.json（仓库外面），只通过 127.0.0.1 的本机服务给页面读，不会被推送到 GitHub。
 - 同一个本机服务也负责“方法库”的读写，存在 ~/.ai-workbench/playbook.json。
 - 只保存你发出的消息（截断后）和 Token 计数，不保存 AI 的回复；常见密钥格式会被替换成 [已隐藏]。
@@ -21,6 +21,7 @@ import os
 import re
 import sys
 import webbrowser
+import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -212,6 +213,136 @@ def read_codex(base, since):
     return out, len(files)
 
 
+# ---------- ChatGPT / Claude 网页和桌面 App：官方“导出数据” ----------
+# 两家都没有公开的读取接口，桌面 App 的本地数据也不能用（ChatGPT 加密，Claude 不全），
+# 所以读你在设置里导出的压缩包。默认在“下载”文件夹里找，压缩包和解压后的文件夹都认；
+# 导出是全部历史，同一家只用最新的那一份。只取你发出的消息，不读 AI 回复，也不复制压缩包。
+EXPORT_MAX = 500 * 1024 * 1024
+NO_TOKENS = {'input': 0, 'output': 0, 'cache_write': 0, 'cache_read': 0, 'total': 0, 'measurement': 'unavailable'}
+
+
+def export_kind(conversations):
+    first = next((c for c in conversations if isinstance(c, dict)), None) if isinstance(conversations, list) else None
+    if not first:
+        return None
+    if 'mapping' in first:
+        return 'chatgpt'
+    if 'chat_messages' in first:
+        return 'claude_ai'
+    return None
+
+
+def load_export(path):
+    """返回 (kind, 对话列表)；不是导出文件就返回 None。只读 conversations*.json，不解压其他文件。"""
+    try:
+        if path.is_dir():
+            files = sorted(path.glob('conversations*.json'))
+            raw = [f.read_bytes() for f in files if f.stat().st_size <= EXPORT_MAX]
+        else:
+            with zipfile.ZipFile(path) as z:
+                names = sorted(n for n in z.namelist() if re.fullmatch(r'(?:[^/]+/)?conversations[^/]*\.json', n))
+                raw = [z.read(n) for n in names if z.getinfo(n).file_size <= EXPORT_MAX]
+        convs = []
+        for b in raw:
+            d = json.loads(b)
+            convs.extend(d if isinstance(d, list) else [])
+    except (OSError, ValueError, zipfile.BadZipFile, RuntimeError):
+        return None
+    kind = export_kind(convs)
+    return (kind, convs) if kind else None
+
+
+def find_exports(dirs):
+    """在这些文件夹（和下一层子文件夹）里找导出，每家返回最新的一份 {kind: path}"""
+    found = {}
+    for base in dirs:
+        base = Path(base).expanduser()
+        if not base.is_dir():
+            continue
+        cands = [p for p in base.iterdir() if p.suffix.lower() == '.zip' or (p.is_dir() and any(p.glob('conversations*.json')))]
+        for p in sorted(cands, key=lambda p: p.stat().st_mtime, reverse=True):
+            if p.suffix.lower() == '.zip' and p.stat().st_size > EXPORT_MAX:
+                continue
+            r = load_export(p)
+            if r and r[0] not in found:
+                found[r[0]] = (p, r[1])
+    return found
+
+
+def epoch(x):
+    try:
+        return dt.datetime.fromtimestamp(float(x), dt.timezone.utc)
+    except (TypeError, ValueError, OverflowError, OSError):
+        return None
+
+
+def chatgpt_branch(c):
+    """沿 current_node 往回走，只取你最后看到的那条分支（重新生成、编辑过的旧分支不算）"""
+    mapping = c.get('mapping') or {}
+    node, chain, seen = c.get('current_node'), [], set()
+    while node and node in mapping and node not in seen:
+        seen.add(node)
+        chain.append(mapping[node])
+        node = mapping[node].get('parent')
+    if not chain:  # 没有 current_node 时按时间排序
+        chain = sorted(mapping.values(), key=lambda n: ((n.get('message') or {}).get('create_time') or 0), reverse=True)
+    return [n.get('message') for n in reversed(chain) if n.get('message')]
+
+
+def read_chatgpt(convs, since):
+    out = []
+    for c in convs:
+        if not isinstance(c, dict):
+            continue
+        s = {'id': f"chatgpt:{c.get('conversation_id') or c.get('id') or c.get('create_time')}", 'provider': 'chatgpt',
+             'cwd': None, 'title': c.get('title'), 'turns': [], 'times': [], 'models': set()}
+        for m in chatgpt_branch(c):
+            ts = epoch(m.get('create_time'))
+            meta = m.get('metadata') or {}
+            if ts:
+                s['times'].append(ts)
+            if meta.get('model_slug'):
+                s['models'].add(meta['model_slug'])
+            content = m.get('content') or {}
+            # 自定义指令、隐藏的系统消息不算你发的
+            if (m.get('author') or {}).get('role') != 'user' or meta.get('is_visually_hidden_from_conversation') \
+                    or content.get('content_type') not in ('text', 'multimodal_text'):
+                continue
+            text = '\n'.join(p for p in content.get('parts') or [] if isinstance(p, str)).strip()
+            if text:
+                s['turns'].append((ts, text))
+        if not s['times']:
+            s['times'] = [t for t in (epoch(c.get('create_time')), epoch(c.get('update_time'))) if t]
+        t = finish(s, dict(NO_TOKENS), since) if s['turns'] else None
+        if t:
+            out.append(t)
+    return out
+
+
+def read_claude_ai(convs, since):
+    out = []
+    for c in convs:
+        if not isinstance(c, dict):
+            continue
+        s = {'id': f"claude_ai:{c.get('uuid')}", 'provider': 'claude_ai', 'cwd': None, 'title': c.get('name') or None,
+             'turns': [], 'times': [], 'models': set()}
+        for m in c.get('chat_messages') or []:
+            ts = parse_time(m.get('created_at'))
+            if ts:
+                s['times'].append(ts)
+            if m.get('sender') != 'human':
+                continue
+            text = m.get('text') or '\n'.join(b.get('text', '') for b in m.get('content') or [] if isinstance(b, dict) and b.get('type') == 'text')
+            if text and text.strip():
+                s['turns'].append((ts, text))
+        if not s['times']:
+            s['times'] = [t for t in (parse_time(c.get('created_at')), parse_time(c.get('updated_at'))) if t]
+        t = finish(s, dict(NO_TOKENS), since) if s['turns'] else None
+        if t:
+            out.append(t)
+    return out
+
+
 def finish(s, tokens, since):
     times = [t for t in s['times'] if t]
     if not times:
@@ -351,7 +482,10 @@ def build(args):
     since = dt.date.fromisoformat(args.since) if args.since else None
     claude, cf = read_claude(Path(args.claude_dir).expanduser(), since)
     codex, xf = read_codex(Path(args.codex_dir).expanduser(), since)
-    tasks = sorted(claude + codex, key=lambda t: t['started_at'], reverse=True)
+    exports = find_exports(args.export_dirs) if args.export_dirs else {}
+    chatgpt = read_chatgpt(exports['chatgpt'][1], since) if 'chatgpt' in exports else []
+    claude_ai = read_claude_ai(exports['claude_ai'][1], since) if 'claude_ai' in exports else []
+    tasks = sorted(claude + codex + chatgpt + claude_ai, key=lambda t: t['started_at'], reverse=True)
     kimi_note = run_kimi(tasks, args) if args.kimi else None
     for t in tasks:
         for turn in t['turns']:
@@ -363,7 +497,11 @@ def build(args):
         'sources': {
             'claude_code': {'dir': args.claude_dir, 'files': cf, 'tasks': len(claude)},
             'codex': {'dir': args.codex_dir, 'files': xf, 'tasks': len(codex)},
+            **{k: {'file': exports[k][0].name, 'exported_at': dt.datetime.fromtimestamp(exports[k][0].stat().st_mtime).astimezone().isoformat(timespec='seconds'),
+                   'tasks': n} if k in exports else None
+               for k, n in (('chatgpt', len(chatgpt)), ('claude_ai', len(claude_ai)))},
         },
+        'export_dirs': args.export_dirs,
         'kimi': kimi_note,
         'tasks': tasks,
     }
@@ -455,6 +593,9 @@ def main():
     ap = argparse.ArgumentParser(description='在本机生成任务复盘数据')
     ap.add_argument('--claude-dir', default='~/.claude/projects')
     ap.add_argument('--codex-dir', default='~/.codex/sessions')
+    ap.add_argument('--export-dir', dest='export_dirs', action='append',
+                    help='到哪里找 ChatGPT / Claude 的导出压缩包，可以写多次；默认是“下载”文件夹')
+    ap.add_argument('--no-exports', action='store_true', help='不读 ChatGPT / Claude 的导出')
     ap.add_argument('--since', help='只分析这天之后的会话，格式 YYYY-MM-DD')
     ap.add_argument('--out', default=str(OUT_DEFAULT))
     ap.add_argument('--port', type=int, default=8787)
@@ -466,6 +607,7 @@ def main():
     ap.add_argument('--kimi-cmd', default='kimi', help='Kimi CLI 的命令名或路径')
     args = ap.parse_args()
 
+    args.export_dirs = [] if args.no_exports else (args.export_dirs or ['~/Downloads'])
     out = Path(args.out).expanduser()
     if ROOT in out.resolve().parents:
         sys.exit('为了不把对话记录推送到 GitHub，--out 不能放在仓库目录里。')
@@ -475,6 +617,10 @@ def main():
         src = data['sources']
         print(f"Claude Code：{src['claude_code']['files']} 个文件，{src['claude_code']['tasks']} 个任务")
         print(f"Codex：{src['codex']['files']} 个文件，{src['codex']['tasks']} 个任务")
+        for k, name, where in (('chatgpt', 'ChatGPT', 'ChatGPT 设置 → 数据管控 → 导出数据'), ('claude_ai', 'Claude 对话', 'Claude 设置 → 隐私 → 导出数据')):
+            e = src[k]
+            print(f"{name}：{e['file']}（{e['exported_at'][:10]}），{e['tasks']} 个对话" if e
+                  else f"{name}：在 {'、'.join(args.export_dirs) or '（已关闭）'} 里没找到导出，可以在 {where} 下载后放进去")
         if data['kimi']:
             k = data['kimi']
             print(f"Kimi：新分析 {k['analyzed']} 个任务，缓存 {k['cached']} 个，失败 {k['failed']} 个，跳过 {k['skipped']} 个{('（' + k['error'] + '）') if k.get('error') else ''}")
