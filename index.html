@@ -4,12 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>月之工作台</title>
-<meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#131312" media="(prefers-color-scheme: dark)">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="月之工作台">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23b5562f'/%3E%3Cpath d='M40 14a20 20 0 1 0 10 34A16 16 0 1 1 40 14z' fill='%23fff'/%3E%3C/svg%3E">
-<meta name="description" content="个人 AI 工作台：AI 情报、AI 玩法、AI 使用分析、方法库。">
+<meta name="description" content="个人 AI 工作台：AI 情报、AI 玩法、AI 使用分析、任务复盘、方法库。">
 <style>
 :root {
   color-scheme: light;
@@ -213,15 +208,64 @@ a.link { text-decoration: none; }
   .tabs { order: 3; width: 100%; overflow-x: auto; }
   .tabs a { flex: none; padding: 5px 10px; font-size: 12.5px; }
 }
-/* 共用 */
+/* 任务复盘 */
+.rv-empty { max-width: 640px; color: var(--ink-2); line-height: 1.7; }
+.rv-empty p { margin: 0 0 8px; }
+.rv-hero { margin-bottom: 2px; }
+.rv-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; align-items: start; }
+.bars { display: grid; gap: 2px; }
+.bar-row { display: grid; grid-template-columns: 96px minmax(0, 1fr) 64px; gap: 10px; align-items: center; border: 0; background: none; padding: 5px 6px; border-radius: 7px; text-align: left; cursor: default; }
+.bar-row.on { background: var(--line-2); }
+.bar-row .bl { font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bar-row .bt { height: 8px; background: var(--line-2); border-radius: 4px; overflow: hidden; }
+.bar-row .bt i { display: block; height: 100%; border-radius: 4px; }
+.bar-row .bn { color: var(--ink-3); font-size: 12px; text-align: right; }
+.rv-sides { margin: 10px 0 4px; }
+.ai-note { background: var(--bg); border-radius: 10px; padding: 10px 12px; font-size: 13.5px; line-height: 1.65; margin-bottom: 8px; display: grid; gap: 4px; }
+.insight { margin-top: 14px; padding: 12px 14px; border: 1px solid var(--line-2); border-radius: 12px; display: grid; gap: 6px; font-size: 13.5px; line-height: 1.6; }
+.ev { display: grid; gap: 4px; }
+.ev-item { border: 0; background: none; padding: 0; text-align: left; color: var(--ink-2); font-size: 12.5px; cursor: pointer; }
+.ev-item:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.rule-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+.rule-card { border: 1px solid var(--line-2); border-radius: 12px; padding: 12px 14px; display: grid; gap: 8px; font-size: 13.5px; align-content: start; }
 .rule-head { display: flex; justify-content: space-between; gap: 8px; }
+.rule-text { display: flex; gap: 10px; align-items: flex-start; justify-content: space-between; background: var(--bg); border-radius: 9px; padding: 8px 10px; color: var(--ink-2); font-size: 12.5px; }
+.rule-text .btn-sm { flex: none; padding: 3px 10px; font-size: 12px; }
+.rv-tok { max-width: 420px; }
+.linklike { border: 0; background: none; padding: 0; text-align: left; cursor: pointer; font: inherit; color: inherit; }
+.linklike:hover { text-decoration: underline; text-underline-offset: 3px; }
+.tasks { border-top: 1px solid var(--line-2); }
+.task { border-bottom: 1px solid var(--line-2); scroll-margin-top: 12px; }
+.task-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 16px; width: 100%; border: 0; background: none; text-align: left; padding: 10px 4px; cursor: pointer; border-radius: 8px; }
+.task-row:hover { background: var(--hover); }
+.task-title { font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.task-meta { grid-column: 1; color: var(--ink-3); font-size: 12px; }
+.task-nums { grid-column: 2; grid-row: 1 / 3; align-self: center; color: var(--ink-2); font-size: 12.5px; white-space: nowrap; }
+.task.open .task-row { background: var(--line-2); }
+.journey { padding: 10px 4px 16px; }
+.steps { list-style: none; margin: 10px 0 0; padding: 0 0 0 14px; border-left: 2px solid var(--line-2); display: grid; gap: 14px; }
+.step { position: relative; }
+.step::before { content: ""; position: absolute; left: -20px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--panel); border: 2px solid var(--ink-3); }
+.step.rev::before { border-color: var(--warn); }
+.step-head { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
+.step-text { margin-top: 5px; white-space: pre-wrap; word-break: break-word; font-size: 13.5px; line-height: 1.65; color: var(--ink-2); max-height: 240px; overflow: auto; }
+.step-diag { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 6px; }
 .chip { --c: var(--ink-3); display: inline-block; font-size: 11.5px; padding: 1px 8px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--c) 45%, transparent); color: var(--c); white-space: nowrap; }
+.chip.clear { --c: var(--good); }
+.chip.partial { --c: var(--warn); }
+.chip.missing { --c: var(--bad); }
+.label-select { margin-left: auto; border: 1px solid var(--line); background: var(--panel); border-radius: 7px; padding: 2px 6px; font-size: 12px; color: var(--ink-3); }
+@media (max-width: 980px) { .rv-grid { grid-template-columns: 1fr; gap: 8px; } }
+@media (max-width: 560px) {
+  .task-row { grid-template-columns: 1fr; }
+  .task-nums { grid-column: 1; grid-row: auto; }
+  .bar-row { grid-template-columns: 80px minmax(0, 1fr) 56px; }
+  .label-select { margin-left: 0; }
+}
 
 /* 方法库 */
 .pb-tools { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; }
 .pb-search { max-width: 320px; }
-.pb-io { margin-left: auto; gap: 12px; }
-.pb-io label { cursor: pointer; }
 .pb-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 12px; margin-top: 10px; }
 .pb-card { border: 1px solid var(--line-2); border-radius: 12px; padding: 12px 14px; display: grid; gap: 8px; align-content: start; min-width: 0; }
 .pb-tags { display: inline-flex; gap: 6px; flex: none; }
@@ -237,8 +281,6 @@ textarea.pb-area { min-height: 140px; }
 .play-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
 .play-card { border: 1px solid var(--line-2); border-radius: 12px; padding: 12px 14px; display: grid; gap: 6px; align-content: start; }
 .play-card .news-sum { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-.play-ai { background: var(--bg); border-radius: 9px; padding: 8px 10px; display: grid; gap: 4px; font-size: 13px; line-height: 1.6; color: var(--ink-2); }
-.play-ai b { color: var(--ink); font-weight: 600; margin-right: 8px; }
 .play-note { background: var(--bg); border-radius: 9px; padding: 8px 10px; color: var(--ink-2); font-size: 12.5px; white-space: pre-wrap; word-break: break-word; }
 .play-noteform { display: grid; gap: 6px; }
 .play-noteform textarea { min-height: 72px; }
@@ -289,10 +331,6 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
         <div class="panel ov-usage">
           <div class="panel-head"><h2>我的 AI 使用<span>今日</span></h2><a class="link" href="#usage">详细 →</a></div>
           <div class="mini" id="ov-usage"><div class="empty">正在读取…</div></div>
-        </div>
-        <div class="panel ov-play">
-          <div class="panel-head"><h2>今日可上手<span>GitHub 精选</span></h2><a class="link" href="#playground">全部 →</a></div>
-          <ol class="news compact" id="ov-play"><li class="empty">正在读取…</li></ol>
         </div>
       </div>
     </section>
@@ -356,23 +394,34 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
         <div class="seg small" id="play-range" role="group" aria-label="GitHub 时间范围"></div>
       </div>
       <div id="play-body"></div>
-      <div class="foot">GitHub 项目每天早上 7 点从 GitHub 公开搜索里挑最近新建的 AI 项目（去掉资源合集和停更的），由 Claude 读简介和 README 后翻译成中文、总结能做什么和对你的用处，按适合度排序；总结是模型写的，以项目主页为准。精选暂时读不到时，改由浏览器直接搜 GitHub，只有英文简介。教程来自 AIHOT 公开 API 最近 7 天的精选，实时读取、不保存。收藏、已尝试和备注（连同标题和链接）只存在这个浏览器里，换手机或换浏览器要重新收藏。</div>
+      <div class="foot">GitHub 项目来自 GitHub 公开搜索（名称、简介或标签里有 AI、LLM、Agent、MCP 等词，按星数排序，结果在这个浏览器里缓存 6 小时）；教程来自 AIHOT 公开 API 最近 7 天的精选，实时读取、不保存。用途和“能配合你常用的工具”按关键词判断，可能不准。收藏、已尝试和备注（连同标题和链接）只存在这个浏览器里，换手机或换浏览器要重新收藏。</div>
     </section>
 
     <!-- ==================== 方法库 ==================== -->
     <section class="panel view" data-view="playbook" aria-labelledby="pb-h">
       <div class="panel-head">
-        <h2 id="pb-h">方法库<span>存在这个浏览器里</span></h2>
+        <h2 id="pb-h">方法库<span>只在本机</span></h2>
         <span class="sub">好用的提示词、项目规则和验收清单，用之前由你确认</span>
       </div>
-      <div id="pb-body"></div>
+      <div id="pb-body"><div class="empty">正在读取…</div></div>
     </section>
 
+    <!-- ==================== 任务复盘 ==================== -->
+    <section class="panel view" data-view="review" aria-labelledby="rv-h">
+      <div class="panel-head">
+        <h2 id="rv-h">任务复盘<span>只在本机</span></h2>
+        <div class="head-right">
+          <span class="update" id="rv-status"></span>
+          <div class="seg" id="rv-range" role="group" aria-label="时间范围"></div>
+        </div>
+      </div>
+      <div id="rv-body"><div class="empty">正在读取…</div></div>
+    </section>
   </div>
 </div>
 
 <dialog class="cmd" id="cmd" aria-label="命令面板">
-  <input class="field cmd-input" id="cmd-input" type="text" placeholder="搜索页面、方法库、资讯和 GitHub 项目" autocomplete="off" role="combobox" aria-controls="cmd-list" aria-expanded="true">
+  <input class="field cmd-input" id="cmd-input" type="text" placeholder="搜索页面、方法库、资讯、任务，或输入一个问题" autocomplete="off" role="combobox" aria-controls="cmd-list" aria-expanded="true">
   <ul class="cmd-list" id="cmd-list" role="listbox"></ul>
   <div class="cmd-foot sub">↑↓ 选择 · Enter 打开 · Esc 关闭</div>
 </dialog>
@@ -384,7 +433,6 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
   const el = (tag, attrs = {}, ...kids) => {
     const e = document.createElement(tag)
     for (const [k, v] of Object.entries(attrs)) {
-      if (v == null) continue
       if (k === 'class') e.className = v
       else if (k === 'style') e.style.cssText = v
       else if (k.startsWith('on')) e.addEventListener(k.slice(2), v)
@@ -841,41 +889,19 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
   const usableRepo = x => x.desc && !/^awesome|awesome-|资源合集|curated list|list of/i.test(`${x.name.split('/')[1]} ${x.desc}`) && Date.now() - new Date(x.pushed) < 14 * 864e5
   const DOABLE = /github\.com|开源|教程|技巧|指南|上手|实战|实操|手把手|步骤|一键|部署|模板|提示词|prompt|工作流|workflow|skill|插件|本地|免费|how to|guide/i
 
-  // 每天由 GitHub Action（.github/workflows/picks.yml）生成的精选，带中文翻译和总结；
-  // 读不到或超过 3 天没更新，就退回浏览器直接搜 GitHub（只有英文简介）
-  const PICKS_URL = 'https://raw.githubusercontent.com/wzp42406-eng/ai-workbench/picks/picks.json'
-  let picksP = null
-  const loadPicks = () => picksP ||= fetch(PICKS_URL, { cache: 'no-cache' })
-    .then(r => { if (!r.ok) throw new Error(`精选返回 ${r.status}`); return r.json() })
-    .then(d => { if (!Array.isArray(d.items) || !(Date.now() - new Date(d.generated_at) < 3 * 864e5)) throw new Error('精选太久没更新'); return d })
-    .catch(e => { picksP = null; throw e })
-  async function repoList(days) {
-    const since = Date.now() - days * 864e5
-    try {
-      const d = await loadPicks()
-      // 模型觉得对你没什么用（1 分）的不显示；有总结的按适合度排，同分按星数
-      const items = d.items.filter(x => new Date(x.created) >= since && (x.ai?.fit ?? 3) >= 2)
-        .sort((a, b) => (b.ai?.fit ?? 0) - (a.ai?.fit ?? 0) || b.stars - a.stars)
-      return { items, picks: d }
-    } catch {
-      const v = await ghRepos(days)
-      return { ...v, items: v.items.filter(usableRepo) }
-    }
-  }
-
   async function loadPlay() {
     const box = $('play-body')
     box.replaceChildren(el('div', { class: 'empty' }, '正在读取…'))
-    const [gh, tip] = await Promise.allSettled([repoList(+ghRange), aihot('/items?mode=selected&window=7d&limit=100&category=tip')])
-    const repos = gh.status === 'fulfilled' ? gh.value.items.slice(0, 8).map(x => ({
-      id: `gh:${x.name}`, kind: 'repo', title: x.name, url: x.url, summary: x.ai?.zh || x.desc, original: x.ai?.zh ? x.desc : '', ai: x.ai,
-      mine: MY_TOOLS.test(`${x.name} ${x.desc} ${x.topics.join(' ')}`), job: jobName(`${x.name} ${x.desc} ${x.topics.join(' ')}`), repo: x })) : []
+    const [gh, tip] = await Promise.allSettled([ghRepos(+ghRange), aihot('/items?mode=selected&window=7d&limit=100&category=tip')])
+    const repos = gh.status === 'fulfilled' ? gh.value.items.filter(usableRepo).slice(0, 8).map(x => ({
+      id: `gh:${x.name}`, kind: 'repo', title: x.name, url: x.url, summary: x.desc, mine: MY_TOOLS.test(`${x.name} ${x.desc} ${x.topics.join(' ')}`),
+      job: jobName(`${x.name} ${x.desc} ${x.topics.join(' ')}`), repo: x })) : []
     const tips = tip.status === 'fulfilled' ? tip.value.items.filter(x => DOABLE.test(`${x.links?.original || ''} ${x.title} ${x.summary || ''}`))
       .sort((a, b) => (b.score ?? -1) - (a.score ?? -1)).slice(0, 6).map(x => ({
         id: x.id, kind: 'tip', title: x.title, url: x.links?.original || x.links?.aihot, summary: x.summary, mine: MY_TOOLS.test(`${x.title} ${x.summary || ''}`),
         job: jobName(`${x.title} ${x.summary || ''}`), tip: x })) : []
     playItems = { repos, tips, ghError: gh.status === 'rejected' ? gh.reason?.message || '网络错误' : gh.value.stale ? `GitHub 暂时读不到（${gh.value.stale}），显示的是上次的结果` : '',
-      tipError: tip.status === 'rejected' ? (tip.reason instanceof TypeError ? '网络错误' : tip.reason?.message || '网络错误') : '', picks: gh.value?.picks }
+      tipError: tip.status === 'rejected' ? (tip.reason instanceof TypeError ? '网络错误' : tip.reason?.message || '网络错误') : '', ghAt: gh.value?.at }
     if (!repos.length && !tips.length && playShow === 'all' && Object.keys(marks).length) playShow = 'saved'
     $('play-status').textContent = [repos.length ? `GitHub ${repos.length} 个项目` : '', tips.length ? `教程 ${tips.length} 篇` : ''].filter(Boolean).join(' · ')
     renderPlay()
@@ -897,8 +923,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     }
     const { repos, tips, ghError, tipError } = playItems
     box.replaceChildren(...[
-      el('div', { class: 'section-title' }, el('span', {}, `GitHub ${GH_RANGES.find(r => r[0] === ghRange)[1]} · ${playItems.picks?.engine ? '按对你的价值' : '按星数'}`),
-        el('span', {}, playItems.picks ? `每天早上 7 点更新，上次 ${fullTime(playItems.picks.generated_at)}${playItems.picks.engine ? '' : '（还没有中文总结）'}` : '只留有简介、最近两周还在更新的，去掉资源合集')),
+      el('div', { class: 'section-title' }, el('span', {}, `GitHub ${GH_RANGES.find(r => r[0] === ghRange)[1]} · 按星数`), el('span', {}, '只留有简介、最近两周还在更新的，去掉资源合集')),
       repos.length ? el('div', { class: 'play-grid' }, ...repos.map(playCard)) : el('div', { class: 'empty' }, ghError ? `暂时读不到 GitHub（${ghError}）` : '这段时间没有符合条件的新项目'),
       ghError && repos.length ? el('div', { class: 'qsub' }, ghError) : null,
       el('div', { class: 'section-title' }, el('span', {}, '本周可以照着做的教程 · 按 AIHOT 评分'), el('span', {}, '只留有开源地址或上手步骤的')),
@@ -916,14 +941,9 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     const when = t && (t.publishedAt || t.discoveredAt)
     return el('div', { class: 'play-card' },
       el('div', { class: 'news-title' }, extLink(x.url, x.title)),
-      x.summary ? el('div', { class: 'news-sum', title: x.original || null }, x.summary) : null,
-      x.ai ? el('div', { class: 'play-ai' },
-        el('div', {}, el('b', {}, '能做什么'), x.ai.what),
-        el('div', {}, el('b', {}, '对你的用处'), x.ai.why),
-        el('div', {}, el('b', {}, '怎么上手'), [x.ai.setup, x.ai.how].filter(Boolean).join('：'))) : null,
+      x.summary ? el('div', { class: 'news-sum' }, x.summary) : null,
       x.gone ? null : el('div', { class: 'news-meta' },
-        x.ai ? el('span', { class: 'chip', style: '--c: var(--accent)', title: '模型按你的使用习惯打的分，5 分最高' }, `适合你 ${x.ai.fit}/5`) : null,
-        !x.ai && x.mine ? el('span', { class: 'chip', style: '--c: var(--accent)', title: '标题或简介里提到 Claude、Codex、Kimi、MCP 或 Skill' }, '能配合你常用的工具') : null,
+        x.mine ? el('span', { class: 'chip', style: '--c: var(--accent)', title: '标题或简介里提到 Claude、Codex、Kimi、MCP 或 Skill' }, '能配合你常用的工具') : null,
         x.job ? el('span', {}, x.job) : null,
         r ? el('span', { title: 'GitHub 星数' }, `★ ${r.stars.toLocaleString()}`) : null,
         r?.lang ? el('span', {}, r.lang) : null,
@@ -957,18 +977,6 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     return f
   }
 
-  // 总览里的 GitHub 精选：本周最适合你的 3 个，只看每天生成的精选，读不到就不显示这块
-  async function renderOverviewPlay() {
-    const box = $('ov-play')
-    try {
-      const { items, picks } = await repoList(7)
-      if (!picks || !items.length) throw new Error()
-      box.replaceChildren(...items.slice(0, 3).map(x => el('li', { class: 'news-item' }, el('div', { class: 'news-main' },
-        el('div', { class: 'news-title' }, extLink(x.url, x.name)),
-        el('div', { class: 'news-sum' }, x.ai?.what || x.ai?.zh || x.desc),
-        el('div', { class: 'news-meta' }, x.ai ? el('span', {}, `适合你 ${x.ai.fit}/5`) : null, x.ai?.setup ? el('span', {}, x.ai.setup) : null, el('span', {}, `★ ${x.stars.toLocaleString()}`))))))
-    } catch { box.closest('.panel').hidden = true }
-  }
   async function renderOverviewIntel() {
     const box = $('ov-hot')
     try {
@@ -978,6 +986,49 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     } catch (e) { intelError(box, e) }
   }
 
+  // ================= 提问规则（任务复盘的“提问习惯”用，只做关键词检查，不调模型） =================
+  // 每个维度用几组关键词判断：命中 2 组以上算明确，1 组算部分。任务越复杂，要求的维度越多。
+  const DIMS = [
+    { id: 'goal', name: '目标', hint: '要完成什么、做到什么程度',
+      ask: '最终想得到什么？做到什么程度算完成？',
+      re: [/帮我|请你?|能否|可以|如何|怎么|怎样|为什么|是否|哪[个些种]|\?|？/i, /写|做|生成|设计|开发|分析|总结|翻译|润色|改写|优化|规划|解释|对比|比较|推荐|整理|搭建|修复|实现|列出|计算|评估|调研|研究/, /目标|目的|希望|想要|为了|最终|结果/] },
+    { id: 'context', name: '背景', hint: '现状、对象、为什么要做',
+      ask: '现在是什么情况？给谁用、在什么场景下用？',
+      re: [/背景|现状|目前|现在|已经|之前|项目|场景/, /我是|我们|公司|团队|客户|用户|读者|面向|给.{1,8}(用|看)/, /因为|由于|遇到|问题是|痛点/] },
+    { id: 'constraints', name: '约束', hint: '预算、时间、技术、不能做的事',
+      ask: '有哪些限制？比如预算、时间、技术栈、不能改动的部分。',
+      re: [/不要|不能|不允许|禁止|避免|别/, /必须|只能|只用|仅|限制|限定|要求/, /预算|时间|期限|截止|以内|不超过|最多|至少|字数|技术栈|版本/] },
+    { id: 'output', name: '输出', hint: '交付形式和格式',
+      ask: '希望以什么形式交付？表格、列表、代码、文档，大概多长？',
+      re: [/格式|形式|输出|交付|返回/, /表格|列表|清单|要点|markdown|json|代码|脚本|文档|报告|邮件|ppt|幻灯片|大纲|步骤/i, /\d+\s*(字|条|点|段|页|行|个)|一句话|简短|详细/] },
+    { id: 'criteria', name: '验收', hint: '怎样算合格、哪些错误不能接受',
+      ask: '怎样算做好了？哪些错误不能接受？',
+      re: [/验收|标准|合格|达标|成功/, /确保|保证|检查|验证|测试|通过/, /不能出现|不可接受|必须满足|评价|衡量|指标/] },
+    { id: 'evidence', name: '参考', hint: '数据、原文、链接、示例',
+      ask: '有没有可以提供的资料、数据、原文或示例？',
+      re: [/https?:\/\//i, /参考|资料|附件|原文|数据|示例|例子|样例|如下|以下|下面/, /```|「|“.{20,}”|"/] },
+  ]
+  // 任务复杂度：简单任务只要求目标，中等再加输出，复杂任务六项里除参考外都要
+  const SIMPLE = /^(请)?(帮我)?(翻译|润色|解释|总结|改写|纠错|查一下|什么是)|是什么[？?]?$|什么意思/
+  const COMPLEX = /开发|系统|网站|应用|app|小程序|架构|项目|方案|产品|策略|规划|计划|调研|研究报告|重构|自动化|工作流|agent/i
+  function complexity(t) {
+    if (t.length > 400 || (COMPLEX.test(t) && t.length > 15)) return 'complex'
+    if (t.length < 60 && SIMPLE.test(t.trim())) return 'simple'
+    return COMPLEX.test(t) ? 'complex' : 'medium'
+  }
+  const NEEDED = { simple: ['goal'], medium: ['goal', 'output'], complex: ['goal', 'context', 'constraints', 'output', 'criteria'] }
+  const STATE = { clear: '明确', partial: '部分', missing: '缺失', na: '不需要' }
+
+  function diagnose(text) {
+    const level = complexity(text)
+    const dims = DIMS.map(d => {
+      const hits = d.re.filter(r => r.test(text)).length
+      const needed = NEEDED[level].includes(d.id)
+      const state = hits >= 2 ? 'clear' : hits === 1 ? 'partial' : needed ? 'missing' : 'na'
+      return { ...d, hits, needed, state }
+    })
+    return { level, dims }
+  }
   const copyBtn = (label, getText) => {
     const b = el('button', { class: 'btn-sm', type: 'button', onclick: async () => {
       try { await navigator.clipboard.writeText(getText()); b.textContent = '已复制' } catch { b.textContent = '复制失败，请手动选择' }
@@ -986,7 +1037,241 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     return b
   }
 
-  // ================= 方法库（存在这个浏览器的 localStorage 里，可以导出备份、导入） =================
+  // ================= 任务复盘（只读本机生成的 review.local.json） =================
+  // 数据由 tools/review.py 在本机生成，经 127.0.0.1 的本机服务提供；公开网站上没有这个文件。
+  const SIDES = { model: ['模型没做好', '--s2'], user: ['表达或背景不足', '--s1'], scope: ['需求本身变了', '--s3'], shared: ['都有可能', '--s4'] }
+  const RV_RANGES = [['7', '近 7 天'], ['30', '近 30 天'], ['all', '全部']]
+  // 某类问题在 3 个以上任务里出现时，给出可以写进项目规则的一句话
+  const RULE_TIPS = {
+    missed: ['多次需要提醒模型“之前说过的要求”。', '做完后逐条对照我列出的要求自查，并在回复末尾列出每条要求的完成情况。'],
+    error: ['结果经常需要你指出报错或不生效。', '改完代码后先运行测试或打开页面验证，确认没有报错再告诉我完成，并说明怎么验证的。'],
+    clarify: ['经常需要解释“我的意思是……”。', '复杂任务开始前，先用两三句话复述你理解的目标和完成标准，等我确认后再动手。'],
+    context: ['经常在中途补充背景。', '（把你经常补充的背景写在这里，放进项目的 CLAUDE.md，例如项目用途、技术栈、目标用户）'],
+    format: ['输出形式经常需要调整。', '回复用中文，先给结论；需要我操作的步骤用编号列表；没有要求时不要超过 15 行。'],
+    added: ['任务进行中经常追加需求。', '开始前先列出这次要做和不做的内容，等我确认范围后再开始。'],
+    changed: ['任务进行中目标经常改变。', '开始前先列出这次要做和不做的内容，等我确认范围后再开始。'],
+  }
+  const OTHER_LABELS = { ack: '确认/继续', other: '其他追问' }
+  let rv = null
+  let rvLoaded = false   // 试过读本机数据（公开网站上读不到）
+  let rvRange = pick('wb-rv-range', RV_RANGES, '30')
+  let rvFilter = ''
+  let rvOpen = ''
+  let rvOverrides = store.get('rv-overrides', {})
+  const ruleName = k => rv?.rules.find(r => r.key === k)?.name || OTHER_LABELS[k] || k
+  const ruleSide = k => rv?.rules.find(r => r.key === k)?.side
+  // 归类优先级：你手动改的 > Kimi 的 > 关键词规则
+  const turnLabels = (t, i) => rvOverrides[t.id]?.[i] ?? t.ai?.turns?.[i]?.labels ?? t.turns[i].labels
+  const turnEvidence = (t, i) => t.ai?.turns?.[i] ? t.ai.turns[i].evidence : t.turns[i].evidence
+  const isRevision = labels => labels.some(l => l !== 'ack' && l !== 'other')
+  const revCount = t => t.turns.slice(1).filter((_, k) => isRevision(turnLabels(t, k + 1))).length
+  const median = xs => { if (!xs.length) return null; const s = [...xs].sort((a, b) => a - b), m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2 }
+  const pct = (a, b) => b ? `${Math.round(a / b * 100)}%` : '—'
+  const fmtDay = iso => { const d = new Date(iso); return `${d.getMonth() + 1}/${d.getDate()} ${pad2(d.getHours())}:${pad2(d.getMinutes())}` }
+  const PROVIDER = { claude_code: 'Claude Code', codex: 'Codex', chatgpt: 'ChatGPT', claude_ai: 'Claude 对话' }
+
+  segButtons($('rv-range'), RV_RANGES, rvRange, id => { rvRange = id; store.set('wb-rv-range', id); pressed($('rv-range'), id); renderReview() })
+
+  async function loadReview() {
+    try {
+      const r = await fetch('review.local.json', { cache: 'no-store' })
+      if (!r.ok) throw new Error(r.status)
+      rv = await r.json()
+      const ai = rv.tasks.filter(t => t.ai).length
+      $('rv-status').textContent = `生成于 ${fmtDay(rv.generated_at)}${ai ? ` · ${ai} 个任务由 Kimi 归类` : ''}${rv.kimi?.error ? ` · Kimi：${rv.kimi.error}` : ''}`
+    } catch {
+      rv = null
+    }
+    rvLoaded = true
+    renderReview()
+  }
+  function rvTasks() {
+    if (!rv) return []
+    const since = rvRange === 'all' ? '' : addDays(dayKey(), -(+rvRange - 1))
+    return rv.tasks.filter(t => !since || dayKey(new Date(t.ended_at)) >= since)
+  }
+  function renderReview() {
+    const box = $('rv-body')
+    if (!rv) {
+      box.replaceChildren(el('div', { class: 'rv-empty' },
+        el('p', {}, '任务复盘需要读取你电脑上的 Claude Code、Codex 会话记录和 ChatGPT、Claude 的导出记录，所以只在本机运行，不会出现在公开网站上，也不会上传。'),
+        el('p', {}, '在仓库目录里运行：'),
+        el('pre', { class: 'pd-pre' }, 'python3 tools/review.py'),
+        el('p', { class: 'sub' }, '默认会把长对话交给本机的 Kimi CLI 归类和总结（只发你发出的消息，不发 AI 回复）；加 --no-kimi 可以关掉，没装 Kimi 时自动跳过。'),
+        el('p', { class: 'sub' }, '它会分析 ~/.claude/projects、~/.codex/sessions 和“下载”文件夹里 ChatGPT / Claude 的官方导出压缩包，把结果写到 ~/.ai-workbench/review.json（仓库外面），然后打开 http://127.0.0.1:8787/#review。只保存你发出的消息和 Token 计数，不保存 AI 的回复，常见密钥会被隐藏。')))
+      return
+    }
+    const tasks = rvTasks()
+    if (!tasks.length) { box.replaceChildren(el('div', { class: 'empty' }, '这个时间范围里没有会话记录')); return }
+    box.replaceChildren(rvStats(tasks), el('div', { class: 'rv-grid' }, rvReasons(tasks), rvHabits(tasks)), rvRules(tasks), rvTokens(tasks), rvList(tasks))
+  }
+
+  function rvStats(tasks) {
+    const revised = tasks.filter(t => revCount(t) > 0)
+    const real = tasks.filter(t => t.tokens.measurement === 'real').map(t => t.tokens.total)
+    const stat = (k, v, sub) => el('div', {}, el('div', { class: 'k' }, k), el('div', { class: 'v num' }, v), sub ? el('div', { class: 'qsub' }, sub) : null)
+    return el('div', {},
+      el('div', { class: 'hero rv-hero' },
+        stat('任务', String(tasks.length), Object.keys(PROVIDER).map(k => [PROVIDER[k], tasks.filter(t => t.provider === k).length]).filter(([, n]) => n).map(([k, n]) => `${k} ${n}`).join(' · ')),
+        stat('有返工的任务', pct(revised.length, tasks.length), `${revised.length} 个任务至少返工一次`),
+        stat('平均返工次数', (tasks.reduce((s, t) => s + revCount(t), 0) / tasks.length).toFixed(1), '每个任务'),
+        stat('每任务 Token 中位数', real.length ? fmtTokStr(median(real)) : '无记录', real.length ? `${real.length} 个任务有实际计量，不含缓存读取` : '')),
+      el('div', { class: 'foot' }, '一个会话算一个任务。“返工”是第二条起被识别为纠错、补充或改需求的消息；只按关键词归类，可能不准，可以在下面任务详情里逐条修改。没有用户确认完成的标记，所以这里不统计“成功率”。'))
+  }
+
+  function bars(rows, total, onClick, active) {
+    const max = Math.max(1, ...rows.map(r => r.n))
+    return el('div', { class: 'bars' }, ...rows.map(r => el('button', { type: 'button', class: `bar-row${active === r.key ? ' on' : ''}`, onclick: onClick ? () => onClick(r.key) : null, title: r.title || '' },
+      el('span', { class: 'bl' }, r.label),
+      el('span', { class: 'bt' }, el('i', { style: `width:${(r.n / max * 100).toFixed(1)}%;background:var(${r.color || '--ink-3'})` })),
+      el('span', { class: 'bn num' }, total ? `${r.n} · ${pct(r.n, total)}` : String(r.n)))))
+  }
+  function rvReasons(tasks) {
+    const count = {}, inTasks = {}
+    let followups = 0
+    for (const t of tasks) t.turns.forEach((_, i) => {
+      if (!i) return
+      followups++
+      for (const l of turnLabels(t, i)) { count[l] = (count[l] || 0) + 1; (inTasks[l] ||= new Set()).add(t.id) }
+    })
+    const rows = rv.rules.map(r => ({ key: r.key, label: r.name, n: count[r.key] || 0, color: SIDES[r.side][1], title: `出现在 ${inTasks[r.key]?.size || 0} 个任务里` }))
+      .filter(r => r.n).sort((a, b) => b.n - a.n)
+    const bySide = Object.entries(SIDES).map(([k, [name, color]]) => [name, color, rv.rules.filter(r => r.side === k).reduce((s, r) => s + (count[r.key] || 0), 0)])
+    return el('div', {},
+      el('div', { class: 'section-title' }, el('span', {}, '返工原因 · 按消息计'), el('span', {}, `追问 ${followups} 条，其中确认/继续 ${count.ack || 0}、其他 ${count.other || 0}`)),
+      rows.length ? bars(rows, 0, k => { rvFilter = rvFilter === k ? '' : k; renderReview() }, rvFilter) : el('div', { class: 'empty' }, '没有识别到返工'),
+      el('div', { class: 'legend rv-sides' }, ...bySide.map(([name, color, n]) => el('span', {}, el('i', { style: `background:var(${color})` }), `${name} ${n}`))),
+      el('div', { class: 'qsub' }, '点一行可以只看有这类返工的任务。“模型没做好”和“需求本身变了”不算你的问题。'))
+  }
+
+  function rvHabits(tasks) {
+    const firsts = tasks.map(t => ({ t, r: diagnose(t.turns[0].text) })).filter(x => x.r.level !== 'simple')
+    const title = el('div', { class: 'section-title' }, el('span', {}, '提问习惯 · 看每个任务的第一条消息'), el('span', {}, `${firsts.length} 个非简单任务`))
+    if (firsts.length < 3) return el('div', {}, title, el('div', { class: 'empty' }, '非简单任务少于 3 个，暂不分析'))
+    const rows = DIMS.map(d => {
+      const need = firsts.filter(x => x.r.dims.find(y => y.id === d.id).needed)
+      const miss = need.filter(x => x.r.dims.find(y => y.id === d.id).state !== 'clear')
+      return { key: d.id, label: d.name, n: miss.length, need: need.length, color: '--warn', miss }
+    }).filter(r => r.need)
+    const top = rows.slice().sort((a, b) => b.n / b.need - a.n / a.need)[0]
+    let insight = null
+    if (top && top.n) {
+      const has = firsts.filter(x => x.r.dims.find(y => y.id === top.key).state === 'clear').map(x => revCount(x.t))
+      const lacks = top.miss.map(x => revCount(x.t))
+      const avg = xs => (xs.reduce((a, b) => a + b, 0) / xs.length).toFixed(1)
+      const compare = has.length >= 3 && lacks.length >= 3
+        ? `第一条就写清${top.label}的任务平均返工 ${avg(has)} 次（${has.length} 个），没写清的平均 ${avg(lacks)} 次（${lacks.length} 个）。样本不多，只能参考。`
+        : `写清和没写清${top.label}的任务都要各有 3 个以上才比较返工次数，现在还不够。`
+      insight = el('div', { class: 'insight' },
+        el('div', {}, el('b', {}, `最常缺的是「${top.label}」：`), `${top.n} / ${top.need} 个任务的第一条消息里没写清。${DIMS.find(d => d.id === top.key).ask}`),
+        el('div', { class: 'qsub' }, compare),
+        el('div', { class: 'ev' }, ...top.miss.slice(0, 2).map(x => el('button', { type: 'button', class: 'ev-item', onclick: () => openTask(x.t.id) }, `“${x.t.turns[0].text.slice(0, 70)}${x.t.turns[0].text.length > 70 ? '…' : ''}”`))))
+    }
+    return el('div', {}, title,
+      bars(rows.map(r => ({ ...r, label: `缺${r.label}` })), 0),
+      el('div', { class: 'qsub' }, '只统计这类任务需要的维度；按关键词检查，看目标、背景、约束、输出、验收、参考六项。'),
+      insight)
+  }
+
+  function rvRules(tasks) {
+    const cards = []
+    for (const [key, [what, rule]] of Object.entries(RULE_TIPS)) {
+      const hits = []
+      for (const t of tasks) t.turns.forEach((turn, i) => { if (i && turnLabels(t, i).includes(key) && !hits.some(h => h.t === t)) hits.push({ t, turn }) })
+      if (hits.length < 3) continue
+      cards.push({ key, n: hits.length, el: el('div', { class: 'rule-card' },
+        el('div', { class: 'rule-head' }, el('b', {}, ruleName(key)), el('span', { class: 'sub' }, `${hits.length} 个任务`)),
+        el('div', {}, what),
+        el('div', { class: 'ev' }, ...hits.slice(0, 3).map(h => el('button', { type: 'button', class: 'ev-item', onclick: () => openTask(h.t.id) }, `“${h.turn.text.slice(0, 60)}${h.turn.text.length > 60 ? '…' : ''}”`))),
+        el('div', { class: 'rule-text' }, el('span', {}, `可以考虑写进项目规则：${rule}`), el('span', { class: 'pb-actions' }, copyBtn('复制', () => rule),
+          pb ? pbButton('存入方法库', { kind: 'rule', title: `应对「${ruleName(key)}」`, text: rule, source: `任务复盘：${hits.length} 个任务出现「${ruleName(key)}」` }) : null))) })
+    }
+    if (!cards.length) return el('div', {})
+    cards.sort((a, b) => b.n - a.n)
+    return el('div', {},
+      el('div', { class: 'section-title' }, el('span', {}, '反复出现的问题'), el('span', {}, '复制后由你决定是否放进 CLAUDE.md，这里不会自动修改任何规则')),
+      el('div', { class: 'rule-grid' }, ...cards.slice(0, 4).map(c => c.el)))
+  }
+
+  function rvTokens(tasks) {
+    const real = tasks.filter(t => t.tokens.measurement === 'real')
+    if (real.length < 2) return el('div', {})
+    const zero = real.filter(t => !revCount(t)).map(t => t.tokens.total)
+    const some = real.filter(t => revCount(t)).map(t => t.tokens.total)
+    const top = real.slice().sort((a, b) => b.tokens.total - a.tokens.total).slice(0, 5)
+    return el('div', {},
+      el('div', { class: 'section-title' }, el('span', {}, 'Token 效率'), el('span', {}, '只算有实际计量的任务，不含缓存读取')),
+      el('div', { class: 'stats rv-tok' },
+        el('div', { class: 'stat' }, el('div', { class: 'k' }, '没有返工的任务'), el('div', { class: 'v num' }, zero.length ? fmtTokStr(median(zero)) : '—'), el('div', { class: 'qsub' }, `中位数 · ${zero.length} 个任务`)),
+        el('div', { class: 'stat' }, el('div', { class: 'k' }, '有返工的任务'), el('div', { class: 'v num' }, some.length ? fmtTokStr(median(some)) : '—'), el('div', { class: 'qsub' }, `中位数 · ${some.length} 个任务`))),
+      el('div', { class: 'qsub' }, '任务大小本身差别很大，这两个数只能看个方向，不能说明返工让 Token 多了多少。'),
+      el('div', { class: 'section-title' }, el('span', {}, '最耗 Token 的任务')),
+      el('ol', { class: 'news compact' }, ...top.map(t => el('li', { class: 'news-item' },
+        el('div', { class: 'news-main' },
+          el('div', { class: 'news-title' }, el('button', { type: 'button', class: 'linklike', onclick: () => openTask(t.id) }, t.title)),
+          el('div', { class: 'news-meta' }, el('span', {}, fmtTokStr(t.tokens.total)), el('span', {}, `返工 ${revCount(t)} 次`), el('span', {}, `${t.turns.length} 条消息`), el('span', {}, `${t.active_minutes} 分钟`)))))))
+  }
+
+  function rvList(tasks) {
+    const shown = rvFilter ? tasks.filter(t => t.turns.some((_, i) => i && turnLabels(t, i).includes(rvFilter))) : tasks
+    return el('div', { id: 'rv-list' },
+      el('div', { class: 'section-title' }, el('span', {}, rvFilter ? `有「${ruleName(rvFilter)}」的任务` : '全部任务'),
+        rvFilter ? el('button', { class: 'link', type: 'button', onclick: () => { rvFilter = ''; renderReview() } }, '清除筛选') : el('span', {}, `${shown.length} 个`)),
+      el('div', { class: 'tasks' }, ...shown.slice(0, 200).map(t => el('div', { class: `task${rvOpen === t.id ? ' open' : ''}`, id: `task-${t.id}` },
+        el('button', { type: 'button', class: 'task-row', onclick: () => { rvOpen = rvOpen === t.id ? '' : t.id; renderReview() } },
+          el('span', { class: 'task-title' }, t.title),
+          el('span', { class: 'task-meta' }, [PROVIDER[t.provider], t.project, fmtDay(t.started_at)].filter(Boolean).join(' · ')),
+          el('span', { class: 'task-nums num' }, `${t.turns.length} 条 · 返工 ${revCount(t)} · ${t.tokens.measurement === 'real' ? fmtTokStr(t.tokens.total) : '无 Token 记录'}`)),
+        rvOpen === t.id ? journey(t) : null))))
+  }
+  function openTask(id) {
+    rvOpen = id; rvFilter = ''
+    renderReview()
+    $(`task-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
+  // 任务路径：每条消息一个节点，显示归类和依据，可以改
+  function journey(t) {
+    const start = new Date(t.started_at).getTime()
+    const first = diagnose(t.turns[0].text)
+    return el('div', { class: 'journey' },
+      t.ai?.summary ? el('div', { class: 'ai-note' }, el('b', {}, 'Kimi 总结：'), t.ai.summary,
+        t.ai.lesson ? el('div', {}, el('b', {}, '下次可以：'), t.ai.lesson, pb ? el('span', {}, ' ', pbButton('存入方法库', { kind: 'method', title: `${t.title.slice(0, 30)} 的经验`, text: t.ai.lesson, source: `任务复盘（Kimi 总结）：${t.title}` })) : null) : null) : null,
+      el('div', { class: 'qsub' }, `耗时 ${t.active_minutes} 分钟（去掉 5 分钟以上的空闲） · ${t.models.join('、') || '模型未知'} · Token：输入 ${fmtTokStr(t.tokens.input)} / 输出 ${fmtTokStr(t.tokens.output)} / 缓存写入 ${fmtTokStr(t.tokens.cache_write)} / 缓存读取 ${fmtTokStr(t.tokens.cache_read)}${t.tokens.measurement === 'real' ? '' : '（无记录）'}`),
+      el('ol', { class: 'steps' }, ...t.turns.map((turn, i) => {
+        const labels = turnLabels(t, i)
+        const edited = rvOverrides[t.id]?.[i] != null
+        const mins = Math.round((new Date(turn.at).getTime() - start) / 60000)
+        return el('li', { class: `step${isRevision(labels) ? ' rev' : ''}` },
+          el('div', { class: 'step-head' },
+            el('span', { class: 'sub num' }, i ? `+${mins} 分钟` : '开始'),
+            ...(i ? labels.map(l => el('span', { class: 'chip', style: ruleSide(l) ? `--c:var(${SIDES[ruleSide(l)][1]})` : '' }, ruleName(l))) : [el('span', { class: 'chip' }, '最初需求')]),
+            i && !edited && turnEvidence(t, i).length ? el('span', { class: 'sub' }, `${t.ai?.turns?.[i] ? 'Kimi 依据' : '依据'}：“${turnEvidence(t, i).join('”“')}”`) : null,
+            i ? labelSelect(t, i, edited) : null),
+          el('div', { class: 'step-text' }, turn.text, turn.length > turn.text.length ? el('span', { class: 'sub' }, `（共 ${turn.length} 字，只保留前 ${turn.text.length} 字）`) : null),
+          i === 0 ? el('div', { class: 'step-diag' },
+            ...first.dims.filter(d => d.needed).map(d => el('span', { class: `chip ${d.state}` }, `${d.name}${STATE[d.state]}`)),
+            pb ? pbButton('存入方法库', { kind: 'prompt', title: t.title.slice(0, 40), text: turn.text, source: `任务复盘：${t.title}（返工 ${revCount(t)} 次${turn.length > turn.text.length ? '，原文较长只存了开头' : ''}）` }) : null) : null)
+      })))
+  }
+  function labelSelect(t, i, edited) {
+    const cur = edited ? rvOverrides[t.id][i][0] : ''
+    const s = el('select', { class: 'label-select', 'aria-label': '修改归类' },
+      el('option', { value: '' }, edited ? '恢复自动归类' : '改归类…'),
+      ...rv.rules.map(r => el('option', { value: r.key }, r.name)),
+      ...Object.entries(OTHER_LABELS).map(([k, v]) => el('option', { value: k }, v)))
+    s.value = cur
+    s.addEventListener('change', () => {
+      const o = (rvOverrides[t.id] ||= {})
+      if (s.value) o[i] = [s.value]; else delete o[i]
+      if (!Object.keys(o).length) delete rvOverrides[t.id]
+      store.set('rv-overrides', rvOverrides)
+      renderReview()
+    })
+    return s
+  }
+
+  // ================= 方法库（只在本机：tools/review.py 起的服务读写 ~/.ai-workbench/playbook.json） =================
   const PB_KINDS = { prompt: '提示词', rule: '项目规则', checklist: '验收清单', method: '方法' }
   // 分类和猜测分类用的关键词；猜不出来归“日常问题”
   const PB_CATS = [
@@ -1001,35 +1286,26 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     ['日常问题', /$^/],
   ]
   const guessCat = text => (PB_CATS.find(([, re]) => re.test(text)) || PB_CATS[PB_CATS.length - 1])[0]
-  const PB_KEY = 'wb-playbook'
-  let pb = store.get(PB_KEY, null)   // { items: [...] }
-  if (!pb || !Array.isArray(pb.items)) pb = { items: [] }
+  let pb = null          // { items: [...] }，null 表示没连上本机服务
   let pbCat = ''
   let pbQuery = ''
   let pbEdit = null      // 正在编辑或新建的条目
   let pbMsg = ''
+  let pbTried = false   // 公开网站上没有本机服务，只试一次
 
-  function savePlaybook() {
-    try { localStorage.setItem(PB_KEY, JSON.stringify(pb)) } catch { throw new Error('这个浏览器不允许保存（可能是无痕模式），请先导出备份') }
+  async function loadPlaybook() {
+    try {
+      const r = await fetch('playbook.local.json', { cache: 'no-store' })
+      if (!r.ok) throw new Error(r.status)
+      pb = await r.json()
+      if (!Array.isArray(pb.items)) pb = { items: [] }
+    } catch { pb = null }
+    renderPlaybook(); if (rv) renderReview()
   }
-  function exportPlaybook() {
-    const a = el('a', { href: URL.createObjectURL(new Blob([JSON.stringify(pb, null, 1)], { type: 'application/json' })), download: `workbench-playbook-${dayKey()}.json` })
-    document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 1000)
+  async function savePlaybook() {
+    const r = await fetch('playbook.local.json', { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Workbench': '1' }, body: JSON.stringify(pb) })
+    if (!r.ok) throw new Error(`保存失败（${r.status}）`)
   }
-  // 导入备份或以前本机服务存的 ~/.ai-workbench/playbook.json：按 id 合并，已有的不覆盖
-  function importPlaybook(file) {
-    file.text().then(t => {
-      const d = JSON.parse(t)
-      const items = (Array.isArray(d) ? d : d.items || []).filter(x => x && typeof x.text === 'string')
-      const ids = new Set(pb.items.map(x => x.id))
-      const add = items.filter(x => !ids.has(x.id)).map(x => ({ ...x, id: x.id || `p${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`,
-        title: String(x.title || ''), category: PB_CATS.some(([c]) => c === x.category) ? x.category : guessCat(`${x.title}\n${x.text}`), created_at: x.created_at || new Date().toISOString() }))
-      pb.items.push(...add)
-      savePlaybook()
-      pbMsg = `导入了 ${add.length} 条${items.length > add.length ? `，${items.length - add.length} 条已经有了` : ''}`
-    }).catch(e => { pbMsg = `导入失败：${e.message || '文件格式不对'}` }).finally(renderPlaybook)
-  }
-
   // 从别的页面存进来：先打开编辑框，用户确认后才保存
   function draftToPlaybook(d) {
     pbEdit = { id: '', kind: 'prompt', title: '', text: '', source: '', ...d }
@@ -1048,6 +1324,14 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
   function renderPlaybook() {
     const box = $('pb-body')
     if (!box) return
+    if (!pb) {
+      box.replaceChildren(el('div', { class: 'rv-empty' },
+        el('p', {}, '方法库存在你自己电脑上（~/.ai-workbench/playbook.json），只能通过本机服务打开，公开网站上看不到。'),
+        el('p', {}, '在仓库目录里运行：'),
+        el('pre', { class: 'pd-pre' }, 'python3 tools/review.py --serve-only'),
+        el('p', { class: 'sub' }, '然后打开 http://127.0.0.1:8787/#playbook。去掉 --serve-only 会同时重新生成任务复盘。')))
+      return
+    }
     const items = pb.items
     const counts = Object.fromEntries(PB_CATS.map(([c]) => [c, items.filter(x => x.category === c).length]))
     const q = pbQuery.trim().toLowerCase()
@@ -1057,15 +1341,11 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
       pbEdit ? pbEditor() : '',
       el('div', { class: 'pb-tools' },
         el('input', { class: 'field pb-search', type: 'search', placeholder: '搜索标题或内容', value: pbQuery, oninput: e => { pbQuery = e.target.value; renderPlaybookList() } }),
-        pbEdit ? null : el('button', { class: 'btn-sm', type: 'button', onclick: () => draftToPlaybook({}) }, '新建'),
-        el('span', { class: 'pb-actions pb-io' },
-          items.length ? el('button', { class: 'link', type: 'button', onclick: exportPlaybook }, '导出备份') : null,
-          el('label', { class: 'link', title: '导入以前导出的备份，或本机服务存的 playbook.json' }, '导入',
-            el('input', { type: 'file', accept: '.json,application/json', hidden: '', onchange: e => { if (e.target.files[0]) importPlaybook(e.target.files[0]); e.target.value = '' } })))),
+        pbEdit ? null : el('button', { class: 'btn-sm', type: 'button', onclick: () => draftToPlaybook({}) }, '新建')),
       el('div', { class: 'seg small cats', role: 'group', 'aria-label': '分类' },
         ...[['', `全部 ${items.length}`], ...PB_CATS.filter(([c]) => counts[c]).map(([c]) => [c, `${c} ${counts[c]}`])].map(([id, label]) =>
           el('button', { type: 'button', 'aria-pressed': String(id === pbCat), onclick: () => { pbCat = id; renderPlaybook() } }, label))),
-      pbMsg ? el('div', { class: `msg${/失败|不允许/.test(pbMsg) ? ' err' : ''}` }, pbMsg) : '',
+      pbMsg ? el('div', { class: 'msg err' }, pbMsg) : '',
       el('div', { id: 'pb-list', class: 'pb-list' }, ...pbCards(shown, items.length)))
   }
   function renderPlaybookList() {
@@ -1074,7 +1354,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     $('pb-list').replaceChildren(...pbCards(shown, pb.items.length))
   }
   function pbCards(shown, total) {
-    if (!total) return [el('div', { class: 'empty' }, '还没有内容。可以在 AI 玩法里点“存入方法库”，也可以直接新建。内容只存在这个浏览器里，换浏览器或手机要先导出再导入。')]
+    if (!total) return [el('div', { class: 'empty' }, '还没有内容。可以在任务复盘的“反复出现的问题”、任务路径或 AI 玩法里点“存入方法库”，也可以直接新建。')]
     if (!shown.length) return [el('div', { class: 'empty' }, '没有符合条件的内容')]
     return shown.map(it => el('div', { class: 'pb-card' },
       el('div', { class: 'rule-head' }, el('b', {}, it.title || '（无标题）'),
@@ -1120,7 +1400,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
   }
 
   // ================= 页面切换 =================
-  const VIEWS = [['overview', '总览'], ['intel', 'AI 情报'], ['playground', 'AI 玩法'], ['usage', 'AI 用量'], ['playbook', '方法库']]
+  const VIEWS = [['overview', '总览'], ['intel', 'AI 情报'], ['playground', 'AI 玩法'], ['usage', '使用分析'], ['review', '任务复盘'], ['playbook', '方法库']]
   let view = 'overview'
   let intelReady = false
   $('nav').replaceChildren(...VIEWS.map(([id, label]) => el('a', { href: `#${id}`, 'data-id': id, 'aria-pressed': 'false' }, label)))
@@ -1130,20 +1410,21 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     for (const s of document.querySelectorAll('.view')) s.hidden = s.dataset.view !== view
     for (const a of $('nav').children) a.setAttribute('aria-pressed', String(a.dataset.id === view))
     if (view === 'usage') drawChart()
-    if (view === 'playbook') renderPlaybook()
+    if (view === 'review' && !rv) loadReview()
+    if (['playbook', 'review'].includes(view)) { if (!pbTried) { pbTried = true; loadPlaybook() } else renderPlaybook() }
     if (view === 'playground' && !playItems) { renderPlayControls(); loadPlay() }
-    if ((view === 'intel' || view === 'overview') && !intelReady) { intelReady = true; renderIntelControls(); renderIntel(); renderOverviewIntel(); renderOverviewPlay() }
+    if ((view === 'intel' || view === 'overview') && !intelReady) { intelReady = true; renderIntelControls(); renderIntel(); renderOverviewIntel() }
   }
   addEventListener('hashchange', () => { showView(); scrollTo(0, 0) })
 
   // ================= 命令面板（Ctrl/⌘ + K） =================
-  // 搜页面、操作、方法库、已经读到的资讯和 GitHub 项目
+  // 搜页面、操作、方法库、已经读到的资讯和本机任务
   let cmdSel = 0
   let cmdHits = []
   function cmdSources() {
     const out = VIEWS.map(([id, label]) => ({ group: '页面', label, run: () => { location.hash = `#${id}` } }))
     out.push({ group: '操作', label: '切换深浅色', run: () => $('theme').click() },
-      { group: '操作', label: '刷新数据', run: () => { for (const k in intelCache) delete intelCache[k]; picksP = null; loadUsage(); if (intelReady) { renderIntel(); renderOverviewIntel(); renderOverviewPlay() } if (playItems) loadPlay() } })
+      { group: '操作', label: '刷新数据', run: () => { for (const k in intelCache) delete intelCache[k]; loadUsage(); if (intelReady) { renderIntel(); renderOverviewIntel() } if (playItems) loadPlay() } })
     for (const it of pb?.items || []) out.push({ group: '方法库', label: it.title || '（无标题）', hint: it.category, text: it.text,
       run: () => { pbQuery = it.title; pbCat = ''; location.hash = '#playbook'; renderPlaybook() } })
     // 只搜这次已经读到的资讯，不额外请求
@@ -1157,6 +1438,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     }
     out.push(...news.values())
     for (const x of playItems?.repos || []) out.push({ group: 'GitHub 项目', label: x.title, hint: x.job, text: x.summary, run: () => open(x.url, '_blank', 'noopener') })
+    if (rv) for (const t of rvTasks()) out.push({ group: '任务', label: t.title, hint: t.project, run: () => { location.hash = '#review'; openTask(t.id) } })
     return out
   }
   function cmdSearch(q) {
