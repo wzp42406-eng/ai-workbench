@@ -8,6 +8,8 @@
   结果写到 ~/.ai-workbench/review.json（仓库外），由它起的 127.0.0.1 服务以 `/review.local.json` 提供给页面。
   同一个服务读写方法库 ~/.ai-workbench/playbook.json（`/playbook.local.json`，PUT 要求 `X-Workbench: 1` 和本机 Host，防止别的网站跨域写入）。
   `--serve-only` 只开服务不重新分析。
+  也读“下载”文件夹（`--export-dir` 可改，`--no-exports` 关掉）里 ChatGPT / Claude 官方导出的压缩包或解压后的文件夹，每家只用最新一份，只取用户消息；
+  Prompt Doctor 的“最近的提问”就用这份数据，公开网站上读不到时只显示怎么在本机运行。
   默认把长对话交给本机 Kimi CLI（`--no-kimi` 关掉，没装时自动跳过）（`tools/kimi/agent.yaml`，不带工具），结果缓存在 ~/.ai-workbench/kimi-cache.json。
 - `data.json`：用量数据，由本机脚本每小时生成并推送。**不要手改、不要改字段结构**，页面只读。
   - `periods.{day,week,month,year,all}`：各区间合计，`all` 含全部历史。
@@ -21,6 +23,8 @@
 - 桌面对话没有 Token；终端 Token 是实际值；网页 Token 是估算。
 - AI 情报在浏览器里直接读 AIHOT 公开 API（https://aihot.news/api/v1，字段见其 openapi-v1.json），
   不把内容存进仓库或 localStorage（AIHOT 条款不允许公开副本），不使用 AIHOT 的名字和 Logo 做品牌。
+- AI 情报的“今日推荐”从最近 24 小时精选里按 AIHOT 评分取 5-10 条（不低于最高分的 80%），评分不够时沿用 AIHOT 的顺序，不自己编分数。
+- AI 玩法只放能直接上手的：GitHub 公开搜索里最近新建、按星数排序的 AI 项目（浏览器直接请求，结果在 localStorage `wb-gh-cache` 缓存 6 小时），加 AIHOT 本周教程里有开源地址或上手步骤的。
 - AI 玩法的收藏、已尝试、备注存在 localStorage（`wb-play-marks`），存条目 id、标题、状态、备注和原文链接（Peter 同意存标题），不存摘要。
 - Prompt Doctor 只做规则检查，不调模型、不保存输入。
 - 任务复盘的数据（含对话原文）永远不能进仓库或公开网站；只保存用户消息，不保存 AI 回复；归类要附原文依据，Kimi 给的引用对不上原文就丢掉。
