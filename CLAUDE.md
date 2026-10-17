@@ -3,7 +3,7 @@
 个人 AI 工作台：AI 情报、AI 玩法、AI 用量、方法库，Ctrl/⌘+K 打开命令面板。GitHub Pages 静态部署，没有后端。
 
 ## 文件
-- `index.html`：整个页面（样式和脚本都在里面），用 `#overview` `#intel` `#playground` `#usage` `#playbook` 切换视图。
+- `index.html`：整个页面（样式和脚本都在里面），左侧导航栏（电脑上可收起，状态存 localStorage `wb-side`；手机上从左边滑出），用 `#overview` `#intel` `#playground` `#usage` `#playbook` 切换视图。
 - `tools/picks.py` + `.github/workflows/picks.yml`：每天北京时间 7 点找最近 30 天新建的 AI 项目，读 README，用 Claude（仓库 Secret `ANTHROPIC_API_KEY`，
   模型可用 Variable `PICKS_MODEL` 改，默认 claude-opus-5-5）翻译简介并总结“能做什么、对 Peter 的用处、怎么上手、适合度 1-5”，
   结果 `picks.json` 强推到 `picks` 分支（只留一份，不碰 main），页面从 raw.githubusercontent.com 读。没有 Key 时只输出项目列表、没有中文总结。
