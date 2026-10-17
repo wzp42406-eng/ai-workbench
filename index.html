@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>月之工作台</title>
-<meta name="description" content="个人 AI 工作台：AI 情报、AI 使用分析、Prompt Doctor。">
+<meta name="description" content="个人 AI 工作台：AI 情报、AI 玩法、AI 使用分析、任务复盘、方法库。">
 <style>
 :root {
   color-scheme: light;
@@ -198,29 +198,15 @@ a.link { text-decoration: none; }
 .chart-filters { display: flex; align-items: center; gap: 10px 16px; flex-wrap: wrap; margin: 6px 0 4px; }
 .chart .missing { stroke: var(--line); stroke-width: 2; stroke-dasharray: 2 2; }
 
-/* Prompt Doctor */
-.pd-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 24px; align-items: start; }
-textarea.pd-input { min-height: 220px; }
-.dims { display: grid; gap: 6px; }
-.dim { display: grid; grid-template-columns: 44px 52px minmax(0, 1fr); gap: 8px; align-items: baseline; padding: 7px 10px; border: 1px solid var(--line-2); border-radius: 9px; font-size: 13px; }
-.dim .dn { font-weight: 600; }
-.dim .ds { font-size: 12px; }
-.dim .dh { color: var(--ink-3); font-size: 12.5px; }
-.dim.clear .ds { color: var(--good); }
-.dim.partial .ds { color: var(--warn); }
-.dim.missing .ds { color: var(--bad); }
-.dim.na { opacity: 0.6; }
-.dim.na .ds { color: var(--ink-3); }
 .pd-pre { white-space: pre-wrap; word-break: break-word; margin: 0; background: var(--bg); border: 1px solid var(--line-2); border-radius: 10px; padding: 12px 14px; font: 13px/1.65 ui-monospace, "SF Mono", Menlo, monospace; color: var(--ink-2); max-height: 360px; overflow: auto; }
 
 @media (max-width: 980px) {
-  .overview, .pd-grid { grid-template-columns: 1fr; }
+  .overview { grid-template-columns: 1fr; }
 }
 @media (max-width: 560px) {
   header.top { gap: 10px; }
   .tabs { order: 3; width: 100%; overflow-x: auto; }
   .tabs a { flex: none; padding: 5px 10px; font-size: 12.5px; }
-  .dim { grid-template-columns: 40px 48px minmax(0, 1fr); }
 }
 /* 任务复盘 */
 .rv-empty { max-width: 640px; color: var(--ink-2); line-height: 1.7; }
@@ -289,11 +275,6 @@ textarea.pd-input { min-height: 220px; }
 .pb-editor { display: grid; gap: 8px; border: 1px solid var(--line); border-radius: 12px; padding: 14px; margin-bottom: 14px; background: var(--bg); }
 .pb-row { display: grid; grid-template-columns: minmax(0, 1fr) 120px 120px; gap: 8px; }
 textarea.pb-area { min-height: 140px; }
-.pd-save { margin-top: 12px; }
-.pd-recent { margin-top: 26px; border-top: 1px solid var(--line-2); padding-top: 4px; }
-.pd-recent .news-title { font-weight: 400; overflow-wrap: anywhere; }
-.pd-recent .news-item { align-items: flex-start; }
-.pd-recent .btn-sm { flex: none; }
 @media (max-width: 560px) { .pb-row { grid-template-columns: 1fr 1fr; } .pb-row input { grid-column: 1 / -1; } .pb-list { grid-template-columns: 1fr; } }
 /* AI 玩法 */
 .play-jump { display: flex; flex-wrap: wrap; gap: 2px 4px; margin: 4px 0 -8px; }
@@ -351,13 +332,6 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
           <div class="panel-head"><h2>我的 AI 使用<span>今日</span></h2><a class="link" href="#usage">详细 →</a></div>
           <div class="mini" id="ov-usage"><div class="empty">正在读取…</div></div>
         </div>
-        <div class="panel ov-doctor">
-          <div class="panel-head"><h2>Prompt Doctor<span>提问优化</span></h2></div>
-          <form id="ov-doctor-form" class="custom">
-            <textarea class="field" name="text" placeholder="粘贴一个准备发给 AI 的问题"></textarea>
-            <div class="row-end"><span class="msg">只在这个页面里分析，不保存</span><button class="btn-sm" type="submit">诊断</button></div>
-          </form>
-        </div>
       </div>
     </section>
 
@@ -409,25 +383,6 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     </section>
 
 
-    <!-- ==================== Prompt Doctor ==================== -->
-    <section class="panel view" data-view="doctor" aria-labelledby="pd-h">
-      <div class="panel-head">
-        <h2 id="pd-h">Prompt Doctor<span>提问诊断</span></h2>
-        <span class="sub">按规则检查，不调用模型、不保存输入</span>
-      </div>
-      <div class="pd-grid">
-        <div>
-          <textarea class="field pd-input" id="pd-input" placeholder="粘贴一个准备发给 AI 的问题，例如：帮我做一个记账小程序"></textarea>
-          <div class="row-end"><span class="msg" id="pd-meta"></span><button class="btn-sm" id="pd-clear" type="button">清空</button></div>
-        </div>
-        <div>
-          <div class="section-title" style="margin-top:0"><span>六个维度</span><span id="pd-level"></span></div>
-          <div class="dims" id="pd-dims"><div class="empty">输入问题后自动检查</div></div>
-        </div>
-      </div>
-      <div id="pd-out"></div>
-      <div id="pd-recent"></div>
-    </section>
     <!-- ==================== AI 玩法 ==================== -->
     <section class="panel view" data-view="playground" aria-labelledby="play-h">
       <div class="panel-head">
@@ -1031,7 +986,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     } catch (e) { intelError(box, e) }
   }
 
-  // ================= Prompt Doctor（规则检查，不调模型） =================
+  // ================= 提问规则（任务复盘的“提问习惯”用，只做关键词检查，不调模型） =================
   // 每个维度用几组关键词判断：命中 2 组以上算明确，1 组算部分。任务越复杂，要求的维度越多。
   const DIMS = [
     { id: 'goal', name: '目标', hint: '要完成什么、做到什么程度',
@@ -1062,7 +1017,6 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     return COMPLEX.test(t) ? 'complex' : 'medium'
   }
   const NEEDED = { simple: ['goal'], medium: ['goal', 'output'], complex: ['goal', 'context', 'constraints', 'output', 'criteria'] }
-  const LEVEL_TEXT = { simple: '简单任务：说清目标就够了', medium: '一般任务：目标和输出要清楚', complex: '复杂任务：建议补齐目标、背景、约束、输出和验收' }
   const STATE = { clear: '明确', partial: '部分', missing: '缺失', na: '不需要' }
 
   function diagnose(text) {
@@ -1075,31 +1029,6 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     })
     return { level, dims }
   }
-  function skeleton(text, r) {
-    const lines = [text.trim(), '']
-    for (const d of r.dims) if (d.needed && d.state !== 'clear') lines.push(`【${d.name}】${d.ask}`)
-    return lines.join('\n').trim()
-  }
-  function metaPrompt(text, r) {
-    const gaps = r.dims.filter(d => d.needed && d.state !== 'clear').map(d => `${d.name}（${STATE[d.state]}）`)
-    return [
-      '请帮我优化下面这个准备发给 AI 的提问。',
-      '',
-      '<原始问题>',
-      text.trim(),
-      '</原始问题>',
-      '',
-      `规则检查的结果：这是一个${({ simple: '简单', medium: '一般', complex: '复杂' })[r.level]}任务${gaps.length ? `，可能不够清楚的地方：${gaps.join('、')}` : '，主要信息已经齐了'}。这只是关键词检查，请你自己判断哪些真的会影响结果。`,
-      '',
-      '请按顺序输出：',
-      '1. 只有缺了会明显影响结果的信息，才列出要我补充的问题（最多 3 个）；信息够了就跳过这一步。',
-      '2. 精简版：保留完成任务所需的最少信息。',
-      r.level === 'simple' ? '3. 简单任务不需要完整版，直接说明即可。' : '3. 完整版：包含目标、背景、约束、输出形式和验收标准，可以直接执行。',
-      '4. 用几句话说明改了什么、为什么改，删掉了哪些、补了哪些。',
-      '',
-      '不要为了凑齐格式添加我没提到的要求；不确定的地方用【待确认】标出来。',
-    ].join('\n')
-  }
   const copyBtn = (label, getText) => {
     const b = el('button', { class: 'btn-sm', type: 'button', onclick: async () => {
       try { await navigator.clipboard.writeText(getText()); b.textContent = '已复制' } catch { b.textContent = '复制失败，请手动选择' }
@@ -1107,99 +1036,6 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     } }, label)
     return b
   }
-  function renderDoctor() {
-    const text = $('pd-input').value
-    const t = text.trim()
-    $('pd-meta').textContent = t ? `${[...t].length} 字` : ''
-    if (!t) {
-      $('pd-level').textContent = ''
-      $('pd-dims').replaceChildren(el('div', { class: 'empty' }, '输入问题后自动检查'))
-      $('pd-out').replaceChildren()
-      return
-    }
-    const r = diagnose(t)
-    $('pd-level').textContent = LEVEL_TEXT[r.level]
-    $('pd-dims').replaceChildren(...r.dims.map(d => el('div', { class: `dim ${d.state}` },
-      el('span', { class: 'dn' }, d.name),
-      el('span', { class: 'ds' }, STATE[d.state]),
-      el('span', { class: 'dh' }, d.state === 'missing' || (d.needed && d.state === 'partial') ? d.ask : d.hint))))
-    const sk = skeleton(t, r), mp = metaPrompt(t, r)
-    const gaps = r.dims.some(d => d.needed && d.state !== 'clear')
-    $('pd-out').replaceChildren(
-      gaps ? el('div', { class: 'pd-block' },
-        el('div', { class: 'section-title' }, el('span', {}, '补充骨架 · 在原问题后面补上这几行再发'), copyBtn('复制', () => sk)),
-        el('pre', { class: 'pd-pre' }, sk)) : '',
-      el('div', { class: 'pd-block' },
-        el('div', { class: 'section-title' }, el('span', {}, '优化请求 · 复制到 Claude，让它给出精简版和完整版'), copyBtn('复制', () => mp)),
-        el('pre', { class: 'pd-pre' }, mp)),
-      pb ? el('div', { class: 'row-end pd-save' }, el('span', { class: 'msg' }, '这个问题以后还会用到？'),
-        pbButton('存入方法库', () => ({ kind: 'prompt', title: t.split('\n')[0].slice(0, 40), text: gaps ? sk : t, source: 'Prompt Doctor' }))) : '',
-      related(t))
-  }
-  // 方法库里和这个问题相关的内容：只给简短推荐，不自动塞进提示词
-  function related(t) {
-    const hits = relatedMethods(t)
-    if (!hits.length) return ''
-    return el('div', { class: 'pd-block' },
-      el('div', { class: 'section-title' }, el('span', {}, '方法库里可能有用'), el('a', { class: 'link', href: '#playbook' }, '打开方法库 →')),
-      ...hits.map(it => el('div', { class: 'rule-text' }, el('span', {}, el('b', {}, `${it.title}（${PB_KINDS[it.kind] || it.kind}）`), `：${it.text.slice(0, 120)}${it.text.length > 120 ? '…' : ''}`),
-        copyBtn('复制', () => { markUsed(it); return it.text }))))
-  }
-  // 最近的提问：读本机复盘数据里每个对话的第一条消息（Claude Code、Codex，以及 ChatGPT / Claude 导出），不用手动复制
-  const PD_RECENT = [['gaps', '可以写得更清楚的'], ['all', '全部']]
-  let pdRecentShow = 'gaps'
-  let pdProvider = ''
-  function renderPdRecent() {
-    const box = $('pd-recent')
-    if (!rvLoaded) return box.replaceChildren()
-    if (!rv) return box.replaceChildren(el('div', { class: 'pd-recent' },
-      el('div', { class: 'section-title' }, el('span', {}, '最近的提问 · 自动读取')),
-      el('p', { class: 'sub' }, '想不用复制就看到你最近在 ChatGPT、Claude、Claude Code 和 Codex 里问了什么，需要在自己电脑上运行任务复盘（数据只在本机，不会出现在公开网站上）：'),
-      el('pre', { class: 'pd-pre' }, 'python3 tools/review.py'),
-      el('p', { class: 'sub' }, '然后打开 http://127.0.0.1:8787/#doctor。ChatGPT 和 Claude 对话要先在它们的设置里导出数据，压缩包留在“下载”文件夹即可，脚本会自己找。')))
-    const since = addDays(dayKey(), -6)
-    const all = rv.tasks.filter(t => dayKey(new Date(t.started_at)) >= since).map(t => ({ t, r: diagnose(t.turns[0].text) }))
-    const gapsOf = r => r.dims.filter(d => d.needed && d.state !== 'clear')
-    const providers = [...new Set(all.map(x => x.t.provider))]
-    if (pdProvider && !providers.includes(pdProvider)) pdProvider = ''
-    const mine = all.filter(x => !pdProvider || x.t.provider === pdProvider)
-    const withGaps = mine.filter(x => gapsOf(x.r).length)
-    const shown = (pdRecentShow === 'gaps' ? withGaps : mine).slice(0, 12)
-    const miss = {}
-    for (const x of withGaps) for (const d of gapsOf(x.r)) miss[d.name] = (miss[d.name] || 0) + 1
-    const top = Object.entries(miss).sort((a, b) => b[1] - a[1])[0]
-    const stale = ['chatgpt', 'claude_ai'].map(k => [k, rv.sources?.[k]]).filter(([, e]) => e && (Date.now() - new Date(e.exported_at)) > 7 * 864e5)
-      .map(([k, e]) => `${PROVIDER[k]} 的导出是 ${fmtDay(e.exported_at).split(' ')[0]} 的，之后的对话要重新导出才看得到`)
-    const missing = ['chatgpt', 'claude_ai'].filter(k => rv.sources && k in rv.sources && !rv.sources[k]).map(k => PROVIDER[k])
-    const seg = (items, cur, set) => { const d = el('div', { class: 'seg small', role: 'group' }); segButtons(d, items, cur, id => { set(id); renderPdRecent() }); return d }
-    box.replaceChildren(el('div', { class: 'pd-recent' },
-      el('div', { class: 'section-title' }, el('span', {}, '最近 7 天的提问 · 自动读取'),
-        el('span', {}, mine.length ? `${mine.length} 个对话，${withGaps.length} 个开头可以写得更清楚${top ? `，最常缺「${top[0]}」` : ''}` : '')),
-      el('div', { class: 'play-tools' },
-        seg(PD_RECENT, pdRecentShow, id => { pdRecentShow = id }),
-        providers.length > 1 ? seg([['', '全部'], ...providers.map(k => [k, PROVIDER[k] || k])], pdProvider, id => { pdProvider = id }) : null),
-      shown.length ? el('ol', { class: 'news' }, ...shown.map(({ t, r }) => {
-        const first = t.turns[0].text, gaps = gapsOf(r)
-        return el('li', { class: 'news-item' },
-          el('div', { class: 'news-main' },
-            el('div', { class: 'news-title' }, first.length > 120 ? first.slice(0, 120) + '…' : first),
-            el('div', { class: 'news-meta' }, el('span', {}, PROVIDER[t.provider] || t.provider), el('span', {}, fmtDay(t.started_at)),
-              el('span', {}, ({ simple: '简单', medium: '一般', complex: '复杂' })[r.level] + '任务'),
-              gaps.length ? el('span', {}, `缺 ${gaps.map(d => d.name).join('、')}`) : el('span', {}, '主要信息齐了'),
-              t.turns.length > 1 ? el('span', {}, `返工 ${revCount(t)} 次`) : null)),
-          el('button', { class: 'btn-sm', type: 'button', onclick: () => { $('pd-input').value = first; renderDoctor(); scrollTo({ top: 0, behavior: 'smooth' }) } }, '诊断'))
-      })) : el('div', { class: 'empty' }, mine.length ? '最近 7 天的提问开头都写得挺清楚' : '最近 7 天没有对话记录'),
-      el('div', { class: 'foot' }, ['数据来自本机的任务复盘，生成于 ' + fmtDay(rv.generated_at) + '，重新运行 python3 tools/review.py 会更新。',
-        missing.length ? `没找到 ${missing.join('、')} 的导出。` : '', ...stale.map(x => x + '。')].join(''))))
-  }
-  $('pd-input').addEventListener('input', renderDoctor)
-  $('pd-clear').addEventListener('click', () => { $('pd-input').value = ''; renderDoctor(); $('pd-input').focus() })
-  $('ov-doctor-form').addEventListener('submit', e => {
-    e.preventDefault()
-    $('pd-input').value = new FormData(e.target).get('text')
-    location.hash = '#doctor'
-    renderDoctor()
-  })
 
   // ================= 任务复盘（只读本机生成的 review.local.json） =================
   // 数据由 tools/review.py 在本机生成，经 127.0.0.1 的本机服务提供；公开网站上没有这个文件。
@@ -1247,7 +1083,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
       rv = null
     }
     rvLoaded = true
-    renderReview(); renderPdRecent()
+    renderReview()
   }
   function rvTasks() {
     if (!rv) return []
@@ -1333,7 +1169,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     }
     return el('div', {}, title,
       bars(rows.map(r => ({ ...r, label: `缺${r.label}` })), 0),
-      el('div', { class: 'qsub' }, '只统计这类任务需要的维度；按关键词检查，和 Prompt Doctor 用的是同一套规则。'),
+      el('div', { class: 'qsub' }, '只统计这类任务需要的维度；按关键词检查，看目标、背景、约束、输出、验收、参考六项。'),
       insight)
   }
 
@@ -1415,7 +1251,6 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
           el('div', { class: 'step-text' }, turn.text, turn.length > turn.text.length ? el('span', { class: 'sub' }, `（共 ${turn.length} 字，只保留前 ${turn.text.length} 字）`) : null),
           i === 0 ? el('div', { class: 'step-diag' },
             ...first.dims.filter(d => d.needed).map(d => el('span', { class: `chip ${d.state}` }, `${d.name}${STATE[d.state]}`)),
-            el('button', { class: 'link', type: 'button', onclick: () => { $('pd-input').value = turn.text; location.hash = '#doctor'; renderDoctor() } }, '用 Prompt Doctor 看看 →'),
             pb ? pbButton('存入方法库', { kind: 'prompt', title: t.title.slice(0, 40), text: turn.text, source: `任务复盘：${t.title}（返工 ${revCount(t)} 次${turn.length > turn.text.length ? '，原文较长只存了开头' : ''}）` }) : null) : null)
       })))
   }
@@ -1465,7 +1300,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
       pb = await r.json()
       if (!Array.isArray(pb.items)) pb = { items: [] }
     } catch { pb = null }
-    renderPlaybook(); renderDoctor(); if (rv) renderReview()
+    renderPlaybook(); if (rv) renderReview()
   }
   async function savePlaybook() {
     const r = await fetch('playbook.local.json', { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Workbench': '1' }, body: JSON.stringify(pb) })
@@ -1480,22 +1315,6 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
   }
   const pbButton = (label, d) => el('button', { class: 'btn-sm', type: 'button', onclick: () => draftToPlaybook(typeof d === 'function' ? d() : d) }, label)
 
-  function bigrams(text) {
-    const s = new Set(), t = text.toLowerCase().replace(/\s+/g, '')
-    for (let i = 0; i < t.length - 1; i++) s.add(t.slice(i, i + 2))
-    return s
-  }
-  // 给新问题找相关的方法：同分类加分，再看两字词重合度；不够相关就不推荐
-  function relatedMethods(text, n = 2) {
-    if (!pb?.items.length || text.length < 6) return []
-    const cat = guessCat(text), q = bigrams(text)
-    return pb.items.map(it => {
-      const b = bigrams(`${it.title} ${it.text}`)
-      let common = 0
-      for (const g of q) if (b.has(g)) common++
-      return { it, score: common / Math.max(8, q.size) + (it.category === cat ? 0.15 : 0) }
-    }).filter(x => x.score >= 0.25).sort((a, b) => b.score - a.score).slice(0, n).map(x => x.it)
-  }
   async function markUsed(it) {
     it.uses = (it.uses || 0) + 1
     it.used_at = new Date().toISOString()
@@ -1535,7 +1354,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     $('pb-list').replaceChildren(...pbCards(shown, pb.items.length))
   }
   function pbCards(shown, total) {
-    if (!total) return [el('div', { class: 'empty' }, '还没有内容。可以在任务复盘的“反复出现的问题”、任务路径或 Prompt Doctor 里点“存入方法库”，也可以直接新建。')]
+    if (!total) return [el('div', { class: 'empty' }, '还没有内容。可以在任务复盘的“反复出现的问题”、任务路径或 AI 玩法里点“存入方法库”，也可以直接新建。')]
     if (!shown.length) return [el('div', { class: 'empty' }, '没有符合条件的内容')]
     return shown.map(it => el('div', { class: 'pb-card' },
       el('div', { class: 'rule-head' }, el('b', {}, it.title || '（无标题）'),
@@ -1581,7 +1400,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
   }
 
   // ================= 页面切换 =================
-  const VIEWS = [['overview', '总览'], ['intel', 'AI 情报'], ['playground', 'AI 玩法'], ['usage', '使用分析'], ['doctor', 'Prompt Doctor'], ['review', '任务复盘'], ['playbook', '方法库']]
+  const VIEWS = [['overview', '总览'], ['intel', 'AI 情报'], ['playground', 'AI 玩法'], ['usage', '使用分析'], ['review', '任务复盘'], ['playbook', '方法库']]
   let view = 'overview'
   let intelReady = false
   $('nav').replaceChildren(...VIEWS.map(([id, label]) => el('a', { href: `#${id}`, 'data-id': id, 'aria-pressed': 'false' }, label)))
@@ -1591,15 +1410,15 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     for (const s of document.querySelectorAll('.view')) s.hidden = s.dataset.view !== view
     for (const a of $('nav').children) a.setAttribute('aria-pressed', String(a.dataset.id === view))
     if (view === 'usage') drawChart()
-    if ((view === 'review' || view === 'doctor') && !rv) loadReview()
-    if (['playbook', 'doctor', 'review'].includes(view)) { if (!pbTried) { pbTried = true; loadPlaybook() } else renderPlaybook() }
+    if (view === 'review' && !rv) loadReview()
+    if (['playbook', 'review'].includes(view)) { if (!pbTried) { pbTried = true; loadPlaybook() } else renderPlaybook() }
     if (view === 'playground' && !playItems) { renderPlayControls(); loadPlay() }
     if ((view === 'intel' || view === 'overview') && !intelReady) { intelReady = true; renderIntelControls(); renderIntel(); renderOverviewIntel() }
   }
   addEventListener('hashchange', () => { showView(); scrollTo(0, 0) })
 
   // ================= 命令面板（Ctrl/⌘ + K） =================
-  // 搜页面、操作、方法库、已经读到的资讯和本机任务；都没有就把输入交给 Prompt Doctor
+  // 搜页面、操作、方法库、已经读到的资讯和本机任务
   let cmdSel = 0
   let cmdHits = []
   function cmdSources() {
@@ -1632,8 +1451,6 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
       if (!words.every(w => label.includes(w) || rest.includes(w))) return null
       return { x, s: (label.startsWith(q) ? 3 : label.includes(q) ? 2 : words.every(w => label.includes(w)) ? 1 : 0) + (x.group === '页面' ? 0.5 : 0) }
     }).filter(Boolean).sort((a, b) => b.s - a.s).slice(0, 30).map(h => h.x)
-    hit.push({ group: '提问', label: `用 Prompt Doctor 优化：${q.length > 40 ? q.slice(0, 40) + '…' : q}`,
-      run: () => { $('pd-input').value = $('cmd-input').value.trim(); location.hash = '#doctor'; renderDoctor() } })
     return hit
   }
   function renderCmd() {
