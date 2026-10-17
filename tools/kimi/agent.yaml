@@ -1,0 +1,7 @@
+# 给 tools/review.py 用的 Kimi CLI agent：不带任何工具，只读输入文本、输出 JSON，
+# 这样 --print 模式自动批准也不会去执行命令或读写文件。
+version: 1
+agent:
+  name: task-review
+  system_prompt_path: ./system.md
+  tools: []

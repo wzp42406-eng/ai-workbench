@@ -222,6 +222,61 @@ textarea.pd-input { min-height: 220px; }
   .tabs a { flex: none; padding: 5px 10px; font-size: 12.5px; }
   .dim { grid-template-columns: 40px 48px minmax(0, 1fr); }
 }
+/* 任务复盘 */
+.rv-empty { max-width: 640px; color: var(--ink-2); line-height: 1.7; }
+.rv-empty p { margin: 0 0 8px; }
+.rv-hero { margin-bottom: 2px; }
+.rv-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; align-items: start; }
+.bars { display: grid; gap: 2px; }
+.bar-row { display: grid; grid-template-columns: 96px minmax(0, 1fr) 64px; gap: 10px; align-items: center; border: 0; background: none; padding: 5px 6px; border-radius: 7px; text-align: left; cursor: default; }
+.bar-row.on { background: var(--line-2); }
+.bar-row .bl { font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bar-row .bt { height: 8px; background: var(--line-2); border-radius: 4px; overflow: hidden; }
+.bar-row .bt i { display: block; height: 100%; border-radius: 4px; }
+.bar-row .bn { color: var(--ink-3); font-size: 12px; text-align: right; }
+.rv-sides { margin: 10px 0 4px; }
+.ai-note { background: var(--bg); border-radius: 10px; padding: 10px 12px; font-size: 13.5px; line-height: 1.65; margin-bottom: 8px; display: grid; gap: 4px; }
+.insight { margin-top: 14px; padding: 12px 14px; border: 1px solid var(--line-2); border-radius: 12px; display: grid; gap: 6px; font-size: 13.5px; line-height: 1.6; }
+.ev { display: grid; gap: 4px; }
+.ev-item { border: 0; background: none; padding: 0; text-align: left; color: var(--ink-2); font-size: 12.5px; cursor: pointer; }
+.ev-item:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.rule-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+.rule-card { border: 1px solid var(--line-2); border-radius: 12px; padding: 12px 14px; display: grid; gap: 8px; font-size: 13.5px; align-content: start; }
+.rule-head { display: flex; justify-content: space-between; gap: 8px; }
+.rule-text { display: flex; gap: 10px; align-items: flex-start; justify-content: space-between; background: var(--bg); border-radius: 9px; padding: 8px 10px; color: var(--ink-2); font-size: 12.5px; }
+.rule-text .btn-sm { flex: none; padding: 3px 10px; font-size: 12px; }
+.rv-tok { max-width: 420px; }
+.linklike { border: 0; background: none; padding: 0; text-align: left; cursor: pointer; font: inherit; color: inherit; }
+.linklike:hover { text-decoration: underline; text-underline-offset: 3px; }
+.tasks { border-top: 1px solid var(--line-2); }
+.task { border-bottom: 1px solid var(--line-2); scroll-margin-top: 12px; }
+.task-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 16px; width: 100%; border: 0; background: none; text-align: left; padding: 10px 4px; cursor: pointer; border-radius: 8px; }
+.task-row:hover { background: var(--hover); }
+.task-title { font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.task-meta { grid-column: 1; color: var(--ink-3); font-size: 12px; }
+.task-nums { grid-column: 2; grid-row: 1 / 3; align-self: center; color: var(--ink-2); font-size: 12.5px; white-space: nowrap; }
+.task.open .task-row { background: var(--line-2); }
+.journey { padding: 10px 4px 16px; }
+.steps { list-style: none; margin: 10px 0 0; padding: 0 0 0 14px; border-left: 2px solid var(--line-2); display: grid; gap: 14px; }
+.step { position: relative; }
+.step::before { content: ""; position: absolute; left: -20px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--panel); border: 2px solid var(--ink-3); }
+.step.rev::before { border-color: var(--warn); }
+.step-head { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
+.step-text { margin-top: 5px; white-space: pre-wrap; word-break: break-word; font-size: 13.5px; line-height: 1.65; color: var(--ink-2); max-height: 240px; overflow: auto; }
+.step-diag { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 6px; }
+.chip { --c: var(--ink-3); display: inline-block; font-size: 11.5px; padding: 1px 8px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--c) 45%, transparent); color: var(--c); white-space: nowrap; }
+.chip.clear { --c: var(--good); }
+.chip.partial { --c: var(--warn); }
+.chip.missing { --c: var(--bad); }
+.label-select { margin-left: auto; border: 1px solid var(--line); background: var(--panel); border-radius: 7px; padding: 2px 6px; font-size: 12px; color: var(--ink-3); }
+@media (max-width: 980px) { .rv-grid { grid-template-columns: 1fr; gap: 8px; } }
+@media (max-width: 560px) {
+  .task-row { grid-template-columns: 1fr; }
+  .task-nums { grid-column: 1; grid-row: auto; }
+  .bar-row { grid-template-columns: 80px minmax(0, 1fr) 56px; }
+  .label-select { margin-left: 0; }
+}
+
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 </head>
@@ -328,6 +383,17 @@ textarea.pd-input { min-height: 220px; }
         </div>
       </div>
       <div id="pd-out"></div>
+    </section>
+    <!-- ==================== 任务复盘 ==================== -->
+    <section class="panel view" data-view="review" aria-labelledby="rv-h">
+      <div class="panel-head">
+        <h2 id="rv-h">任务复盘<span>只在本机</span></h2>
+        <div class="head-right">
+          <span class="update" id="rv-status"></span>
+          <div class="seg" id="rv-range" role="group" aria-label="时间范围"></div>
+        </div>
+      </div>
+      <div id="rv-body"><div class="empty">正在读取…</div></div>
     </section>
   </div>
 </div>
@@ -861,8 +927,239 @@ textarea.pd-input { min-height: 220px; }
     renderDoctor()
   })
 
+  // ================= 任务复盘（只读本机生成的 review.local.json） =================
+  // 数据由 tools/review.py 在本机生成，经 127.0.0.1 的本机服务提供；公开网站上没有这个文件。
+  const SIDES = { model: ['模型没做好', '--s2'], user: ['表达或背景不足', '--s1'], scope: ['需求本身变了', '--s3'], shared: ['都有可能', '--s4'] }
+  const RV_RANGES = [['7', '近 7 天'], ['30', '近 30 天'], ['all', '全部']]
+  // 某类问题在 3 个以上任务里出现时，给出可以写进项目规则的一句话
+  const RULE_TIPS = {
+    missed: ['多次需要提醒模型“之前说过的要求”。', '做完后逐条对照我列出的要求自查，并在回复末尾列出每条要求的完成情况。'],
+    error: ['结果经常需要你指出报错或不生效。', '改完代码后先运行测试或打开页面验证，确认没有报错再告诉我完成，并说明怎么验证的。'],
+    clarify: ['经常需要解释“我的意思是……”。', '复杂任务开始前，先用两三句话复述你理解的目标和完成标准，等我确认后再动手。'],
+    context: ['经常在中途补充背景。', '（把你经常补充的背景写在这里，放进项目的 CLAUDE.md，例如项目用途、技术栈、目标用户）'],
+    format: ['输出形式经常需要调整。', '回复用中文，先给结论；需要我操作的步骤用编号列表；没有要求时不要超过 15 行。'],
+    added: ['任务进行中经常追加需求。', '开始前先列出这次要做和不做的内容，等我确认范围后再开始。'],
+    changed: ['任务进行中目标经常改变。', '开始前先列出这次要做和不做的内容，等我确认范围后再开始。'],
+  }
+  const OTHER_LABELS = { ack: '确认/继续', other: '其他追问' }
+  let rv = null
+  let rvRange = pick('wb-rv-range', RV_RANGES, '30')
+  let rvFilter = ''
+  let rvOpen = ''
+  let rvOverrides = store.get('rv-overrides', {})
+  const ruleName = k => rv?.rules.find(r => r.key === k)?.name || OTHER_LABELS[k] || k
+  const ruleSide = k => rv?.rules.find(r => r.key === k)?.side
+  // 归类优先级：你手动改的 > Kimi 的 > 关键词规则
+  const turnLabels = (t, i) => rvOverrides[t.id]?.[i] ?? t.ai?.turns?.[i]?.labels ?? t.turns[i].labels
+  const turnEvidence = (t, i) => t.ai?.turns?.[i] ? t.ai.turns[i].evidence : t.turns[i].evidence
+  const isRevision = labels => labels.some(l => l !== 'ack' && l !== 'other')
+  const revCount = t => t.turns.slice(1).filter((_, k) => isRevision(turnLabels(t, k + 1))).length
+  const median = xs => { if (!xs.length) return null; const s = [...xs].sort((a, b) => a - b), m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2 }
+  const pct = (a, b) => b ? `${Math.round(a / b * 100)}%` : '—'
+  const fmtDay = iso => { const d = new Date(iso); return `${d.getMonth() + 1}/${d.getDate()} ${pad2(d.getHours())}:${pad2(d.getMinutes())}` }
+  const PROVIDER = { claude_code: 'Claude Code', codex: 'Codex' }
+
+  segButtons($('rv-range'), RV_RANGES, rvRange, id => { rvRange = id; store.set('wb-rv-range', id); pressed($('rv-range'), id); renderReview() })
+
+  async function loadReview() {
+    try {
+      const r = await fetch('review.local.json', { cache: 'no-store' })
+      if (!r.ok) throw new Error(r.status)
+      rv = await r.json()
+      const ai = rv.tasks.filter(t => t.ai).length
+      $('rv-status').textContent = `生成于 ${fmtDay(rv.generated_at)}${ai ? ` · ${ai} 个任务由 Kimi 归类` : ''}${rv.kimi?.error ? ` · Kimi：${rv.kimi.error}` : ''}`
+    } catch {
+      rv = null
+    }
+    renderReview()
+  }
+  function rvTasks() {
+    if (!rv) return []
+    const since = rvRange === 'all' ? '' : addDays(dayKey(), -(+rvRange - 1))
+    return rv.tasks.filter(t => !since || dayKey(new Date(t.ended_at)) >= since)
+  }
+  function renderReview() {
+    const box = $('rv-body')
+    if (!rv) {
+      box.replaceChildren(el('div', { class: 'rv-empty' },
+        el('p', {}, '任务复盘需要读取你电脑上的 Claude Code 和 Codex 会话记录，所以只在本机运行，不会出现在公开网站上，也不会上传。'),
+        el('p', {}, '在仓库目录里运行：'),
+        el('pre', { class: 'pd-pre' }, 'python3 tools/review.py'),
+        el('p', { class: 'sub' }, '默认会把长对话交给本机的 Kimi CLI 归类和总结（只发你发出的消息，不发 AI 回复）；加 --no-kimi 可以关掉，没装 Kimi 时自动跳过。'),
+        el('p', { class: 'sub' }, '它会分析 ~/.claude/projects 和 ~/.codex/sessions，把结果写到 ~/.ai-workbench/review.json（仓库外面），然后打开 http://127.0.0.1:8787/#review。只保存你发出的消息和 Token 计数，不保存 AI 的回复，常见密钥会被隐藏。')))
+      return
+    }
+    const tasks = rvTasks()
+    if (!tasks.length) { box.replaceChildren(el('div', { class: 'empty' }, '这个时间范围里没有会话记录')); return }
+    box.replaceChildren(rvStats(tasks), el('div', { class: 'rv-grid' }, rvReasons(tasks), rvHabits(tasks)), rvRules(tasks), rvTokens(tasks), rvList(tasks))
+  }
+
+  function rvStats(tasks) {
+    const revised = tasks.filter(t => revCount(t) > 0)
+    const real = tasks.filter(t => t.tokens.measurement === 'real').map(t => t.tokens.total)
+    const stat = (k, v, sub) => el('div', {}, el('div', { class: 'k' }, k), el('div', { class: 'v num' }, v), sub ? el('div', { class: 'qsub' }, sub) : null)
+    return el('div', {},
+      el('div', { class: 'hero rv-hero' },
+        stat('任务', String(tasks.length), `Claude Code ${tasks.filter(t => t.provider === 'claude_code').length} · Codex ${tasks.filter(t => t.provider === 'codex').length}`),
+        stat('有返工的任务', pct(revised.length, tasks.length), `${revised.length} 个任务至少返工一次`),
+        stat('平均返工次数', (tasks.reduce((s, t) => s + revCount(t), 0) / tasks.length).toFixed(1), '每个任务'),
+        stat('每任务 Token 中位数', real.length ? fmtTokStr(median(real)) : '无记录', real.length ? `${real.length} 个任务有实际计量，不含缓存读取` : '')),
+      el('div', { class: 'foot' }, '一个会话算一个任务。“返工”是第二条起被识别为纠错、补充或改需求的消息；只按关键词归类，可能不准，可以在下面任务详情里逐条修改。没有用户确认完成的标记，所以这里不统计“成功率”。'))
+  }
+
+  function bars(rows, total, onClick, active) {
+    const max = Math.max(1, ...rows.map(r => r.n))
+    return el('div', { class: 'bars' }, ...rows.map(r => el('button', { type: 'button', class: `bar-row${active === r.key ? ' on' : ''}`, onclick: onClick ? () => onClick(r.key) : null, title: r.title || '' },
+      el('span', { class: 'bl' }, r.label),
+      el('span', { class: 'bt' }, el('i', { style: `width:${(r.n / max * 100).toFixed(1)}%;background:var(${r.color || '--ink-3'})` })),
+      el('span', { class: 'bn num' }, total ? `${r.n} · ${pct(r.n, total)}` : String(r.n)))))
+  }
+  function rvReasons(tasks) {
+    const count = {}, inTasks = {}
+    let followups = 0
+    for (const t of tasks) t.turns.forEach((_, i) => {
+      if (!i) return
+      followups++
+      for (const l of turnLabels(t, i)) { count[l] = (count[l] || 0) + 1; (inTasks[l] ||= new Set()).add(t.id) }
+    })
+    const rows = rv.rules.map(r => ({ key: r.key, label: r.name, n: count[r.key] || 0, color: SIDES[r.side][1], title: `出现在 ${inTasks[r.key]?.size || 0} 个任务里` }))
+      .filter(r => r.n).sort((a, b) => b.n - a.n)
+    const bySide = Object.entries(SIDES).map(([k, [name, color]]) => [name, color, rv.rules.filter(r => r.side === k).reduce((s, r) => s + (count[r.key] || 0), 0)])
+    return el('div', {},
+      el('div', { class: 'section-title' }, el('span', {}, '返工原因 · 按消息计'), el('span', {}, `追问 ${followups} 条，其中确认/继续 ${count.ack || 0}、其他 ${count.other || 0}`)),
+      rows.length ? bars(rows, 0, k => { rvFilter = rvFilter === k ? '' : k; renderReview() }, rvFilter) : el('div', { class: 'empty' }, '没有识别到返工'),
+      el('div', { class: 'legend rv-sides' }, ...bySide.map(([name, color, n]) => el('span', {}, el('i', { style: `background:var(${color})` }), `${name} ${n}`))),
+      el('div', { class: 'qsub' }, '点一行可以只看有这类返工的任务。“模型没做好”和“需求本身变了”不算你的问题。'))
+  }
+
+  function rvHabits(tasks) {
+    const firsts = tasks.map(t => ({ t, r: diagnose(t.turns[0].text) })).filter(x => x.r.level !== 'simple')
+    const title = el('div', { class: 'section-title' }, el('span', {}, '提问习惯 · 看每个任务的第一条消息'), el('span', {}, `${firsts.length} 个非简单任务`))
+    if (firsts.length < 3) return el('div', {}, title, el('div', { class: 'empty' }, '非简单任务少于 3 个，暂不分析'))
+    const rows = DIMS.map(d => {
+      const need = firsts.filter(x => x.r.dims.find(y => y.id === d.id).needed)
+      const miss = need.filter(x => x.r.dims.find(y => y.id === d.id).state !== 'clear')
+      return { key: d.id, label: d.name, n: miss.length, need: need.length, color: '--warn', miss }
+    }).filter(r => r.need)
+    const top = rows.slice().sort((a, b) => b.n / b.need - a.n / a.need)[0]
+    let insight = null
+    if (top && top.n) {
+      const has = firsts.filter(x => x.r.dims.find(y => y.id === top.key).state === 'clear').map(x => revCount(x.t))
+      const lacks = top.miss.map(x => revCount(x.t))
+      const avg = xs => (xs.reduce((a, b) => a + b, 0) / xs.length).toFixed(1)
+      const compare = has.length >= 3 && lacks.length >= 3
+        ? `第一条就写清${top.label}的任务平均返工 ${avg(has)} 次（${has.length} 个），没写清的平均 ${avg(lacks)} 次（${lacks.length} 个）。样本不多，只能参考。`
+        : `写清和没写清${top.label}的任务都要各有 3 个以上才比较返工次数，现在还不够。`
+      insight = el('div', { class: 'insight' },
+        el('div', {}, el('b', {}, `最常缺的是「${top.label}」：`), `${top.n} / ${top.need} 个任务的第一条消息里没写清。${DIMS.find(d => d.id === top.key).ask}`),
+        el('div', { class: 'qsub' }, compare),
+        el('div', { class: 'ev' }, ...top.miss.slice(0, 2).map(x => el('button', { type: 'button', class: 'ev-item', onclick: () => openTask(x.t.id) }, `“${x.t.turns[0].text.slice(0, 70)}${x.t.turns[0].text.length > 70 ? '…' : ''}”`))))
+    }
+    return el('div', {}, title,
+      bars(rows.map(r => ({ ...r, label: `缺${r.label}` })), 0),
+      el('div', { class: 'qsub' }, '只统计这类任务需要的维度；按关键词检查，和 Prompt Doctor 用的是同一套规则。'),
+      insight)
+  }
+
+  function rvRules(tasks) {
+    const cards = []
+    for (const [key, [what, rule]] of Object.entries(RULE_TIPS)) {
+      const hits = []
+      for (const t of tasks) t.turns.forEach((turn, i) => { if (i && turnLabels(t, i).includes(key) && !hits.some(h => h.t === t)) hits.push({ t, turn }) })
+      if (hits.length < 3) continue
+      cards.push({ key, n: hits.length, el: el('div', { class: 'rule-card' },
+        el('div', { class: 'rule-head' }, el('b', {}, ruleName(key)), el('span', { class: 'sub' }, `${hits.length} 个任务`)),
+        el('div', {}, what),
+        el('div', { class: 'ev' }, ...hits.slice(0, 3).map(h => el('button', { type: 'button', class: 'ev-item', onclick: () => openTask(h.t.id) }, `“${h.turn.text.slice(0, 60)}${h.turn.text.length > 60 ? '…' : ''}”`))),
+        el('div', { class: 'rule-text' }, el('span', {}, `可以考虑写进项目规则：${rule}`), copyBtn('复制', () => rule))) })
+    }
+    if (!cards.length) return el('div', {})
+    cards.sort((a, b) => b.n - a.n)
+    return el('div', {},
+      el('div', { class: 'section-title' }, el('span', {}, '反复出现的问题'), el('span', {}, '复制后由你决定是否放进 CLAUDE.md，这里不会自动修改任何规则')),
+      el('div', { class: 'rule-grid' }, ...cards.slice(0, 4).map(c => c.el)))
+  }
+
+  function rvTokens(tasks) {
+    const real = tasks.filter(t => t.tokens.measurement === 'real')
+    if (real.length < 2) return el('div', {})
+    const zero = real.filter(t => !revCount(t)).map(t => t.tokens.total)
+    const some = real.filter(t => revCount(t)).map(t => t.tokens.total)
+    const top = real.slice().sort((a, b) => b.tokens.total - a.tokens.total).slice(0, 5)
+    return el('div', {},
+      el('div', { class: 'section-title' }, el('span', {}, 'Token 效率'), el('span', {}, '只算有实际计量的任务，不含缓存读取')),
+      el('div', { class: 'stats rv-tok' },
+        el('div', { class: 'stat' }, el('div', { class: 'k' }, '没有返工的任务'), el('div', { class: 'v num' }, zero.length ? fmtTokStr(median(zero)) : '—'), el('div', { class: 'qsub' }, `中位数 · ${zero.length} 个任务`)),
+        el('div', { class: 'stat' }, el('div', { class: 'k' }, '有返工的任务'), el('div', { class: 'v num' }, some.length ? fmtTokStr(median(some)) : '—'), el('div', { class: 'qsub' }, `中位数 · ${some.length} 个任务`))),
+      el('div', { class: 'qsub' }, '任务大小本身差别很大，这两个数只能看个方向，不能说明返工让 Token 多了多少。'),
+      el('div', { class: 'section-title' }, el('span', {}, '最耗 Token 的任务')),
+      el('ol', { class: 'news compact' }, ...top.map(t => el('li', { class: 'news-item' },
+        el('div', { class: 'news-main' },
+          el('div', { class: 'news-title' }, el('button', { type: 'button', class: 'linklike', onclick: () => openTask(t.id) }, t.title)),
+          el('div', { class: 'news-meta' }, el('span', {}, fmtTokStr(t.tokens.total)), el('span', {}, `返工 ${revCount(t)} 次`), el('span', {}, `${t.turns.length} 条消息`), el('span', {}, `${t.active_minutes} 分钟`)))))))
+  }
+
+  function rvList(tasks) {
+    const shown = rvFilter ? tasks.filter(t => t.turns.some((_, i) => i && turnLabels(t, i).includes(rvFilter))) : tasks
+    return el('div', { id: 'rv-list' },
+      el('div', { class: 'section-title' }, el('span', {}, rvFilter ? `有「${ruleName(rvFilter)}」的任务` : '全部任务'),
+        rvFilter ? el('button', { class: 'link', type: 'button', onclick: () => { rvFilter = ''; renderReview() } }, '清除筛选') : el('span', {}, `${shown.length} 个`)),
+      el('div', { class: 'tasks' }, ...shown.slice(0, 200).map(t => el('div', { class: `task${rvOpen === t.id ? ' open' : ''}`, id: `task-${t.id}` },
+        el('button', { type: 'button', class: 'task-row', onclick: () => { rvOpen = rvOpen === t.id ? '' : t.id; renderReview() } },
+          el('span', { class: 'task-title' }, t.title),
+          el('span', { class: 'task-meta' }, [PROVIDER[t.provider], t.project, fmtDay(t.started_at)].filter(Boolean).join(' · ')),
+          el('span', { class: 'task-nums num' }, `${t.turns.length} 条 · 返工 ${revCount(t)} · ${t.tokens.measurement === 'real' ? fmtTokStr(t.tokens.total) : '无 Token 记录'}`)),
+        rvOpen === t.id ? journey(t) : null))))
+  }
+  function openTask(id) {
+    rvOpen = id; rvFilter = ''
+    renderReview()
+    $(`task-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
+  // 任务路径：每条消息一个节点，显示归类和依据，可以改
+  function journey(t) {
+    const start = new Date(t.started_at).getTime()
+    const first = diagnose(t.turns[0].text)
+    return el('div', { class: 'journey' },
+      t.ai?.summary ? el('div', { class: 'ai-note' }, el('b', {}, 'Kimi 总结：'), t.ai.summary,
+        t.ai.lesson ? el('div', {}, el('b', {}, '下次可以：'), t.ai.lesson) : null) : null,
+      el('div', { class: 'qsub' }, `耗时 ${t.active_minutes} 分钟（去掉 5 分钟以上的空闲） · ${t.models.join('、') || '模型未知'} · Token：输入 ${fmtTokStr(t.tokens.input)} / 输出 ${fmtTokStr(t.tokens.output)} / 缓存写入 ${fmtTokStr(t.tokens.cache_write)} / 缓存读取 ${fmtTokStr(t.tokens.cache_read)}${t.tokens.measurement === 'real' ? '' : '（无记录）'}`),
+      el('ol', { class: 'steps' }, ...t.turns.map((turn, i) => {
+        const labels = turnLabels(t, i)
+        const edited = rvOverrides[t.id]?.[i] != null
+        const mins = Math.round((new Date(turn.at).getTime() - start) / 60000)
+        return el('li', { class: `step${isRevision(labels) ? ' rev' : ''}` },
+          el('div', { class: 'step-head' },
+            el('span', { class: 'sub num' }, i ? `+${mins} 分钟` : '开始'),
+            ...(i ? labels.map(l => el('span', { class: 'chip', style: ruleSide(l) ? `--c:var(${SIDES[ruleSide(l)][1]})` : '' }, ruleName(l))) : [el('span', { class: 'chip' }, '最初需求')]),
+            i && !edited && turnEvidence(t, i).length ? el('span', { class: 'sub' }, `${t.ai?.turns?.[i] ? 'Kimi 依据' : '依据'}：“${turnEvidence(t, i).join('”“')}”`) : null,
+            i ? labelSelect(t, i, edited) : null),
+          el('div', { class: 'step-text' }, turn.text, turn.length > turn.text.length ? el('span', { class: 'sub' }, `（共 ${turn.length} 字，只保留前 ${turn.text.length} 字）`) : null),
+          i === 0 ? el('div', { class: 'step-diag' },
+            ...first.dims.filter(d => d.needed).map(d => el('span', { class: `chip ${d.state}` }, `${d.name}${STATE[d.state]}`)),
+            el('button', { class: 'link', type: 'button', onclick: () => { $('pd-input').value = turn.text; location.hash = '#doctor'; renderDoctor() } }, '用 Prompt Doctor 看看 →')) : null)
+      })))
+  }
+  function labelSelect(t, i, edited) {
+    const cur = edited ? rvOverrides[t.id][i][0] : ''
+    const s = el('select', { class: 'label-select', 'aria-label': '修改归类' },
+      el('option', { value: '' }, edited ? '恢复自动归类' : '改归类…'),
+      ...rv.rules.map(r => el('option', { value: r.key }, r.name)),
+      ...Object.entries(OTHER_LABELS).map(([k, v]) => el('option', { value: k }, v)))
+    s.value = cur
+    s.addEventListener('change', () => {
+      const o = (rvOverrides[t.id] ||= {})
+      if (s.value) o[i] = [s.value]; else delete o[i]
+      if (!Object.keys(o).length) delete rvOverrides[t.id]
+      store.set('rv-overrides', rvOverrides)
+      renderReview()
+    })
+    return s
+  }
+
   // ================= 页面切换 =================
-  const VIEWS = [['overview', '总览'], ['intel', 'AI 情报'], ['usage', '使用分析'], ['doctor', 'Prompt Doctor']]
+  const VIEWS = [['overview', '总览'], ['intel', 'AI 情报'], ['usage', '使用分析'], ['doctor', 'Prompt Doctor'], ['review', '任务复盘']]
   let view = 'overview'
   let intelReady = false
   $('nav').replaceChildren(...VIEWS.map(([id, label]) => el('a', { href: `#${id}`, 'data-id': id, 'aria-pressed': 'false' }, label)))
@@ -872,6 +1169,7 @@ textarea.pd-input { min-height: 220px; }
     for (const s of document.querySelectorAll('.view')) s.hidden = s.dataset.view !== view
     for (const a of $('nav').children) a.setAttribute('aria-pressed', String(a.dataset.id === view))
     if (view === 'usage') drawChart()
+    if (view === 'review' && !rv) loadReview()
     if ((view === 'intel' || view === 'overview') && !intelReady) { intelReady = true; renderIntelControls(); renderIntel(); renderOverviewIntel() }
   }
   addEventListener('hashchange', () => { showView(); scrollTo(0, 0) })

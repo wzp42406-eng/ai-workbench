@@ -1,0 +1,4 @@
+# 任务复盘的数据只放在 ~/.ai-workbench，以防万一也不让它进仓库
+review.local.json
+*.local.json
+__pycache__/
