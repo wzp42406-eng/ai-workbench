@@ -8,7 +8,7 @@
   结果写到 ~/.ai-workbench/review.json（仓库外），由它起的 127.0.0.1 服务以 `/review.local.json` 提供给页面。
   同一个服务读写方法库 ~/.ai-workbench/playbook.json（`/playbook.local.json`，PUT 要求 `X-Workbench: 1` 和本机 Host，防止别的网站跨域写入）。
   `--serve-only` 只开服务不重新分析。
-  `--kimi` 时把长对话交给本机 Kimi CLI（`tools/kimi/agent.yaml`，不带工具），结果缓存在 ~/.ai-workbench/kimi-cache.json。
+  默认把长对话交给本机 Kimi CLI（`--no-kimi` 关掉，没装时自动跳过）（`tools/kimi/agent.yaml`，不带工具），结果缓存在 ~/.ai-workbench/kimi-cache.json。
 - `data.json`：用量数据，由本机脚本每小时生成并推送。**不要手改、不要改字段结构**，页面只读。
   - `periods.{day,week,month,year,all}`：各区间合计，`all` 含全部历史。
   - `daily[]`：按天的明细；没有出现的日期表示那天没有记录（页面显示“无记录”，不当 0）。
