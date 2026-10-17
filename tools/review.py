@@ -9,6 +9,7 @@
 隐私：
 - 只读本机的 ~/.claude/projects 和 ~/.codex/sessions，不联网、不调模型。
 - 结果写到 ~/.ai-workbench/review.json（仓库外面），只通过 127.0.0.1 的本机服务给页面读，不会被推送到 GitHub。
+- 同一个本机服务也负责“方法库”的读写，存在 ~/.ai-workbench/playbook.json。
 - 只保存你发出的消息（截断后）和 Token 计数，不保存 AI 的回复；常见密钥格式会被替换成 [已隐藏]。
 """
 import argparse
@@ -368,12 +369,24 @@ def build(args):
     }
 
 
+PLAYBOOK = Path.home() / '.ai-workbench' / 'playbook.json'
+PLAYBOOK_MAX = 2 * 1024 * 1024
 # 只提供页面需要的文件，不把整个仓库（包括 .git）暴露出去
 PUBLIC_FILES = {'/', '/index.html', '/data.json'}
 
 
 class Handler(http.server.SimpleHTTPRequestHandler):
+    """静态页面 + 两个只在本机的数据地址：复盘结果（只读）和方法库（可读写）。"""
     review_path = OUT_DEFAULT
+    playbook_path = PLAYBOOK
+
+    def send_json(self, body, status=200):
+        self.send_response(status)
+        self.send_header('Content-Type', 'application/json; charset=utf-8')
+        self.send_header('Cache-Control', 'no-store')
+        self.send_header('Content-Length', str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
 
     def local_host(self):
         # 防 DNS 重绑定：只接受用本机地址访问
@@ -384,7 +397,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         if not self.local_host():
             self.send_error(403)
             return False
-        if self.path.split('?')[0] not in PUBLIC_FILES | {'/review.local.json'}:
+        if self.path.split('?')[0] not in PUBLIC_FILES | {'/review.local.json', '/playbook.local.json'}:
             self.send_error(404)
             return False
         return True
@@ -396,20 +409,43 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
         if not self.allowed():
             return
-        if self.path.split('?')[0] == '/review.local.json':
+        path = self.path.split('?')[0]
+        if path in ('/review.local.json', '/playbook.local.json'):
+            if path == '/playbook.local.json' and not self.playbook_path.exists():
+                self.send_json(b'{"items": []}')
+                return
             try:
-                body = self.review_path.read_bytes()
+                body = (self.review_path if path == '/review.local.json' else self.playbook_path).read_bytes()
             except OSError:
                 self.send_error(404)
                 return
-            self.send_response(200)
-            self.send_header('Content-Type', 'application/json; charset=utf-8')
-            self.send_header('Cache-Control', 'no-store')
-            self.send_header('Content-Length', str(len(body)))
-            self.end_headers()
-            self.wfile.write(body)
+            self.send_json(body)
             return
         super().do_GET()
+
+    def do_PUT(self):
+        # 只有页面自己能写：要求自定义请求头和 JSON 类型，别的网站跨域发不过来（预检不会通过）
+        if (self.path.split('?')[0] != '/playbook.local.json' or not self.local_host()
+                or self.headers.get('X-Workbench') != '1' or 'application/json' not in (self.headers.get('Content-Type') or '')):
+            self.send_error(403)
+            return
+        try:
+            n = int(self.headers.get('Content-Length') or 0)
+        except ValueError:
+            self.send_error(400)
+            return
+        if not 0 < n <= PLAYBOOK_MAX:
+            self.send_error(413)
+            return
+        try:
+            data = json.loads(self.rfile.read(n))
+            if not isinstance(data, dict) or not isinstance(data.get('items'), list):
+                raise ValueError
+        except ValueError:
+            self.send_error(400)
+            return
+        write_private(self.playbook_path, json.dumps(data, ensure_ascii=False, indent=1))
+        self.send_json(b'{"ok": true}')
 
     def log_message(self, *a):
         pass
@@ -423,6 +459,7 @@ def main():
     ap.add_argument('--out', default=str(OUT_DEFAULT))
     ap.add_argument('--port', type=int, default=8787)
     ap.add_argument('--no-serve', action='store_true')
+    ap.add_argument('--serve-only', action='store_true', help='不重新分析，只打开页面（用方法库时）')
     ap.add_argument('--no-open', action='store_true')
     ap.add_argument('--no-kimi', dest='kimi', action='store_false', help='不调用 Kimi CLI。默认会把长对话交给本机 Kimi 归类和总结（只发你发出的消息，不发 AI 回复）')
     ap.add_argument('--kimi-max', type=int, default=20, help='这次最多新分析多少个任务（已分析过的走缓存，不重复调用）')
@@ -432,20 +469,21 @@ def main():
     out = Path(args.out).expanduser()
     if ROOT in out.resolve().parents:
         sys.exit('为了不把对话记录推送到 GitHub，--out 不能放在仓库目录里。')
-    data = build(args)
-    write_private(out, json.dumps(data, ensure_ascii=False))
-    src = data['sources']
-    print(f"Claude Code：{src['claude_code']['files']} 个文件，{src['claude_code']['tasks']} 个任务")
-    print(f"Codex：{src['codex']['files']} 个文件，{src['codex']['tasks']} 个任务")
-    if data['kimi']:
-        k = data['kimi']
-        print(f"Kimi：新分析 {k['analyzed']} 个任务，缓存 {k['cached']} 个，失败 {k['failed']} 个，跳过 {k['skipped']} 个{('（' + k['error'] + '）') if k.get('error') else ''}")
-    print(f'已写入 {out}（只在本机）')
+    if not args.serve_only:
+        data = build(args)
+        write_private(out, json.dumps(data, ensure_ascii=False))
+        src = data['sources']
+        print(f"Claude Code：{src['claude_code']['files']} 个文件，{src['claude_code']['tasks']} 个任务")
+        print(f"Codex：{src['codex']['files']} 个文件，{src['codex']['tasks']} 个任务")
+        if data['kimi']:
+            k = data['kimi']
+            print(f"Kimi：新分析 {k['analyzed']} 个任务，缓存 {k['cached']} 个，失败 {k['failed']} 个，跳过 {k['skipped']} 个{('（' + k['error'] + '）') if k.get('error') else ''}")
+        print(f'已写入 {out}（只在本机）')
     if args.no_serve:
         return
     Handler.review_path = out
     handler = functools.partial(Handler, directory=str(ROOT))
-    url = f'http://127.0.0.1:{args.port}/#review'
+    url = f"http://127.0.0.1:{args.port}/#{'playbook' if args.serve_only else 'review'}"
     with http.server.ThreadingHTTPServer(('127.0.0.1', args.port), handler) as httpd:
         print(f'打开 {url} 查看，按 Ctrl+C 结束')
         if not args.no_open:

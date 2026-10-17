@@ -277,6 +277,20 @@ textarea.pd-input { min-height: 220px; }
   .label-select { margin-left: 0; }
 }
 
+/* 方法库 */
+.pb-tools { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; }
+.pb-search { max-width: 320px; }
+.pb-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 12px; margin-top: 10px; }
+.pb-card { border: 1px solid var(--line-2); border-radius: 12px; padding: 12px 14px; display: grid; gap: 8px; align-content: start; min-width: 0; }
+.pb-tags { display: inline-flex; gap: 6px; flex: none; }
+.pb-text { max-height: 150px; }
+.pb-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+.pb-actions { display: inline-flex; gap: 6px; align-items: center; flex: none; }
+.pb-editor { display: grid; gap: 8px; border: 1px solid var(--line); border-radius: 12px; padding: 14px; margin-bottom: 14px; background: var(--bg); }
+.pb-row { display: grid; grid-template-columns: minmax(0, 1fr) 120px 120px; gap: 8px; }
+textarea.pb-area { min-height: 140px; }
+.pd-save { margin-top: 12px; }
+@media (max-width: 560px) { .pb-row { grid-template-columns: 1fr 1fr; } .pb-row input { grid-column: 1 / -1; } .pb-list { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 </head>
@@ -384,6 +398,15 @@ textarea.pd-input { min-height: 220px; }
       </div>
       <div id="pd-out"></div>
     </section>
+    <!-- ==================== 方法库 ==================== -->
+    <section class="panel view" data-view="playbook" aria-labelledby="pb-h">
+      <div class="panel-head">
+        <h2 id="pb-h">方法库<span>只在本机</span></h2>
+        <span class="sub">好用的提示词、项目规则和验收清单，用之前由你确认</span>
+      </div>
+      <div id="pb-body"><div class="empty">正在读取…</div></div>
+    </section>
+
     <!-- ==================== 任务复盘 ==================== -->
     <section class="panel view" data-view="review" aria-labelledby="rv-h">
       <div class="panel-head">
@@ -916,7 +939,19 @@ textarea.pd-input { min-height: 220px; }
         el('pre', { class: 'pd-pre' }, sk)) : '',
       el('div', { class: 'pd-block' },
         el('div', { class: 'section-title' }, el('span', {}, '优化请求 · 复制到 Claude，让它给出精简版和完整版'), copyBtn('复制', () => mp)),
-        el('pre', { class: 'pd-pre' }, mp)))
+        el('pre', { class: 'pd-pre' }, mp)),
+      pb ? el('div', { class: 'row-end pd-save' }, el('span', { class: 'msg' }, '这个问题以后还会用到？'),
+        pbButton('存入方法库', () => ({ kind: 'prompt', title: t.split('\n')[0].slice(0, 40), text: gaps ? sk : t, source: 'Prompt Doctor' }))) : '',
+      related(t))
+  }
+  // 方法库里和这个问题相关的内容：只给简短推荐，不自动塞进提示词
+  function related(t) {
+    const hits = relatedMethods(t)
+    if (!hits.length) return ''
+    return el('div', { class: 'pd-block' },
+      el('div', { class: 'section-title' }, el('span', {}, '方法库里可能有用'), el('a', { class: 'link', href: '#playbook' }, '打开方法库 →')),
+      ...hits.map(it => el('div', { class: 'rule-text' }, el('span', {}, el('b', {}, `${it.title}（${PB_KINDS[it.kind] || it.kind}）`), `：${it.text.slice(0, 120)}${it.text.length > 120 ? '…' : ''}`),
+        copyBtn('复制', () => { markUsed(it); return it.text }))))
   }
   $('pd-input').addEventListener('input', renderDoctor)
   $('pd-clear').addEventListener('click', () => { $('pd-input').value = ''; renderDoctor(); $('pd-input').focus() })
@@ -1071,7 +1106,8 @@ textarea.pd-input { min-height: 220px; }
         el('div', { class: 'rule-head' }, el('b', {}, ruleName(key)), el('span', { class: 'sub' }, `${hits.length} 个任务`)),
         el('div', {}, what),
         el('div', { class: 'ev' }, ...hits.slice(0, 3).map(h => el('button', { type: 'button', class: 'ev-item', onclick: () => openTask(h.t.id) }, `“${h.turn.text.slice(0, 60)}${h.turn.text.length > 60 ? '…' : ''}”`))),
-        el('div', { class: 'rule-text' }, el('span', {}, `可以考虑写进项目规则：${rule}`), copyBtn('复制', () => rule))) })
+        el('div', { class: 'rule-text' }, el('span', {}, `可以考虑写进项目规则：${rule}`), el('span', { class: 'pb-actions' }, copyBtn('复制', () => rule),
+          pb ? pbButton('存入方法库', { kind: 'rule', title: `应对「${ruleName(key)}」`, text: rule, source: `任务复盘：${hits.length} 个任务出现「${ruleName(key)}」` }) : null))) })
     }
     if (!cards.length) return el('div', {})
     cards.sort((a, b) => b.n - a.n)
@@ -1123,7 +1159,7 @@ textarea.pd-input { min-height: 220px; }
     const first = diagnose(t.turns[0].text)
     return el('div', { class: 'journey' },
       t.ai?.summary ? el('div', { class: 'ai-note' }, el('b', {}, 'Kimi 总结：'), t.ai.summary,
-        t.ai.lesson ? el('div', {}, el('b', {}, '下次可以：'), t.ai.lesson) : null) : null,
+        t.ai.lesson ? el('div', {}, el('b', {}, '下次可以：'), t.ai.lesson, pb ? el('span', {}, ' ', pbButton('存入方法库', { kind: 'method', title: `${t.title.slice(0, 30)} 的经验`, text: t.ai.lesson, source: `任务复盘（Kimi 总结）：${t.title}` })) : null) : null) : null,
       el('div', { class: 'qsub' }, `耗时 ${t.active_minutes} 分钟（去掉 5 分钟以上的空闲） · ${t.models.join('、') || '模型未知'} · Token：输入 ${fmtTokStr(t.tokens.input)} / 输出 ${fmtTokStr(t.tokens.output)} / 缓存写入 ${fmtTokStr(t.tokens.cache_write)} / 缓存读取 ${fmtTokStr(t.tokens.cache_read)}${t.tokens.measurement === 'real' ? '' : '（无记录）'}`),
       el('ol', { class: 'steps' }, ...t.turns.map((turn, i) => {
         const labels = turnLabels(t, i)
@@ -1138,7 +1174,8 @@ textarea.pd-input { min-height: 220px; }
           el('div', { class: 'step-text' }, turn.text, turn.length > turn.text.length ? el('span', { class: 'sub' }, `（共 ${turn.length} 字，只保留前 ${turn.text.length} 字）`) : null),
           i === 0 ? el('div', { class: 'step-diag' },
             ...first.dims.filter(d => d.needed).map(d => el('span', { class: `chip ${d.state}` }, `${d.name}${STATE[d.state]}`)),
-            el('button', { class: 'link', type: 'button', onclick: () => { $('pd-input').value = turn.text; location.hash = '#doctor'; renderDoctor() } }, '用 Prompt Doctor 看看 →')) : null)
+            el('button', { class: 'link', type: 'button', onclick: () => { $('pd-input').value = turn.text; location.hash = '#doctor'; renderDoctor() } }, '用 Prompt Doctor 看看 →'),
+            pb ? pbButton('存入方法库', { kind: 'prompt', title: t.title.slice(0, 40), text: turn.text, source: `任务复盘：${t.title}（返工 ${revCount(t)} 次${turn.length > turn.text.length ? '，原文较长只存了开头' : ''}）` }) : null) : null)
       })))
   }
   function labelSelect(t, i, edited) {
@@ -1158,8 +1195,152 @@ textarea.pd-input { min-height: 220px; }
     return s
   }
 
+  // ================= 方法库（只在本机：tools/review.py 起的服务读写 ~/.ai-workbench/playbook.json） =================
+  const PB_KINDS = { prompt: '提示词', rule: '项目规则', checklist: '验收清单', method: '方法' }
+  // 分类和猜测分类用的关键词；猜不出来归“日常问题”
+  const PB_CATS = [
+    ['软件开发', /代码|开发|bug|报错|接口|部署|重构|测试|前端|后端|脚本|\bapp\b|网站|小程序|claude code|codex|git/i],
+    ['产品设计', /产品|需求|功能|交互|原型|体验|prd|页面设计/i],
+    ['AI Agent', /agent|智能体|mcp|工作流|自动化|提示词|prompt/i],
+    ['数据分析', /数据|统计|图表|excel|sql|报表|指标/i],
+    ['行业研究', /行业|市场|竞品|调研|趋势/],
+    ['商业分析', /商业|营收|成本|利润|定价|商业模式|财务|投资/],
+    ['写作表达', /文章|邮件|润色|翻译|文案|演讲|写作|总结/],
+    ['职业决策', /职业|面试|简历|跳槽|offer|晋升/i],
+    ['日常问题', /$^/],
+  ]
+  const guessCat = text => (PB_CATS.find(([, re]) => re.test(text)) || PB_CATS[PB_CATS.length - 1])[0]
+  let pb = null          // { items: [...] }，null 表示没连上本机服务
+  let pbCat = ''
+  let pbQuery = ''
+  let pbEdit = null      // 正在编辑或新建的条目
+  let pbMsg = ''
+  let pbTried = false   // 公开网站上没有本机服务，只试一次
+
+  async function loadPlaybook() {
+    try {
+      const r = await fetch('playbook.local.json', { cache: 'no-store' })
+      if (!r.ok) throw new Error(r.status)
+      pb = await r.json()
+      if (!Array.isArray(pb.items)) pb = { items: [] }
+    } catch { pb = null }
+    renderPlaybook(); renderDoctor(); if (rv) renderReview()
+  }
+  async function savePlaybook() {
+    const r = await fetch('playbook.local.json', { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Workbench': '1' }, body: JSON.stringify(pb) })
+    if (!r.ok) throw new Error(`保存失败（${r.status}）`)
+  }
+  // 从别的页面存进来：先打开编辑框，用户确认后才保存
+  function draftToPlaybook(d) {
+    pbEdit = { id: '', kind: 'prompt', title: '', text: '', source: '', ...d }
+    pbEdit.category ||= guessCat(`${pbEdit.title}\n${pbEdit.text}`)
+    location.hash = '#playbook'
+    renderPlaybook()
+  }
+  const pbButton = (label, d) => el('button', { class: 'btn-sm', type: 'button', onclick: () => draftToPlaybook(typeof d === 'function' ? d() : d) }, label)
+
+  function bigrams(text) {
+    const s = new Set(), t = text.toLowerCase().replace(/\s+/g, '')
+    for (let i = 0; i < t.length - 1; i++) s.add(t.slice(i, i + 2))
+    return s
+  }
+  // 给新问题找相关的方法：同分类加分，再看两字词重合度；不够相关就不推荐
+  function relatedMethods(text, n = 2) {
+    if (!pb?.items.length || text.length < 6) return []
+    const cat = guessCat(text), q = bigrams(text)
+    return pb.items.map(it => {
+      const b = bigrams(`${it.title} ${it.text}`)
+      let common = 0
+      for (const g of q) if (b.has(g)) common++
+      return { it, score: common / Math.max(8, q.size) + (it.category === cat ? 0.15 : 0) }
+    }).filter(x => x.score >= 0.25).sort((a, b) => b.score - a.score).slice(0, n).map(x => x.it)
+  }
+  async function markUsed(it) {
+    it.uses = (it.uses || 0) + 1
+    it.used_at = new Date().toISOString()
+    try { await savePlaybook() } catch { /* 计数失败不影响复制 */ }
+  }
+
+  function renderPlaybook() {
+    const box = $('pb-body')
+    if (!box) return
+    if (!pb) {
+      box.replaceChildren(el('div', { class: 'rv-empty' },
+        el('p', {}, '方法库存在你自己电脑上（~/.ai-workbench/playbook.json），只能通过本机服务打开，公开网站上看不到。'),
+        el('p', {}, '在仓库目录里运行：'),
+        el('pre', { class: 'pd-pre' }, 'python3 tools/review.py --serve-only'),
+        el('p', { class: 'sub' }, '然后打开 http://127.0.0.1:8787/#playbook。去掉 --serve-only 会同时重新生成任务复盘。')))
+      return
+    }
+    const items = pb.items
+    const counts = Object.fromEntries(PB_CATS.map(([c]) => [c, items.filter(x => x.category === c).length]))
+    const q = pbQuery.trim().toLowerCase()
+    const shown = items.filter(x => (!pbCat || x.category === pbCat) && (!q || `${x.title}\n${x.text}`.toLowerCase().includes(q)))
+      .sort((a, b) => (b.used_at || b.created_at).localeCompare(a.used_at || a.created_at))
+    box.replaceChildren(
+      pbEdit ? pbEditor() : '',
+      el('div', { class: 'pb-tools' },
+        el('input', { class: 'field pb-search', type: 'search', placeholder: '搜索标题或内容', value: pbQuery, oninput: e => { pbQuery = e.target.value; renderPlaybookList() } }),
+        pbEdit ? null : el('button', { class: 'btn-sm', type: 'button', onclick: () => draftToPlaybook({}) }, '新建')),
+      el('div', { class: 'seg small cats', role: 'group', 'aria-label': '分类' },
+        ...[['', `全部 ${items.length}`], ...PB_CATS.filter(([c]) => counts[c]).map(([c]) => [c, `${c} ${counts[c]}`])].map(([id, label]) =>
+          el('button', { type: 'button', 'aria-pressed': String(id === pbCat), onclick: () => { pbCat = id; renderPlaybook() } }, label))),
+      pbMsg ? el('div', { class: 'msg err' }, pbMsg) : '',
+      el('div', { id: 'pb-list', class: 'pb-list' }, ...pbCards(shown, items.length)))
+  }
+  function renderPlaybookList() {
+    const q = pbQuery.trim().toLowerCase()
+    const shown = pb.items.filter(x => (!pbCat || x.category === pbCat) && (!q || `${x.title}\n${x.text}`.toLowerCase().includes(q)))
+    $('pb-list').replaceChildren(...pbCards(shown, pb.items.length))
+  }
+  function pbCards(shown, total) {
+    if (!total) return [el('div', { class: 'empty' }, '还没有内容。可以在任务复盘的“反复出现的问题”、任务路径或 Prompt Doctor 里点“存入方法库”，也可以直接新建。')]
+    if (!shown.length) return [el('div', { class: 'empty' }, '没有符合条件的内容')]
+    return shown.map(it => el('div', { class: 'pb-card' },
+      el('div', { class: 'rule-head' }, el('b', {}, it.title || '（无标题）'),
+        el('span', { class: 'pb-tags' }, el('span', { class: 'chip' }, PB_KINDS[it.kind] || it.kind), el('span', { class: 'chip' }, it.category))),
+      el('pre', { class: 'pd-pre pb-text' }, it.text),
+      el('div', { class: 'pb-foot' },
+        el('span', { class: 'sub' }, [it.source, `存于 ${it.created_at.slice(0, 10)}`, it.uses ? `用过 ${it.uses} 次` : ''].filter(Boolean).join(' · ')),
+        el('span', { class: 'pb-actions' },
+          copyBtn('复制', () => { markUsed(it); return it.text }),
+          el('button', { class: 'link', type: 'button', onclick: () => { pbEdit = { ...it }; renderPlaybook(); scrollTo(0, 0) } }, '编辑'),
+          el('button', { class: 'link', type: 'button', onclick: async () => {
+            if (!confirm(`删除「${it.title}」？`)) return
+            pb.items = pb.items.filter(x => x !== it)
+            try { await savePlaybook(); pbMsg = '' } catch (e) { pbMsg = e.message }
+            renderPlaybook()
+          } }, '删除')))))
+  }
+  function pbEditor() {
+    const f = el('form', { class: 'pb-editor' },
+      el('div', { class: 'pb-row' },
+        el('input', { class: 'field', name: 'title', placeholder: '标题，例如：开发任务的验收清单', value: pbEdit.title, required: '' }),
+        el('select', { class: 'field', name: 'kind' }, ...Object.entries(PB_KINDS).map(([k, v]) => el('option', { value: k }, v))),
+        el('select', { class: 'field', name: 'category' }, ...PB_CATS.map(([c]) => el('option', { value: c }, c)))),
+      el('textarea', { class: 'field pb-area', name: 'text', placeholder: '内容', required: '' }),
+      pbEdit.source ? el('div', { class: 'sub' }, `来源：${pbEdit.source}`) : null,
+      el('div', { class: 'row-end' }, el('span', { class: 'msg' }, pbEdit.id ? '修改后保存' : '确认内容后再保存'),
+        el('span', { class: 'pb-actions' },
+          el('button', { class: 'link', type: 'button', onclick: () => { pbEdit = null; renderPlaybook() } }, '取消'),
+          el('button', { class: 'btn-sm', type: 'submit' }, '保存'))))
+    f.kind.value = pbEdit.kind; f.category.value = pbEdit.category || '日常问题'; f.text.value = pbEdit.text
+    f.addEventListener('submit', async e => {
+      e.preventDefault()
+      const d = Object.fromEntries(new FormData(f))
+      if (!pbEdit.id && d.category === '日常问题') d.category = guessCat(`${d.title}\n${d.text}`) // 没选分类时按内容猜
+      const now = new Date().toISOString()
+      const old = pbEdit.id && pb.items.find(x => x.id === pbEdit.id)
+      if (old) Object.assign(old, d, { updated_at: now })
+      else pb.items.push({ id: `p${Date.now().toString(36)}`, ...d, source: pbEdit.source || '', created_at: now, uses: 0 })
+      try { await savePlaybook(); pbEdit = null; pbMsg = '' } catch (err) { pbMsg = err.message }
+      renderPlaybook()
+    })
+    return f
+  }
+
   // ================= 页面切换 =================
-  const VIEWS = [['overview', '总览'], ['intel', 'AI 情报'], ['usage', '使用分析'], ['doctor', 'Prompt Doctor'], ['review', '任务复盘']]
+  const VIEWS = [['overview', '总览'], ['intel', 'AI 情报'], ['usage', '使用分析'], ['doctor', 'Prompt Doctor'], ['review', '任务复盘'], ['playbook', '方法库']]
   let view = 'overview'
   let intelReady = false
   $('nav').replaceChildren(...VIEWS.map(([id, label]) => el('a', { href: `#${id}`, 'data-id': id, 'aria-pressed': 'false' }, label)))
@@ -1170,6 +1351,7 @@ textarea.pd-input { min-height: 220px; }
     for (const a of $('nav').children) a.setAttribute('aria-pressed', String(a.dataset.id === view))
     if (view === 'usage') drawChart()
     if (view === 'review' && !rv) loadReview()
+    if (['playbook', 'doctor', 'review'].includes(view)) { if (!pbTried) { pbTried = true; loadPlaybook() } else renderPlaybook() }
     if ((view === 'intel' || view === 'overview') && !intelReady) { intelReady = true; renderIntelControls(); renderIntel(); renderOverviewIntel() }
   }
   addEventListener('hashchange', () => { showView(); scrollTo(0, 0) })
