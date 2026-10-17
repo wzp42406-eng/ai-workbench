@@ -240,7 +240,7 @@ def finish(s, tokens, since):
 
 
 # ---------- Kimi CLI：长文本交给 Kimi 归类 ----------
-# 只在加 --kimi 时运行。用 tools/kimi/agent.yaml（不带任何工具）在一个空目录里跑 kimi --quiet，
+# 默认运行（加 --no-kimi 关掉；没装 kimi 命令时自动跳过）。用 tools/kimi/agent.yaml（不带任何工具）在一个空目录里跑 kimi --quiet，
 # 输入只有你发出的消息；结果按“任务 + 内容”缓存，同样的内容不会重复调用。
 KIMI_DIR = Path(__file__).resolve().parent / 'kimi'
 KIMI_CACHE = Path.home() / '.ai-workbench' / 'kimi-cache.json'
@@ -424,7 +424,7 @@ def main():
     ap.add_argument('--port', type=int, default=8787)
     ap.add_argument('--no-serve', action='store_true')
     ap.add_argument('--no-open', action='store_true')
-    ap.add_argument('--kimi', action='store_true', help='用本机的 Kimi CLI 给长对话做归类和总结（会把你发出的消息发给 Kimi）')
+    ap.add_argument('--no-kimi', dest='kimi', action='store_false', help='不调用 Kimi CLI。默认会把长对话交给本机 Kimi 归类和总结（只发你发出的消息，不发 AI 回复）')
     ap.add_argument('--kimi-max', type=int, default=20, help='这次最多新分析多少个任务（已分析过的走缓存，不重复调用）')
     ap.add_argument('--kimi-cmd', default='kimi', help='Kimi CLI 的命令名或路径')
     args = ap.parse_args()

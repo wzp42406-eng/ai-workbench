@@ -985,7 +985,7 @@ textarea.pd-input { min-height: 220px; }
         el('p', {}, '任务复盘需要读取你电脑上的 Claude Code 和 Codex 会话记录，所以只在本机运行，不会出现在公开网站上，也不会上传。'),
         el('p', {}, '在仓库目录里运行：'),
         el('pre', { class: 'pd-pre' }, 'python3 tools/review.py'),
-        el('p', { class: 'sub' }, '加上 --kimi 会把长对话交给本机的 Kimi CLI 归类和总结（这时你发出的消息会发给 Kimi）。'),
+        el('p', { class: 'sub' }, '默认会把长对话交给本机的 Kimi CLI 归类和总结（只发你发出的消息，不发 AI 回复）；加 --no-kimi 可以关掉，没装 Kimi 时自动跳过。'),
         el('p', { class: 'sub' }, '它会分析 ~/.claude/projects 和 ~/.codex/sessions，把结果写到 ~/.ai-workbench/review.json（仓库外面），然后打开 http://127.0.0.1:8787/#review。只保存你发出的消息和 Token 计数，不保存 AI 的回复，常见密钥会被隐藏。')))
       return
     }
