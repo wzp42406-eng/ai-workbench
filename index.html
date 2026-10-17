@@ -437,7 +437,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
         <div class="seg small" id="play-sort" role="group" aria-label="排序"></div>
       </div>
       <div id="play-body"></div>
-      <div class="foot">来自 AIHOT 公开 API 最近 7 天精选里的教程和产品，在你的浏览器里实时读取。分组按标题和摘要里的关键词自动归类，可能不准；收藏、已尝试和备注只存在这个浏览器里，不存标题和摘要。</div>
+      <div class="foot">来自 AIHOT 公开 API 最近 7 天精选里的教程和产品，在你的浏览器里实时读取。分组按标题和摘要里的关键词自动归类，可能不准；收藏、已尝试和备注（连同标题和原文链接）只存在这个浏览器里，换手机或换浏览器要重新收藏。</div>
     </section>
 
     <!-- ==================== 方法库 ==================== -->
@@ -877,7 +877,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
   }
   // ================= AI 玩法：AIHOT 最近 7 天精选里的教程和产品，按“想用 AI 做什么”分组 =================
   // 分组只看标题和摘要里的关键词，猜不出来归“其他”。排序只用发布时间或 AIHOT 自己的评分，不另外编“实用度”。
-  // 本机只记你的标记（条目 id、状态、备注、原文链接），不存标题和摘要，避免变成 AIHOT 内容的副本。
+  // 浏览器里只记你标记过的条目（id、标题、状态、备注、原文链接），不存摘要，也不进仓库。
   const JOBS = [
     ['auto', '自动化日常工作', /自动化|工作流|workflow|n8n|zapier|定时|批量|脚本|邮件|日程|浏览器操作|computer use|rpa/i],
     ['code', '用 AI 写代码', /代码|编程|coding|coder|claude code|codex|cursor|copilot|ide|开发者|debug|github|vibe/i],
@@ -897,7 +897,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
   let playSort = pick('wb-play-sort', PLAY_SORT, 'new')
   let playItems = null
   let playNote = ''      // 正在写备注的条目 id
-  const marks = store.get('wb-play-marks', {})   // { id: { status: 'saved' | 'tried', note, url, at } }
+  const marks = store.get('wb-play-marks', {})   // { id: { status: 'saved' | 'tried', title, note, url, at } }
   const saveMarks = () => store.set('wb-play-marks', marks)
   // 先看标题，标题看不出来再看摘要
   const jobOf = x => (JOBS.find(([, , re]) => re.test(x.title)) || JOBS.find(([, , re]) => re.test(x.summary || '')) || JOBS[JOBS.length - 1])[0]
@@ -907,8 +907,13 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     box.replaceChildren(el('div', { class: 'empty' }, '正在读取…'))
     const rs = await Promise.allSettled(['tip', 'ai-products'].map(c => aihot(`/items?mode=selected&window=7d&limit=100&category=${c}`)))
     const ok = rs.filter(r => r.status === 'fulfilled')
-    if (!ok.length) return box.replaceChildren(el('div', { class: 'empty' }, `暂时读不到 AI 玩法（${rs[0].reason?.message || '网络错误'}）。`,
-      el('button', { class: 'link', type: 'button', onclick: loadPlay }, '重试')))
+    if (!ok.length) {
+      // 读不到新内容时，收藏和已尝试仍然可以看
+      playItems = []
+      $('play-status').textContent = `暂时读不到最新内容（${rs[0].reason instanceof TypeError ? '网络错误' : rs[0].reason?.message || '网络错误'}），先显示你存下的`
+      if (playShow === 'all') playShow = 'saved'
+      return renderPlay()
+    }
     const seen = new Set()
     playItems = ok.flatMap(r => r.value.items).filter(x => !seen.has(x.id) && seen.add(x.id))
     $('play-status').textContent = `最近 7 天 · ${playItems.length} 条${ok.length < rs.length ? '（部分分类没读到）' : ''}`
@@ -926,7 +931,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     const time = x => x.publishedAt || x.discoveredAt || ''
     const list = playItems.filter(x => (!playKind || x.category === playKind) && (playShow === 'all' || marks[x.id]?.status === playShow))
       .sort((a, b) => playSort === 'score' ? (b.score ?? -1) - (a.score ?? -1) : time(b).localeCompare(time(a)))
-    // 标记过、但已经不在最近 7 天里的条目：只剩你的备注和原文链接
+    // 标记过、但已经不在最近 7 天里的条目：用存下的标题、备注和原文链接显示
     const gone = playShow === 'all' ? [] : Object.entries(marks).filter(([id, m]) => m.status === playShow && !playItems.some(x => x.id === id))
     const groups = JOBS.map(([id, name]) => [name, list.filter(x => jobOf(x) === id)]).filter(([, xs]) => xs.length)
     box.replaceChildren(...[
@@ -936,14 +941,15 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
         el('div', { class: 'section-title' }, el('span', {}, name), el('span', {}, `${xs.length} 条`)),
         el('div', { class: 'play-grid' }, ...xs.map(playCard)))),
       gone.length ? el('div', { class: 'play-group' },
-        el('div', { class: 'section-title' }, el('span', {}, '已不在最近 7 天里'), el('span', {}, `${gone.length} 条`)),
+        el('div', { class: 'section-title' }, el('span', {}, playItems.length ? '已不在最近 7 天里' : playShow === 'saved' ? '我的收藏' : '已尝试'), el('span', {}, `${gone.length} 条`)),
         el('div', { class: 'play-grid' }, ...gone.map(([id, m]) => el('div', { class: 'play-card' },
-          el('div', { class: 'play-note' }, m.note || '（没写备注）'),
-          el('div', { class: 'play-foot' }, m.url ? extLink(m.url, '打开原文') : el('span', {}), el('button', { class: 'link', type: 'button', onclick: () => { delete marks[id]; saveMarks(); renderPlay() } }, '移除')))))) : null,
+          el('div', { class: 'news-title' }, m.url ? extLink(m.url, m.title || '（无标题）') : (m.title || '（无标题）')),
+          m.note ? el('div', { class: 'play-note' }, m.note) : null,
+          el('div', { class: 'play-foot' }, el('span', { class: 'sub' }, m.status === 'tried' ? '已尝试' : '已收藏'), el('button', { class: 'link', type: 'button', onclick: () => { delete marks[id]; saveMarks(); renderPlay() } }, '移除')))))) : null,
       !groups.length && !gone.length ? el('div', { class: 'empty' }, playShow === 'all' ? '最近 7 天没有这类精选' : playShow === 'saved' ? '还没有收藏' : '还没有标记已尝试的') : null].filter(Boolean))
   }
   function setMark(x, patch) {
-    const m = { ...marks[x.id], ...patch, url: safeUrl(x.links?.original || x.links?.aihot || ''), at: new Date().toISOString() }
+    const m = { ...marks[x.id], ...patch, title: x.title, url: safeUrl(x.links?.original || x.links?.aihot || ''), at: new Date().toISOString() }
     if (!m.status && !m.note) delete marks[x.id]; else marks[x.id] = m
     saveMarks(); renderPlay()
   }
@@ -1507,7 +1513,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     if (view === 'usage') drawChart()
     if (view === 'review' && !rv) loadReview()
     if (['playbook', 'doctor', 'review'].includes(view)) { if (!pbTried) { pbTried = true; loadPlaybook() } else renderPlaybook() }
-    if (view === 'playground' && !playItems) { renderPlayControls(); loadPlay() }
+    if (view === 'playground' && !playItems?.length) { renderPlayControls(); loadPlay() }
     if ((view === 'intel' || view === 'overview') && !intelReady) { intelReady = true; renderIntelControls(); renderIntel(); renderOverviewIntel() }
   }
   addEventListener('hashchange', () => { showView(); scrollTo(0, 0) })

@@ -21,7 +21,7 @@
 - 桌面对话没有 Token；终端 Token 是实际值；网页 Token 是估算。
 - AI 情报在浏览器里直接读 AIHOT 公开 API（https://aihot.news/api/v1，字段见其 openapi-v1.json），
   不把内容存进仓库或 localStorage（AIHOT 条款不允许公开副本），不使用 AIHOT 的名字和 Logo 做品牌。
-- AI 玩法的收藏、已尝试、备注存在 localStorage（`wb-play-marks`），只存条目 id、状态、备注和原文链接，不存标题和摘要。
+- AI 玩法的收藏、已尝试、备注存在 localStorage（`wb-play-marks`），存条目 id、标题、状态、备注和原文链接（Peter 同意存标题），不存摘要。
 - Prompt Doctor 只做规则检查，不调模型、不保存输入。
 - 任务复盘的数据（含对话原文）永远不能进仓库或公开网站；只保存用户消息，不保存 AI 回复；归类要附原文依据，Kimi 给的引用对不上原文就丢掉。
 - 归类优先级：用户手动修改 > Kimi > 关键词规则。没有明确的完成标记时不统计“成功率”。
