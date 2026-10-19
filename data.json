@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-10-19T11:00:26+08:00",
+ "updated_at": "2026-10-19T12:44:22+08:00",
  "note": "Codex 额度与账户累计 token 来自本机 app-server 只读 API；CLI 时长与当前周期 token 来自会话记录。会话 token 不含 cache_read_tokens，缓存读取另列。Claude、ChatGPT、Kimi 桌面对话无 token 记录",
  "quota": {
   "claude": {
