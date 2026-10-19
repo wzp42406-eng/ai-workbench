@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-10-19T14:24:36+08:00",
+ "updated_at": "2026-10-19T15:24:52+08:00",
  "note": "Codex 额度与账户累计 token 来自本机 app-server 只读 API；CLI 时长与当前周期 token 来自会话记录。会话 token 不含 cache_read_tokens，缓存读取另列。Claude、ChatGPT、Kimi 桌面对话无 token 记录",
  "quota": {
   "claude": {
@@ -22,11 +22,11 @@
   },
   "codex": {
    "five_hour": {
-    "used_percent": 7.0,
-    "remaining_percent": 93.0,
-    "resets_at": "2026-10-19T14:34:30+08:00",
+    "used_percent": 0.0,
+    "remaining_percent": 100.0,
+    "resets_at": null,
     "observed_at": "2026-10-19T09:44:23+08:00",
-    "reset_since": false,
+    "reset_since": true,
     "source": "codex_app_server"
    },
    "seven_day": {
