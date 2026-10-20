@@ -4,7 +4,7 @@
 
 ## 文件
 - `index.html`：整个页面（样式和脚本都在里面），左侧导航栏（电脑上可收起，状态存 localStorage `wb-side`；手机上从左边滑出），用 `#overview` `#intel` `#playground` `#usage` `#playbook` 切换视图。
-- `tools/picks.py` + `.github/workflows/picks.yml`：每天北京时间 7 点找最近 30 天新建的 AI 项目，读 README，用 Claude（仓库 Secret `ANTHROPIC_API_KEY`，
+- `tools/picks.py` + `.github/workflows/picks.yml`：每天北京时间 10 点找最近 30 天新建的 AI 项目，读 README，用 Claude（仓库 Secret `ANTHROPIC_API_KEY`，
   模型可用 Variable `PICKS_MODEL` 改，默认 claude-opus-5-5）翻译简介并总结“能做什么、对 Peter 的用处、怎么上手、适合度 1-5”，
   结果 `picks.json` 强推到 `picks` 分支（只留一份，不碰 main），页面从 raw.githubusercontent.com 读。没有 Key 时只输出项目列表、没有中文总结。
   本机没有 Key 但装了 Kimi CLI 时用 `tools/kimi/agent.yaml`（不带工具）。总结过的项目 14 天内不重复调用模型。
@@ -13,7 +13,7 @@
   - `daily[]`：按天的明细；没有出现的日期表示那天没有记录（页面显示“无记录”，不当 0）。
   - `codex_api.token_usage`：Codex app-server 返回的账户累计。
   - `quota`：额度数据，页面不再显示，但保留字段。
-- 本机脚本也会推送 `index.html`（提交信息“更新工作台页面”）。改页面后要同步回本机那份，否则会被覆盖。
+- 本机的 claude-quota-ring 插件（`usage-api/publish.py`，launchd）只推 `data.json`；2026-10-17 起不再推 `index.html`，页面只在 GitHub 上改。
 
 ## 数据规则
 - 拿不到的数据显示“无记录”，不编造、不补假数据。
