@@ -408,7 +408,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
         <div class="seg small" id="play-range" role="group" aria-label="GitHub 时间范围"></div>
       </div>
       <div id="play-body"></div>
-      <div class="foot">GitHub 项目每天早上 7 点从 GitHub 公开搜索里挑最近新建的 AI 项目（去掉资源合集和停更的），由 Claude 读简介和 README 后翻译成中文、总结能做什么和对你的用处，按适合度排序；总结是模型写的，以项目主页为准。精选暂时读不到时，改由浏览器直接搜 GitHub，只有英文简介。教程来自 AIHOT 公开 API 最近 7 天的精选，实时读取、不保存。收藏、已尝试和备注（连同标题和链接）只存在这个浏览器里，换手机或换浏览器要重新收藏。</div>
+      <div class="foot">GitHub 项目每天早上 10 点从 GitHub 公开搜索里挑最近新建的 AI 项目（去掉资源合集和停更的），由 Claude 读简介和 README 后翻译成中文、总结能做什么和对你的用处，按适合度排序；总结是模型写的，以项目主页为准。精选暂时读不到时，改由浏览器直接搜 GitHub，只有英文简介。教程来自 AIHOT 公开 API 最近 7 天的精选，实时读取、不保存。收藏、已尝试和备注（连同标题和链接）只存在这个浏览器里，换手机或换浏览器要重新收藏。</div>
     </section>
 
     <!-- ==================== 方法库 ==================== -->
@@ -952,7 +952,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     const { repos, tips, ghError, tipError } = playItems
     box.replaceChildren(...[
       el('div', { class: 'section-title' }, el('span', {}, `GitHub ${GH_RANGES.find(r => r[0] === ghRange)[1]} · ${playItems.picks?.engine ? '按对你的价值' : '按星数'}`),
-        el('span', {}, playItems.picks ? `每天早上 7 点更新，上次 ${fullTime(playItems.picks.generated_at)}${playItems.picks.engine ? '' : '（还没有中文总结）'}` : '只留有简介、最近两周还在更新的，去掉资源合集')),
+        el('span', {}, playItems.picks ? `每天早上 10 点更新，上次 ${fullTime(playItems.picks.generated_at)}${playItems.picks.engine ? '' : '（还没有中文总结）'}` : '只留有简介、最近两周还在更新的，去掉资源合集')),
       repos.length ? el('div', { class: 'play-grid' }, ...repos.map(playCard)) : el('div', { class: 'empty' }, ghError ? `暂时读不到 GitHub（${ghError}）` : '这段时间没有符合条件的新项目'),
       ghError && repos.length ? el('div', { class: 'qsub' }, ghError) : null,
       el('div', { class: 'section-title' }, el('span', {}, '本周可以照着做的教程 · 按 AIHOT 评分'), el('span', {}, '只留有开源地址或上手步骤的')),
