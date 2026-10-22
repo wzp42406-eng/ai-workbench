@@ -1,46 +1,46 @@
 {
- "updated_at": "2026-10-21T20:59:16+08:00",
+ "updated_at": "2026-10-22T09:46:49+08:00",
  "note": "Codex 额度与账户累计 token 来自本机 app-server 只读 API；CLI 时长与当前周期 token 来自会话记录。会话 token 不含 cache_read_tokens，缓存读取另列。Claude、ChatGPT、Kimi 桌面对话无 token 记录",
  "quota": {
   "claude": {
    "five_hour": {
-    "used_percent": 22.0,
-    "remaining_percent": 78.0,
-    "resets_at": "2026-10-21T17:30:00.000Z",
-    "observed_at": "2026-10-21T20:59:07+08:00",
-    "reset_since": false,
+    "used_percent": 0.0,
+    "remaining_percent": 100.0,
+    "resets_at": null,
+    "observed_at": "2026-10-21T23:52:26+08:00",
+    "reset_since": true,
     "source": "local_report"
    },
    "seven_day": {
-    "used_percent": 23.0,
-    "remaining_percent": 77.0,
+    "used_percent": 29.0,
+    "remaining_percent": 71.0,
     "resets_at": "2026-10-27T19:00:00.000Z",
-    "observed_at": "2026-10-21T20:59:07+08:00",
+    "observed_at": "2026-10-21T23:52:26+08:00",
     "reset_since": false,
     "source": "local_report"
    }
   },
   "codex": {
    "five_hour": {
-    "used_percent": 1.0,
-    "remaining_percent": 99.0,
-    "resets_at": "2026-10-21T21:10:49+08:00",
-    "observed_at": "2026-10-21T20:59:16+08:00",
-    "reset_since": false,
+    "used_percent": 0.0,
+    "remaining_percent": 100.0,
+    "resets_at": null,
+    "observed_at": "2026-10-21T22:20:06+08:00",
+    "reset_since": true,
     "source": "codex_app_server"
    },
    "seven_day": {
     "used_percent": 33.0,
     "remaining_percent": 67.0,
     "resets_at": "2026-10-27T14:54:22+08:00",
-    "observed_at": "2026-10-21T20:59:16+08:00",
+    "observed_at": "2026-10-21T22:20:06+08:00",
     "reset_since": false,
     "source": "codex_app_server"
    }
   }
  },
  "codex_api": {
-  "updated_at": "2026-10-21T20:59:16+08:00",
+  "updated_at": "2026-10-21T22:20:06+08:00",
   "token_usage": {
    "lifetime_tokens": 658736379,
    "peak_daily_tokens": 64874275,
@@ -262,7 +262,7 @@
     "tokens": 0
    },
    "claude_code": {
-    "minutes": 9.6,
+    "minutes": 0.0,
     "tokens": 0,
     "cache_read_tokens": 0
    },
@@ -279,7 +279,7 @@
     "output_tokens": 0
    },
    "claude_desktop": {
-    "minutes": 126.5,
+    "minutes": 0.0,
     "tokens": null
    },
    "chatgpt_desktop": {
@@ -292,8 +292,8 @@
    },
    "claude_desktop_code": {
     "minutes": 0.0,
-    "tokens": 881023,
-    "cache_read_tokens": 35985780
+    "tokens": 1582,
+    "cache_read_tokens": 135030
    },
    "codex_desktop_code": {
     "minutes": 0.0,
@@ -305,20 +305,20 @@
     "tokens": 0
    },
    "cli_total": {
-    "minutes": 9.6,
+    "minutes": 0.0,
     "tokens": 0,
     "cache_read_tokens": 0
    },
    "desktop_total": {
-    "minutes": 126.5,
-    "tokens": 881023,
-    "cache_read_tokens": 35985780
+    "minutes": 0.0,
+    "tokens": 1582,
+    "cache_read_tokens": 135030
    },
    "total": {
-    "minutes": 136.1,
-    "tokens": 881023
+    "minutes": 0.0,
+    "tokens": 1582
    },
-   "from": "2026-10-21"
+   "from": "2026-10-22"
   },
   "week": {
    "claude": {
@@ -330,7 +330,7 @@
     "tokens": 0
    },
    "claude_code": {
-    "minutes": 16.8,
+    "minutes": 21.1,
     "tokens": 79891,
     "cache_read_tokens": 231705
    },
@@ -347,7 +347,7 @@
     "output_tokens": 52
    },
    "claude_desktop": {
-    "minutes": 156.6,
+    "minutes": 188.7,
     "tokens": null
    },
    "chatgpt_desktop": {
@@ -360,8 +360,8 @@
    },
    "claude_desktop_code": {
     "minutes": 0.0,
-    "tokens": 1006132,
-    "cache_read_tokens": 39133480
+    "tokens": 1503761,
+    "cache_read_tokens": 92246107
    },
    "codex_desktop_code": {
     "minutes": 0.0,
@@ -373,18 +373,18 @@
     "tokens": 0
    },
    "cli_total": {
-    "minutes": 17.8,
+    "minutes": 22.1,
     "tokens": 101111,
     "cache_read_tokens": 244761
    },
    "desktop_total": {
-    "minutes": 350.3,
-    "tokens": 1970528,
-    "cache_read_tokens": 59436968
+    "minutes": 382.5,
+    "tokens": 2468157,
+    "cache_read_tokens": 112549595
    },
    "total": {
-    "minutes": 368.2,
-    "tokens": 2071639
+    "minutes": 404.6,
+    "tokens": 2569268
    },
    "from": "2026-10-19"
   },
@@ -398,7 +398,7 @@
     "tokens": 0
    },
    "claude_code": {
-    "minutes": 293.2,
+    "minutes": 297.5,
     "tokens": 1138663,
     "cache_read_tokens": 34041757
    },
@@ -415,7 +415,7 @@
     "output_tokens": 3508
    },
    "claude_desktop": {
-    "minutes": 327.6,
+    "minutes": 359.7,
     "tokens": null
    },
    "chatgpt_desktop": {
@@ -428,8 +428,8 @@
    },
    "claude_desktop_code": {
     "minutes": 91.7,
-    "tokens": 3473471,
-    "cache_read_tokens": 199853722
+    "tokens": 3971100,
+    "cache_read_tokens": 252966349
    },
    "codex_desktop_code": {
     "minutes": 66.1,
@@ -441,18 +441,18 @@
     "tokens": 0
    },
    "cli_total": {
-    "minutes": 505.2,
+    "minutes": 509.5,
     "tokens": 4200155,
     "cache_read_tokens": 90705795
    },
    "desktop_total": {
-    "minutes": 739.3,
-    "tokens": 5003786,
-    "cache_read_tokens": 231841818
+    "minutes": 771.4,
+    "tokens": 5501415,
+    "cache_read_tokens": 284954445
    },
    "total": {
-    "minutes": 1249.3,
-    "tokens": 9203941
+    "minutes": 1285.7,
+    "tokens": 9701570
    },
    "from": "2026-10-01"
   },
@@ -466,7 +466,7 @@
     "tokens": 0
    },
    "claude_code": {
-    "minutes": 302.2,
+    "minutes": 306.5,
     "tokens": 1138663,
     "cache_read_tokens": 34041757
    },
@@ -483,7 +483,7 @@
     "output_tokens": 3508
    },
    "claude_desktop": {
-    "minutes": 327.6,
+    "minutes": 359.7,
     "tokens": null
    },
    "chatgpt_desktop": {
@@ -496,8 +496,8 @@
    },
    "claude_desktop_code": {
     "minutes": 139.0,
-    "tokens": 4001253,
-    "cache_read_tokens": 224038085
+    "tokens": 4498882,
+    "cache_read_tokens": 277150712
    },
    "codex_desktop_code": {
     "minutes": 646.7,
@@ -509,18 +509,18 @@
     "tokens": 0
    },
    "cli_total": {
-    "minutes": 553.6,
+    "minutes": 557.9,
     "tokens": 4350460,
     "cache_read_tokens": 96669955
    },
    "desktop_total": {
-    "minutes": 1367.3,
-    "tokens": 8682770,
-    "cache_read_tokens": 339203013
+    "minutes": 1399.4,
+    "tokens": 9180399,
+    "cache_read_tokens": 392315640
    },
    "total": {
-    "minutes": 1925.7,
-    "tokens": 13033230
+    "minutes": 1962.1,
+    "tokens": 13530859
    },
    "from": "2026-01-01"
   },
@@ -534,7 +534,7 @@
     "tokens": 0
    },
    "claude_code": {
-    "minutes": 302.2,
+    "minutes": 306.5,
     "tokens": 1138663,
     "cache_read_tokens": 34041757
    },
@@ -551,7 +551,7 @@
     "output_tokens": 3508
    },
    "claude_desktop": {
-    "minutes": 327.6,
+    "minutes": 359.7,
     "tokens": null
    },
    "chatgpt_desktop": {
@@ -564,8 +564,8 @@
    },
    "claude_desktop_code": {
     "minutes": 139.0,
-    "tokens": 4001253,
-    "cache_read_tokens": 224038085
+    "tokens": 4498882,
+    "cache_read_tokens": 277150712
    },
    "codex_desktop_code": {
     "minutes": 646.7,
@@ -577,18 +577,18 @@
     "tokens": 0
    },
    "cli_total": {
-    "minutes": 553.6,
+    "minutes": 557.9,
     "tokens": 4350460,
     "cache_read_tokens": 96669955
    },
    "desktop_total": {
-    "minutes": 1367.3,
-    "tokens": 8682770,
-    "cache_read_tokens": 339203013
+    "minutes": 1399.4,
+    "tokens": 9180399,
+    "cache_read_tokens": 392315640
    },
    "total": {
-    "minutes": 1925.7,
-    "tokens": 13033230
+    "minutes": 1962.1,
+    "tokens": 13530859
    },
    "from": null
   }
@@ -1965,7 +1965,7 @@
     "tokens": 0
    },
    "claude_code": {
-    "minutes": 9.6,
+    "minutes": 13.9,
     "tokens": 0,
     "cache_read_tokens": 0
    },
@@ -1982,7 +1982,7 @@
     "output_tokens": 0
    },
    "claude_desktop": {
-    "minutes": 126.5,
+    "minutes": 158.6,
     "tokens": null
    },
    "chatgpt_desktop": {
@@ -1995,8 +1995,8 @@
    },
    "claude_desktop_code": {
     "minutes": 0.0,
-    "tokens": 881023,
-    "cache_read_tokens": 35985780
+    "tokens": 1377070,
+    "cache_read_tokens": 88963377
    },
    "codex_desktop_code": {
     "minutes": 0.0,
@@ -2008,18 +2008,86 @@
     "tokens": 0
    },
    "cli_total": {
-    "minutes": 9.6,
+    "minutes": 13.9,
     "tokens": 0,
     "cache_read_tokens": 0
    },
    "desktop_total": {
-    "minutes": 126.5,
-    "tokens": 881023,
-    "cache_read_tokens": 35985780
+    "minutes": 158.6,
+    "tokens": 1377070,
+    "cache_read_tokens": 88963377
    },
    "total": {
-    "minutes": 136.1,
-    "tokens": 881023
+    "minutes": 172.5,
+    "tokens": 1377070
+   }
+  },
+  {
+   "date": "2026-10-22",
+   "claude": {
+    "minutes": 0.0,
+    "tokens": 0
+   },
+   "chatgpt": {
+    "minutes": 0.0,
+    "tokens": 0
+   },
+   "claude_code": {
+    "minutes": 0.0,
+    "tokens": 0,
+    "cache_read_tokens": 0
+   },
+   "codex": {
+    "minutes": 0.0,
+    "tokens": 0,
+    "cache_read_tokens": 0
+   },
+   "kimi": {
+    "minutes": 0.0,
+    "tokens": 0,
+    "cache_read_tokens": 0,
+    "input_tokens": 0,
+    "output_tokens": 0
+   },
+   "claude_desktop": {
+    "minutes": 0.0,
+    "tokens": null
+   },
+   "chatgpt_desktop": {
+    "minutes": 0.0,
+    "tokens": null
+   },
+   "kimi_desktop": {
+    "minutes": 0.0,
+    "tokens": null
+   },
+   "claude_desktop_code": {
+    "minutes": 0.0,
+    "tokens": 1582,
+    "cache_read_tokens": 135030
+   },
+   "codex_desktop_code": {
+    "minutes": 0.0,
+    "tokens": 0,
+    "cache_read_tokens": 0
+   },
+   "web_total": {
+    "minutes": 0.0,
+    "tokens": 0
+   },
+   "cli_total": {
+    "minutes": 0.0,
+    "tokens": 0,
+    "cache_read_tokens": 0
+   },
+   "desktop_total": {
+    "minutes": 0.0,
+    "tokens": 1582,
+    "cache_read_tokens": 135030
+   },
+   "total": {
+    "minutes": 0.0,
+    "tokens": 1582
    }
   }
  ]
