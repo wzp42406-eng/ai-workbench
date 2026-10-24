@@ -1,0 +1,484 @@
+{
+ "generated_at": "2026-10-24T06:41:10+00:00",
+ "days": 30,
+ "engine": "",
+ "note": "没有设置 ANTHROPIC_API_KEY，也没有 Kimi CLI，所以没有中文总结",
+ "items": [
+  {
+   "name": "Ebony-Vinyl/dsh-our-free-model",
+   "url": "https://github.com/Ebony-Vinyl/dsh-our-free-model",
+   "desc": "在 dsh 里装上这个插件即可，无需登录、注册或填 API Key，就能使用包括 DeepSeek V4.1 Flash、Kimi K3 在内的前沿模型——完全免费，不限量。 All you do is install this plugin in dsh: no login, no sign-up, no API key — the frontier models are just there, DeepSeek V4.1 Flash and Kimi K3 among them. Completely free, with no usage cap.",
+   "stars": 39792,
+   "lang": "JavaScript",
+   "topics": [
+    "ai-agents",
+    "deepseek",
+    "deepseek-harness",
+    "developer-tools",
+    "dsh",
+    "dsh-plugin",
+    "free-model",
+    "llm"
+   ],
+   "created": "2026-09-24T16:17:19Z",
+   "pushed": "2026-10-24T06:03:04Z",
+   "license": "MIT",
+   "home": ""
+  },
+  {
+   "name": "wheresryan22/anatomy",
+   "url": "https://github.com/wheresryan22/anatomy",
+   "desc": "An agent skill for creating detailed, interactive isometric illustrations of real-world machines and complex systems. Generates polished SVGs with optional WebGL shaders and 3D effects.",
+   "stars": 19797,
+   "lang": "JavaScript",
+   "topics": [
+    "agent-skill",
+    "open-source",
+    "svg",
+    "vizualization"
+   ],
+   "created": "2026-10-08T10:12:49Z",
+   "pushed": "2026-10-18T20:20:24Z",
+   "license": "MIT",
+   "home": "https://skills.wheresryan.sh/anatomy"
+  },
+  {
+   "name": "tangency-labs/solidcraft",
+   "url": "https://github.com/tangency-labs/solidcraft",
+   "desc": "SolidCraft: an open-source parametric 3D CAD application built in pure Rust. Desktop, web, and automation through MCP.",
+   "stars": 9789,
+   "lang": "Rust",
+   "topics": [
+    "3d-modeling",
+    "brep",
+    "cad",
+    "egui",
+    "mcp",
+    "parametric-cad",
+    "rust",
+    "step"
+   ],
+   "created": "2026-10-07T18:57:48Z",
+   "pushed": "2026-10-24T06:32:00Z",
+   "license": "Apache-2.0",
+   "home": "solidcraft.io"
+  },
+  {
+   "name": "rehan-remade/universal-modder",
+   "url": "https://github.com/rehan-remade/universal-modder",
+   "desc": "Point Claude at any game. Skills, tools and the fal MCP that let Claude Code mod almost any PC game you own: recon, reverse engineering, fal-generated art/3D/audio, in-game testing, showcase videos.",
+   "stars": 8823,
+   "lang": "Python",
+   "topics": [
+    "age-of-empires",
+    "claude-code",
+    "claude-code-plugin",
+    "fal",
+    "game-assets",
+    "game-modding",
+    "mcp",
+    "modding"
+   ],
+   "created": "2026-09-30T05:00:35Z",
+   "pushed": "2026-10-24T04:32:33Z",
+   "license": "MIT",
+   "home": ""
+  },
+  {
+   "name": "KKKKhazix/AIHOT",
+   "url": "https://github.com/KKKKhazix/AIHOT",
+   "desc": "一个自己找热点、自己写日报的网站框架。把信源和精选标准换成你的，它就是你的行业热点站。",
+   "stars": 8520,
+   "lang": "TypeScript",
+   "topics": [
+    "ai",
+    "chinese",
+    "content-curation",
+    "daily-digest",
+    "docker-compose",
+    "llm",
+    "mcp",
+    "news-aggregator"
+   ],
+   "created": "2026-09-28T23:40:05Z",
+   "pushed": "2026-10-22T10:44:35Z",
+   "license": "MIT",
+   "home": "https://aihot.news"
+  },
+  {
+   "name": "Louis-CFM/coucou",
+   "url": "https://github.com/Louis-CFM/coucou",
+   "desc": "A tiny friend in your Mac's notch and on your iPhone that keeps an eye on your AI coding agents: Claude Code, Codex, Cursor, Gemini CLI, Antigravity and more. Approve from the notch or your Lock Screen.",
+   "stars": 6326,
+   "lang": "Swift",
+   "topics": [
+    "ai-agents",
+    "anthropic",
+    "antigravity",
+    "claude",
+    "claude-code",
+    "codex",
+    "cursor",
+    "dynamic-island"
+   ],
+   "created": "2026-09-27T21:54:12Z",
+   "pushed": "2026-10-23T17:25:38Z",
+   "license": "MIT",
+   "home": "https://louis-cfm.github.io/coucou/"
+  },
+  {
+   "name": "lemomo-ai/lemo-opuscar",
+   "url": "https://github.com/lemomo-ai/lemo-opuscar",
+   "desc": "A toolbox of film styles made in code for Claude Code: 59 ready to use, and your own. Each style is a style prompt plus a demo film made entirely in code by Claude Opus 5.5, with no video model. By Lemomo. · 一套用代码做片的风格工具箱：59 种现成风格，也能做出你自己的",
+   "stars": 6216,
+   "lang": "JavaScript",
+   "topics": [
+    "agent-skills",
+    "ai-agents",
+    "ai-short-film",
+    "ai-video",
+    "animation",
+    "canvas",
+    "claude",
+    "claude-code"
+   ],
+   "created": "2026-09-26T10:10:41Z",
+   "pushed": "2026-10-22T07:07:05Z",
+   "license": "MIT",
+   "home": "https://lemomo-ai.github.io/lemo-opuscar/"
+  },
+  {
+   "name": "CopilotKit/OpenDots",
+   "url": "https://github.com/CopilotKit/OpenDots",
+   "desc": "Your always-on AI coworkers that move between text, calls, and Slack.",
+   "stars": 5946,
+   "lang": "TypeScript",
+   "topics": [],
+   "created": "2026-09-29T17:13:58Z",
+   "pushed": "2026-10-22T15:15:00Z",
+   "license": "MIT",
+   "home": "https://www.copilotkit.ai/opendots"
+  },
+  {
+   "name": "shader-effects-inc/shaders",
+   "url": "https://github.com/shader-effects-inc/shaders",
+   "desc": "WebGPU components for React, Vue, Svelte, Solid, JS & Framer",
+   "stars": 5381,
+   "lang": "TypeScript",
+   "topics": [
+    "cli",
+    "javascript",
+    "mcp",
+    "react",
+    "shaders",
+    "solid",
+    "svelte",
+    "vue"
+   ],
+   "created": "2026-09-29T16:36:26Z",
+   "pushed": "2026-10-21T17:33:36Z",
+   "license": "MIT",
+   "home": "https://shaders.com"
+  },
+  {
+   "name": "omlahore/RemoveMacAI",
+   "url": "https://github.com/omlahore/RemoveMacAI",
+   "desc": "Debloat macOS: turn off Apple Intelligence, analytics, ads and pop-ups. A native app and CLI, and every change can be undone.",
+   "stars": 5188,
+   "lang": "Swift",
+   "topics": [
+    "ai-blocker",
+    "anti-ai",
+    "apple-intelligence",
+    "cli",
+    "debloat",
+    "hacktoberfest",
+    "macos",
+    "macos-27"
+   ],
+   "created": "2026-09-29T11:02:39Z",
+   "pushed": "2026-10-23T20:10:33Z",
+   "license": "MIT",
+   "home": "https://omlahore.github.io/RemoveMacAI/"
+  },
+  {
+   "name": "kaankiziltug/logo-design-skill",
+   "url": "https://github.com/kaankiziltug/logo-design-skill",
+   "desc": "A comprehensive logo-design skill for Claude, Gemini CLI, Codex and other AI agents: principles, process, SVG craft, testing tools and a 1,400+ logo reference library.",
+   "stars": 4339,
+   "lang": "HTML",
+   "topics": [
+    "agent-skills",
+    "branding",
+    "claude",
+    "claude-skills",
+    "codex",
+    "gemini-cli",
+    "logo-design",
+    "svg"
+   ],
+   "created": "2026-09-26T08:23:34Z",
+   "pushed": "2026-10-20T09:14:19Z",
+   "license": "MIT",
+   "home": ""
+  },
+  {
+   "name": "QingYunA/answer-me-with-html",
+   "url": "https://github.com/QingYunA/answer-me-with-html",
+   "desc": "Answer me with HTML — an agent skill that answers hard questions with a one-page HTML you can actually read. 让 AI Agent 用一页 HTML 回答复杂问题。",
+   "stars": 4325,
+   "lang": "JavaScript",
+   "topics": [
+    "agent-skill",
+    "ai-agent",
+    "claude-code",
+    "claude-code-skill",
+    "claude-skill",
+    "claude-skills",
+    "cli",
+    "diagram"
+   ],
+   "created": "2026-10-02T09:57:40Z",
+   "pushed": "2026-10-22T08:23:28Z",
+   "license": "MIT",
+   "home": "https://answer-me-with-html.com/"
+  },
+  {
+   "name": "Arekejoker/qwen21-nsfw-pose-skill",
+   "url": "https://github.com/Arekejoker/qwen21-nsfw-pose-skill",
+   "desc": "Qwen-Image 2.1 NSFW/姿势出图 skill：作者级提示词配方 + NSFW LoRA + 136 姿势 VNCCS 人偶控制；适用 Claude Code / Codex / Cursor / OpenClaw",
+   "stars": 3686,
+   "lang": "Python",
+   "topics": [
+    "agent-skill",
+    "comfyui",
+    "image-generation",
+    "openclaw",
+    "pose-control",
+    "qwen-image"
+   ],
+   "created": "2026-10-13T03:09:42Z",
+   "pushed": "2026-10-20T07:03:30Z",
+   "license": "Apache-2.0",
+   "home": ""
+  },
+  {
+   "name": "onehumanbeing/esp32-iphone-agent",
+   "url": "https://github.com/onehumanbeing/esp32-iphone-agent",
+   "desc": "Let an AI model use a real iPhone with a $7 ESP32: AirPlay eyes, USB HID hands, any OpenAI-compatible vision model. No Mac, no developer account, no jailbreak.",
+   "stars": 3679,
+   "lang": "C",
+   "topics": [
+    "ai-agent",
+    "airplay",
+    "automation",
+    "computer-use",
+    "esp32",
+    "esp32-s3",
+    "iphone",
+    "llm"
+   ],
+   "created": "2026-10-11T19:10:25Z",
+   "pushed": "2026-10-22T05:26:44Z",
+   "license": "MIT",
+   "home": "https://handsy.tech?ref=github"
+  },
+  {
+   "name": "feitangyuan/onetake",
+   "url": "https://github.com/feitangyuan/onetake",
+   "desc": "Motion films that never cut to the next slide: every beat grows out of the one before, one continuous camera, continuity measured by an oracle. Product launch films and feature demos, made with a coding agent.",
+   "stars": 3116,
+   "lang": "Python",
+   "topics": [
+    "agent-skill",
+    "animation",
+    "canvas",
+    "claude-skill",
+    "launch-video",
+    "motion-graphics",
+    "video"
+   ],
+   "created": "2026-09-26T05:35:17Z",
+   "pushed": "2026-10-21T17:58:00Z",
+   "license": "",
+   "home": "https://onetakemotion.com"
+  },
+  {
+   "name": "Folkbench/folkbench",
+   "url": "https://github.com/Folkbench/folkbench",
+   "desc": "AI API 中转站评测排行与切换工具：实测可用率、延迟与价格 · Open-source AI API relay benchmark, rankings & switcher for Claude Code / Codex",
+   "stars": 3026,
+   "lang": "Rust",
+   "topics": [
+    "ai",
+    "api-relay",
+    "api-relay-pricing",
+    "benchmark",
+    "benchmarks",
+    "claude",
+    "claude-code",
+    "codex"
+   ],
+   "created": "2026-10-02T09:50:45Z",
+   "pushed": "2026-10-23T18:17:59Z",
+   "license": "",
+   "home": "https://folkbench.com"
+  },
+  {
+   "name": "dzhng/jevgrep",
+   "url": "https://github.com/dzhng/jevgrep",
+   "desc": "Find code by asking what it does. A CLI for coding agents that uses Jev to discover relevant files and source context.",
+   "stars": 2885,
+   "lang": "TypeScript",
+   "topics": [
+    "ai-sdk",
+    "claude-code",
+    "cli",
+    "code-search",
+    "codex",
+    "coding-agents",
+    "context-retrieval",
+    "developer-tools"
+   ],
+   "created": "2026-09-26T04:06:56Z",
+   "pushed": "2026-10-21T19:35:15Z",
+   "license": "MIT",
+   "home": ""
+  },
+  {
+   "name": "Leonxlnx/earshot",
+   "url": "https://github.com/Leonxlnx/earshot",
+   "desc": "Ears for coding agents: let AI hear, review and make sound. CPU-only, open source.",
+   "stars": 2507,
+   "lang": "Python",
+   "topics": [
+    "ai-agents",
+    "audio",
+    "claude-code",
+    "mcp",
+    "sound-design"
+   ],
+   "created": "2026-10-15T06:52:46Z",
+   "pushed": "2026-10-22T23:12:59Z",
+   "license": "MIT",
+   "home": ""
+  },
+  {
+   "name": "nanaism/yomiyasu",
+   "url": "https://github.com/nanaism/yomiyasu",
+   "desc": "AI生成の日本語を自然な日本語へ推敲するAgent Skill / Agent Skill for Refining AI-Generated Japanese into Natural Japanese",
+   "stars": 2449,
+   "lang": "Python",
+   "topics": [
+    "agent-skills",
+    "ai-writing",
+    "antigravity",
+    "claude-code",
+    "codex",
+    "cursor",
+    "gemini",
+    "japanese"
+   ],
+   "created": "2026-09-30T11:49:32Z",
+   "pushed": "2026-10-24T01:55:35Z",
+   "license": "MIT",
+   "home": ""
+  },
+  {
+   "name": "openfilm/openfilm",
+   "url": "https://github.com/openfilm/openfilm",
+   "desc": "The open source AI video agent: turns any coding agent into a video agent, with an editor to change anything it makes.",
+   "stars": 2388,
+   "lang": "TypeScript",
+   "topics": [
+    "ai-video",
+    "claude-code",
+    "codex",
+    "coding-agents",
+    "html",
+    "motion-graphics",
+    "video-agent",
+    "video-editor"
+   ],
+   "created": "2026-10-04T09:29:07Z",
+   "pushed": "2026-10-23T15:51:11Z",
+   "license": "MIT",
+   "home": "https://openfilm.dev"
+  },
+  {
+   "name": "deeplethe/solid-glass",
+   "url": "https://github.com/deeplethe/solid-glass",
+   "desc": "A design system for AI applications. Material, physical, tactile, technical.",
+   "stars": 2191,
+   "lang": "TypeScript",
+   "topics": [
+    "agent-ui",
+    "ai",
+    "ai-agents",
+    "chat-ui",
+    "design-system",
+    "llm",
+    "react",
+    "shadcn"
+   ],
+   "created": "2026-10-12T09:19:02Z",
+   "pushed": "2026-10-22T18:35:56Z",
+   "license": "MIT",
+   "home": "https://deeplethe.github.io/solid-glass"
+  },
+  {
+   "name": "jiwoochris/artex-global",
+   "url": "https://github.com/jiwoochris/artex-global",
+   "desc": "ARTEX 한국어판 · AI 자율 침투 테스트 프레임워크(upstream: Autumn-27/ARTEX, AGPL-3.0)",
+   "stars": 2094,
+   "lang": "Go",
+   "topics": [
+    "ai-agent",
+    "autonomous-agents",
+    "blue-team",
+    "cybersecurity",
+    "detection-engineering",
+    "i18n",
+    "korean",
+    "llm"
+   ],
+   "created": "2026-10-03T14:49:48Z",
+   "pushed": "2026-10-14T07:52:45Z",
+   "license": "AGPL-3.0",
+   "home": ""
+  },
+  {
+   "name": "academa-labs/manimgx",
+   "url": "https://github.com/academa-labs/manimgx",
+   "desc": "The animation engine for agents: blazingly fast math and 3D videos with Manim's Python API, on a Rust GPU core.",
+   "stars": 2073,
+   "lang": "Python",
+   "topics": [],
+   "created": "2026-10-05T20:57:05Z",
+   "pushed": "2026-10-24T06:15:32Z",
+   "license": "MIT",
+   "home": "https://manimgx.academa.ai"
+  },
+  {
+   "name": "oil-oil/oil-ui",
+   "url": "https://github.com/oil-oil/oil-ui",
+   "desc": "UI design skill for Claude Code, Codex and other AI agents: explore distinct directions, compare them side by side, refine against real screenshots. 给 AI Agent 用的 UI 设计 Skill。",
+   "stars": 2070,
+   "lang": "Python",
+   "topics": [
+    "agent-skills",
+    "ai-design",
+    "claude-code",
+    "claude-skills",
+    "codex",
+    "frontend",
+    "ui-design",
+    "ux-design"
+   ],
+   "created": "2026-09-30T03:55:35Z",
+   "pushed": "2026-10-23T12:58:54Z",
+   "license": "MIT",
+   "home": "https://ui.oiloil.org"
+  }
+ ]
+}
