@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-10-24T14:45:32+08:00",
+ "updated_at": "2026-10-24T18:07:49+08:00",
  "note": "Codex 额度与账户累计 token 来自本机 app-server 只读 API；CLI 时长与当前周期 token 来自会话记录。会话 token 不含 cache_read_tokens，缓存读取另列。Claude、ChatGPT、Kimi 桌面对话无 token 记录",
  "quota": {
   "claude": {
@@ -24,8 +24,8 @@
    "five_hour": {
     "used_percent": 0.0,
     "remaining_percent": 100.0,
-    "resets_at": "2026-10-24T19:45:27+08:00",
-    "observed_at": "2026-10-24T14:45:32+08:00",
+    "resets_at": "2026-10-24T23:07:48+08:00",
+    "observed_at": "2026-10-24T18:07:49+08:00",
     "reset_since": false,
     "source": "codex_app_server"
    },
@@ -33,16 +33,16 @@
     "used_percent": 3.0,
     "remaining_percent": 97.0,
     "resets_at": "2026-10-31T02:40:20+08:00",
-    "observed_at": "2026-10-24T14:45:32+08:00",
+    "observed_at": "2026-10-24T18:07:49+08:00",
     "reset_since": false,
     "source": "codex_app_server"
    }
   }
  },
  "codex_api": {
-  "updated_at": "2026-10-24T14:45:32+08:00",
+  "updated_at": "2026-10-24T18:07:49+08:00",
   "token_usage": {
-   "lifetime_tokens": 666201916,
+   "lifetime_tokens": 666510577,
    "peak_daily_tokens": 64874275,
    "longest_running_turn_seconds": 6254,
    "current_streak_days": 47,
@@ -258,7 +258,7 @@
     },
     {
      "date": "2026-10-23",
-     "tokens": 2072136
+     "tokens": 2380797
     }
    ]
   }
