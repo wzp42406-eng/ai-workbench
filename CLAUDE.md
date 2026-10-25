@@ -4,7 +4,7 @@
 
 ## 文件
 - `index.html`：整个页面（样式和脚本都在里面），左侧导航栏（电脑上可收起，状态存 localStorage `wb-side`；手机上从左边滑出），用 `#overview` `#intel` `#playground` `#usage` `#playbook` 切换视图。
-- `tools/picks.py` + `.github/workflows/picks.yml`：每天北京时间 10 点找最近 30 天新建的 AI 项目，读 README，用 Claude（仓库 Secret `ANTHROPIC_API_KEY`，
+- `tools/picks.py` + `.github/workflows/picks.yml`：每天北京时间凌晨 4:17 定时（GitHub 常推迟几小时，目标是上午 10 点前完成）找最近 30 天新建的 AI 项目，读 README，用 Claude（仓库 Secret `ANTHROPIC_API_KEY`，
   模型可用 Variable `PICKS_MODEL` 改，默认 claude-opus-5-5）翻译简介并总结“能做什么、对 Peter 的用处、怎么上手、适合度 1-5”，
   结果 `picks.json` 强推到 `picks` 分支（只留一份，不碰 main），页面从 raw.githubusercontent.com 读。没有 Key 时只输出项目列表、没有中文总结。
   本机没有 Key 但装了 Kimi CLI 时用 `tools/kimi/agent.yaml`（不带工具）。总结过的项目 14 天内不重复调用模型。
