@@ -4,7 +4,7 @@
 
 ## 文件
 - `index.html`：整个页面（样式和脚本都在里面），左侧导航栏（电脑上可收起，状态存 localStorage `wb-side`；手机上从左边滑出），用 `#overview` `#intel` `#playground` `#usage` `#playbook` 切换视图。
-- `tools/picks.py` + `.github/workflows/picks.yml`：每天北京时间凌晨 4:17 定时（GitHub 常推迟几小时，目标是上午 10 点前完成）找最近 30 天新建的 AI 项目，读 README，用 Claude（仓库 Secret `ANTHROPIC_API_KEY`，
+- `tools/picks.py` + `.github/workflows/picks.yml`：每天北京时间凌晨 4:17 定时（GitHub 常推迟几小时，目标是上午 10 点前完成）从 GitHub Trending（本周/今天新增 star）和搜索里挑 star 涨得最快的 AI 项目（不限创建时间，推荐过的记在 `shown` 里不再推荐，每天最多 8 个新的），读 README，用 Claude（仓库 Secret `ANTHROPIC_API_KEY`，
   模型可用 Variable `PICKS_MODEL` 改，默认 claude-opus-5-5）翻译简介并总结“能做什么、对 Peter 的用处、怎么上手、适合度 1-5”，
   结果 `picks.json` 强推到 `picks` 分支（只留一份，不碰 main），页面从 raw.githubusercontent.com 读。没有 Key 时只输出项目列表、没有中文总结。
   本机没有 Key 但装了 Kimi CLI 时用 `tools/kimi/agent.yaml`（不带工具）。总结过的项目 14 天内不重复调用模型。
@@ -21,7 +21,7 @@
 - AI 情报在浏览器里直接读 AIHOT 公开 API（https://aihot.news/api/v1，字段见其 openapi-v1.json），
   不把内容存进仓库或 localStorage（AIHOT 条款不允许公开副本），不使用 AIHOT 的名字和 Logo 做品牌。
 - AI 情报的“今日推荐”从最近 24 小时精选里按 AIHOT 评分取 5-10 条（不低于最高分的 80%），评分不够时沿用 AIHOT 的顺序，不自己编分数。
-- AI 玩法只放能直接上手的：每天生成的 GitHub 精选（按适合度、再按星数排，适合度 1 分的不显示）；精选读不到或超过 3 天没更新时，浏览器直接搜 GitHub（localStorage `wb-gh-cache` 缓存 6 小时，只有英文简介）。另有 AIHOT 本周教程里有开源地址或上手步骤的。
+- AI 玩法只放能直接上手的：每天生成的 GitHub 精选（页面按推荐日期分本周/本月，按适合度、再按 star 增速排，适合度 1 分的不推荐）；精选读不到或超过 3 天没更新时，浏览器直接搜 GitHub（localStorage `wb-gh-cache` 缓存 6 小时，只有英文简介）。另有 AIHOT 本周教程里有开源地址或上手步骤的。
 - picks.json 只放 GitHub 公开数据和模型写的总结，不放 AIHOT 的任何内容。
 - AI 玩法的收藏、已尝试、备注存在 localStorage（`wb-play-marks`），存条目 id、标题、状态、备注和原文链接（Peter 同意存标题），不存摘要。
 - 方法库存在 localStorage（`wb-playbook`），页面上可以导出/导入 JSON 备份。
