@@ -408,7 +408,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
         <div class="seg small" id="play-range" role="group" aria-label="GitHub 时间范围"></div>
       </div>
       <div id="play-body"></div>
-      <div class="foot">GitHub 项目每天上午 10 点前从 GitHub 公开搜索里挑最近新建的 AI 项目（去掉资源合集和停更的），由 Claude 读简介和 README 后翻译成中文、总结能做什么和对你的用处，按适合度排序；总结是模型写的，以项目主页为准。精选暂时读不到时，改由浏览器直接搜 GitHub，只有英文简介。教程来自 AIHOT 公开 API 最近 7 天的精选，实时读取、不保存。收藏、已尝试和备注（连同标题和链接）只存在这个浏览器里，换手机或换浏览器要重新收藏。</div>
+      <div class="foot">GitHub 项目每天上午 10 点前从 GitHub Trending 和公开搜索里挑最近 star 涨得最快的 AI 项目（不限创建时间，去掉资源合集和停更的，推荐过的不再出现），由 Claude 读简介和 README 后翻译成中文、总结能做什么和对你的用处，按适合度排序；总结是模型写的，以项目主页为准。精选暂时读不到时，改由浏览器直接搜 GitHub，只有英文简介。教程来自 AIHOT 公开 API 最近 7 天的精选，实时读取、不保存。收藏、已尝试和备注（连同标题和链接）只存在这个浏览器里，换手机或换浏览器要重新收藏。</div>
     </section>
 
     <!-- ==================== 方法库 ==================== -->
@@ -861,7 +861,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
   const jobName = text => (JOBS.find(([, , re]) => re.test(text)) || [, ''])[1]
   // 和你常用的工具（Claude Code、Codex、Kimi）能直接配合的
   const MY_TOOLS = /claude|codex|kimi|\bmcp\b|skill|agents\.md|claude\.md/i
-  const GH_RANGES = [['7', '本周新项目'], ['30', '本月新项目']]
+  const GH_RANGES = [['7', '本周推荐'], ['30', '本月推荐']]
   const PLAY_SHOW = [['all', '推荐'], ['saved', '收藏'], ['tried', '已尝试']]
   const GH_TTL = 6 * 3600e3
   let ghRange = pick('wb-gh-range', GH_RANGES, '30')
@@ -892,6 +892,8 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     }
   }
   // 能直接落地：有简介、最近两周还在更新、不是“资源合集”类列表
+  const GROWTH_BASIS = { trending: '按 GitHub Trending 上本周或今天新增的 star 算', snapshot: '按上次记下的星数算的近一周平均', age: '还没有近期数据，按总星数 ÷ 创建天数估算' }
+  const growthText = n => n >= 100 ? Math.round(n).toLocaleString() : n >= 10 ? String(Math.round(n)) : n.toFixed(1)
   const usableRepo = x => x.desc && !/^awesome|awesome-|资源合集|curated list|list of/i.test(`${x.name.split('/')[1]} ${x.desc}`) && Date.now() - new Date(x.pushed) < 14 * 864e5
   const DOABLE = /github\.com|开源|教程|技巧|指南|上手|实战|实操|手把手|步骤|一键|部署|模板|提示词|prompt|工作流|workflow|skill|插件|本地|免费|how to|guide/i
 
@@ -907,9 +909,10 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     const since = Date.now() - days * 864e5
     try {
       const d = await loadPicks()
-      // 模型觉得对你没什么用（1 分）的不显示；有总结的按适合度排，同分按星数
-      const items = d.items.filter(x => new Date(x.created) >= since && (x.ai?.fit ?? 3) >= 2)
-        .sort((a, b) => (b.ai?.fit ?? 0) - (a.ai?.fit ?? 0) || b.stars - a.stars)
+      // 按推荐日期分本周 / 本月（推荐过的不会再出现）；模型觉得对你没什么用（1 分）的不显示；
+      // 有总结的按适合度排，同分按 star 增速
+      const items = d.items.filter(x => new Date(x.picked || x.created) >= since && (x.ai?.fit ?? 3) >= 2)
+        .sort((a, b) => (b.ai?.fit ?? 0) - (a.ai?.fit ?? 0) || (b.growth?.per_day ?? 0) - (a.growth?.per_day ?? 0) || b.stars - a.stars)
       return { items, picks: d }
     } catch {
       const v = await ghRepos(days)
@@ -921,7 +924,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     const box = $('play-body')
     box.replaceChildren(el('div', { class: 'empty' }, '正在读取…'))
     const [gh, tip] = await Promise.allSettled([repoList(+ghRange), aihot('/items?mode=selected&window=7d&limit=100&category=tip')])
-    const repos = gh.status === 'fulfilled' ? gh.value.items.slice(0, 8).map(x => ({
+    const repos = gh.status === 'fulfilled' ? gh.value.items.slice(0, 12).map(x => ({
       id: `gh:${x.name}`, kind: 'repo', title: x.name, url: x.url, summary: x.ai?.zh || x.desc, original: x.ai?.zh ? x.desc : '', ai: x.ai,
       mine: MY_TOOLS.test(`${x.name} ${x.desc} ${x.topics.join(' ')}`), job: jobName(`${x.name} ${x.desc} ${x.topics.join(' ')}`), repo: x })) : []
     const tips = tip.status === 'fulfilled' ? tip.value.items.filter(x => DOABLE.test(`${x.links?.original || ''} ${x.title} ${x.summary || ''}`))
@@ -951,9 +954,9 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     }
     const { repos, tips, ghError, tipError } = playItems
     box.replaceChildren(...[
-      el('div', { class: 'section-title' }, el('span', {}, `GitHub ${GH_RANGES.find(r => r[0] === ghRange)[1]} · ${playItems.picks?.engine ? '按对你的价值' : '按星数'}`),
+      el('div', { class: 'section-title' }, el('span', {}, `GitHub ${GH_RANGES.find(r => r[0] === ghRange)[1]} · ${playItems.picks?.engine ? '按对你的价值' : playItems.picks ? '按 star 增速' : '按星数'}`),
         el('span', {}, playItems.picks ? `每天上午 10 点前更新，上次 ${fullTime(playItems.picks.generated_at)}${playItems.picks.engine ? '' : '（还没有中文总结）'}` : '只留有简介、最近两周还在更新的，去掉资源合集')),
-      repos.length ? el('div', { class: 'play-grid' }, ...repos.map(playCard)) : el('div', { class: 'empty' }, ghError ? `暂时读不到 GitHub（${ghError}）` : '这段时间没有符合条件的新项目'),
+      repos.length ? el('div', { class: 'play-grid' }, ...repos.map(playCard)) : el('div', { class: 'empty' }, ghError ? `暂时读不到 GitHub（${ghError}）` : playItems.picks ? '这段时间还没有新推荐' : '这段时间没有符合条件的新项目'),
       ghError && repos.length ? el('div', { class: 'qsub' }, ghError) : null,
       el('div', { class: 'section-title' }, el('span', {}, '本周可以照着做的教程 · 按 AIHOT 评分'), el('span', {}, '只留有开源地址或上手步骤的')),
       tips.length ? el('div', { class: 'play-grid' }, ...tips.map(playCard)) : el('div', { class: 'empty' }, tipError ? `暂时读不到教程（${tipError}）` : '最近 7 天没有符合条件的教程')].filter(Boolean))
@@ -980,6 +983,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
         !x.ai && x.mine ? el('span', { class: 'chip', style: '--c: var(--accent)', title: '标题或简介里提到 Claude、Codex、Kimi、MCP 或 Skill' }, '能配合你常用的工具') : null,
         x.job ? el('span', {}, x.job) : null,
         r ? el('span', { title: 'GitHub 星数' }, `★ ${r.stars.toLocaleString()}`) : null,
+        r?.growth ? el('span', { title: GROWTH_BASIS[r.growth.basis] || '' }, `+${growthText(r.growth.per_day)} 星/天`) : null,
         r?.lang ? el('span', {}, r.lang) : null,
         r ? el('span', { title: fullTime(r.created) }, `${ago(r.created)}创建`) : null,
         r ? el('span', { title: r.license ? '开源许可' : '没写开源许可，商用前先确认' }, r.license || '未写许可') : null,
@@ -1011,7 +1015,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     return f
   }
 
-  // 总览里的 GitHub 精选：本周最适合你的 3 个，只看每天生成的精选，读不到就不显示这块
+  // 总览里的 GitHub 精选：本周推荐里最适合你的 3 个，只看每天生成的精选，读不到就不显示这块
   async function renderOverviewPlay() {
     const box = $('ov-play')
     try {
@@ -1020,7 +1024,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
       box.replaceChildren(...items.slice(0, 3).map(x => el('li', { class: 'news-item' }, el('div', { class: 'news-main' },
         el('div', { class: 'news-title' }, extLink(x.url, x.name)),
         el('div', { class: 'news-sum' }, x.ai?.what || x.ai?.zh || x.desc),
-        el('div', { class: 'news-meta' }, x.ai ? el('span', {}, `适合你 ${x.ai.fit}/5`) : null, x.ai?.setup ? el('span', {}, x.ai.setup) : null, el('span', {}, `★ ${x.stars.toLocaleString()}`))))))
+        el('div', { class: 'news-meta' }, x.ai ? el('span', {}, `适合你 ${x.ai.fit}/5`) : null, x.ai?.setup ? el('span', {}, x.ai.setup) : null, el('span', {}, `★ ${x.stars.toLocaleString()}`), x.growth ? el('span', {}, `+${growthText(x.growth.per_day)} 星/天`) : null)))))
     } catch { box.closest('.panel').hidden = true }
   }
   async function renderOverviewIntel() {
