@@ -22,7 +22,8 @@ from pathlib import Path
 
 MODEL = os.environ.get('PICKS_MODEL') or 'claude-opus-5-5'
 DAYS = 30            # 找最近 30 天新建的项目（页面上再分本周 / 本月）
-KEEP = 24            # 最多保留并总结多少个项目
+WEEK_KEEP = 12       # 最近 7 天新建的单独搜一次，留这么多个，不然本月的高星项目会把本周的挤掉
+KEEP = 30            # 最多保留并总结多少个项目
 REUSE_DAYS = 14      # 总结过的项目多少天内不重新总结
 README_CHARS = 8000
 
@@ -63,24 +64,31 @@ def usable(x, now):
     name = x['full_name'].split('/')[1].lower()
     desc = (x.get('description') or '').lower()
     pushed = dt.datetime.fromisoformat(x['pushed_at'].replace('Z', '+00:00'))
+    text = f'{name} {desc} {" ".join(x.get("topics") or [])}'
     return bool(desc) and not (name.startswith('awesome') or 'awesome-' in name or 'curated list' in desc or 'list of' in desc) \
-        and (now - pushed).days < 14
+        and 'nsfw' not in text and (now - pushed).days < 14
 
 
-def search(now):
-    since = (now - dt.timedelta(days=DAYS)).date().isoformat()
+def search_since(now, days):
+    since = (now - dt.timedelta(days=days)).date().isoformat()
     # 和页面上的备用搜索一样；GitHub 规定一次最多 5 个 OR
     q = f'llm OR agent OR mcp OR ai OR gpt OR claude created:>={since} stars:>=20 archived:false fork:false'
     d = gh('/search/repositories?' + urllib.parse.urlencode({'q': q, 'sort': 'stars', 'order': 'desc', 'per_page': 60}))
+    return [x for x in d['items'] if usable(x, now)]
+
+
+def search(now):
+    # 本周新建的先占 WEEK_KEEP 个位置，剩下的给本月星数最高的
+    week = search_since(now, 7)[:WEEK_KEEP]
+    seen = {x['full_name'] for x in week}
+    month = [x for x in search_since(now, DAYS) if x['full_name'] not in seen]
     out = []
-    for x in d['items']:
-        if not usable(x, now):
-            continue
+    for x in (week + month)[:KEEP]:
         lic = (x.get('license') or {}).get('spdx_id') or ''
         out.append({'name': x['full_name'], 'url': x['html_url'], 'desc': x.get('description') or '', 'stars': x['stargazers_count'],
                     'lang': x.get('language'), 'topics': (x.get('topics') or [])[:8], 'created': x['created_at'], 'pushed': x['pushed_at'],
                     'license': '' if lic in ('', 'NOASSERTION') else lic, 'home': x.get('homepage') or ''})
-    return out[:KEEP]
+    return out
 
 
 def prompt(repo, readme):

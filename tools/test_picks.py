@@ -64,6 +64,20 @@ class PicksTest(unittest.TestCase):
         self.assertEqual(data['items'][0]['ai']['zh'], '旧的')
         self.assertEqual(len(calls), 1)  # 只总结 e/old
 
+    def test_week_projects_not_crowded_out(self):
+        week = [repo('w/new')]
+        month = [repo(f'm/big{i}', stargazers_count=9000 - i, created_at=iso(20)) for i in range(40)] + [repo('x/pose', desc='NSFW pose skill')]
+
+        def gh(path, accept=''):
+            if path.startswith('/search/'):
+                return {'items': week if f'created%3A%3E%3D{(NOW - dt.timedelta(days=7)).date()}' in path else month}
+            return ''
+        with mock.patch.object(picks, 'gh', gh):
+            names = [x['name'] for x in picks.search(NOW)]
+        self.assertEqual(names[0], 'w/new')
+        self.assertEqual(len(names), picks.KEEP)
+        self.assertNotIn('x/pose', names)
+
     def test_bad_output_is_dropped(self):
         data, _ = self.run_main({**GOOD, 'fit': 9})
         self.assertNotIn('ai', data['items'][0])
