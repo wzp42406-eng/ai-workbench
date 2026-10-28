@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-10-28T09:19:57+08:00",
+ "updated_at": "2026-10-28T13:31:38+08:00",
  "note": "Codex 额度与账户累计 token 来自本机 app-server 只读 API；CLI 时长与当前周期 token 来自会话记录。会话 token 不含 cache_read_tokens，缓存读取另列。Claude、ChatGPT、Kimi 桌面对话无 token 记录",
  "quota": {
   "claude": {
@@ -25,7 +25,7 @@
     "used_percent": 9.0,
     "remaining_percent": 91.0,
     "resets_at": "2026-10-28T14:10:49+08:00",
-    "observed_at": "2026-10-28T09:19:57+08:00",
+    "observed_at": "2026-10-28T10:20:05+08:00",
     "reset_since": false,
     "source": "codex_app_server"
    },
@@ -33,14 +33,14 @@
     "used_percent": 18.0,
     "remaining_percent": 82.0,
     "resets_at": "2026-11-02T21:37:25+08:00",
-    "observed_at": "2026-10-28T09:19:57+08:00",
+    "observed_at": "2026-10-28T10:20:05+08:00",
     "reset_since": false,
     "source": "codex_app_server"
    }
   }
  },
  "codex_api": {
-  "updated_at": "2026-10-28T09:19:57+08:00",
+  "updated_at": "2026-10-28T10:20:05+08:00",
   "token_usage": {
    "lifetime_tokens": 715042537,
    "peak_daily_tokens": 64874275,
@@ -311,7 +311,7 @@
     "tokens": null
    },
    "chatgpt_desktop": {
-    "minutes": 1.0,
+    "minutes": 33.1,
     "tokens": null
    },
    "kimi_desktop": {
@@ -338,12 +338,12 @@
     "cache_read_tokens": 0
    },
    "desktop_total": {
-    "minutes": 1.0,
+    "minutes": 33.1,
     "tokens": 0,
     "cache_read_tokens": 0
    },
    "total": {
-    "minutes": 1.0,
+    "minutes": 33.1,
     "tokens": 0
    },
    "from": "2026-10-28"
@@ -379,7 +379,7 @@
     "tokens": null
    },
    "chatgpt_desktop": {
-    "minutes": 109.4,
+    "minutes": 141.5,
     "tokens": null
    },
    "kimi_desktop": {
@@ -406,12 +406,12 @@
     "cache_read_tokens": 4221282
    },
    "desktop_total": {
-    "minutes": 397.4,
+    "minutes": 429.6,
     "tokens": 543264,
     "cache_read_tokens": 12500540
    },
    "total": {
-    "minutes": 423.5,
+    "minutes": 455.6,
     "tokens": 725613
    },
    "from": "2026-10-26"
@@ -447,7 +447,7 @@
     "tokens": null
    },
    "chatgpt_desktop": {
-    "minutes": 630.7,
+    "minutes": 662.8,
     "tokens": null
    },
    "kimi_desktop": {
@@ -474,12 +474,12 @@
     "cache_read_tokens": 95564773
    },
    "desktop_total": {
-    "minutes": 1452.3,
+    "minutes": 1484.4,
     "tokens": 7352826,
     "cache_read_tokens": 328482788
    },
    "total": {
-    "minutes": 1992.6,
+    "minutes": 2024.7,
     "tokens": 11743644
    },
    "from": "2026-10-01"
@@ -515,7 +515,7 @@
     "tokens": null
    },
    "chatgpt_desktop": {
-    "minutes": 630.7,
+    "minutes": 662.8,
     "tokens": null
    },
    "kimi_desktop": {
@@ -542,12 +542,12 @@
     "cache_read_tokens": 101528933
    },
    "desktop_total": {
-    "minutes": 2080.2,
+    "minutes": 2112.4,
     "tokens": 11031810,
     "cache_read_tokens": 435843983
    },
    "total": {
-    "minutes": 2669.0,
+    "minutes": 2701.1,
     "tokens": 15572933
    },
    "from": "2026-01-01"
@@ -583,7 +583,7 @@
     "tokens": null
    },
    "chatgpt_desktop": {
-    "minutes": 630.7,
+    "minutes": 662.8,
     "tokens": null
    },
    "kimi_desktop": {
@@ -610,12 +610,12 @@
     "cache_read_tokens": 101528933
    },
    "desktop_total": {
-    "minutes": 2080.2,
+    "minutes": 2112.4,
     "tokens": 11031810,
     "cache_read_tokens": 435843983
    },
    "total": {
-    "minutes": 2669.0,
+    "minutes": 2701.1,
     "tokens": 15572933
    },
    "from": null
@@ -2490,7 +2490,7 @@
     "tokens": null
    },
    "chatgpt_desktop": {
-    "minutes": 1.0,
+    "minutes": 33.1,
     "tokens": null
    },
    "kimi_desktop": {
@@ -2517,12 +2517,12 @@
     "cache_read_tokens": 0
    },
    "desktop_total": {
-    "minutes": 1.0,
+    "minutes": 33.1,
     "tokens": 0,
     "cache_read_tokens": 0
    },
    "total": {
-    "minutes": 1.0,
+    "minutes": 33.1,
     "tokens": 0
    }
   }
