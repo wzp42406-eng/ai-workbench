@@ -1,0 +1,54 @@
+{
+ "date": "2026-10-30",
+ "generated_at": "2026-10-30T13:03:18+00:00",
+ "items": [
+  {
+   "title": "思迈特披露晶合集成智能分析案例",
+   "summary": "思迈特10月30日披露，晶合集成项目整合百余个数据源，将相关价格分析与报告生成缩短至分钟级。",
+   "why": "可用来询问客户：跨系统指标口径是否一致，业务人员完成一次归因分析需要多久。案例效果来自厂商披露，沟通时应注明出处。",
+   "tag": "竞品",
+   "source": "思迈特软件",
+   "url": "https://www.smartbi.com.cn/news_cont/nid/8643.html"
+  },
+  {
+   "title": "ThoughtSpot上线应用连接器市场",
+   "summary": "ThoughtSpot 10月29日称，Spotter连接器市场已在26.10版本正式可用，首批提供110个应用连接选项；写入和删除操作默认需用户批准。",
+   "why": "竞品正把问数延伸到业务应用中的信息获取与操作。可据此了解客户是否希望分析结果进入日常协作流程，以及对权限控制的要求。",
+   "tag": "竞品",
+   "source": "ThoughtSpot",
+   "url": "https://www.thoughtspot.com/blog/spotter-connector-marketplace"
+  },
+  {
+   "title": "审计机构披露AI分析平台使用规模",
+   "summary": "ThoughtSpot 10月30日发布客户案例：Grant Thornton的分析平台已在爱尔兰运行两年，约1100名审计人员累计生成约16万份输出。",
+   "why": "可用该案例讨论智能分析的实际使用率、数据标准化和结果可追溯性，并询问客户如何衡量上线后的持续使用。",
+   "tag": "AI+BI",
+   "source": "ThoughtSpot",
+   "url": "https://www.thoughtspot.com/blog/how-grant-thornton-rebuilt-audit-data-control-with-ai"
+  },
+  {
+   "title": "鸣鸣很忙数智化仓配中心增至81座",
+   "summary": "10月29日报道，鸣鸣很忙两座新仓投运后，全国数智化仓配中心达到81座，总面积超过200万平方米；其网络服务超3万家门店。",
+   "why": "与连锁客户沟通时，可从门店补货、库存周转和仓配效率切入，了解总部是否能把门店销售与仓配数据放在一起分析。",
+   "tag": "客户行业",
+   "source": "新华网",
+   "url": "https://www.xinhuanet.com/20261029/b6afe39df0ad4f2bb638f8730ab194e4/c.html"
+  },
+  {
+   "title": "豫园股份披露连锁网点调整",
+   "summary": "豫园股份10月30日公告称，截至9月末共有营业网点3738家；“老庙”和“亚一”连锁网点3339家，低于2025年末的3952家。",
+   "why": "可用网点变化引出直营与加盟、区域及单店经营表现的分析需求，帮助客户判断调整后的门店网络如何运营。",
+   "tag": "客户行业",
+   "source": "豫园股份公告（新浪财经转载）",
+   "url": "https://vip.stock.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=12675926&stockid=600655"
+  },
+  {
+   "title": "数据要素应用聚焦具体业务场景",
+   "summary": "国家数据局10月29日转载的报道指出，三年来“数据要素×”行动累计挖掘千余个高价值场景；本届大赛覆盖16个行业领域赛道及1个数据基础设施赛道。",
+   "why": "可在企业数字化预算沟通中，先讨论具体场景的数据融合与经营成效，再确定分析项目的范围和衡量指标。",
+   "tag": "行业",
+   "source": "人民网、国家数据局",
+   "url": "https://www.nda.gov.cn/sjj/swdt/mtsy/1029/20261029145219128890594_mobile.html"
+  }
+ ]
+}
