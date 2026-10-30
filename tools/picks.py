@@ -29,7 +29,7 @@ SEEN_DAYS = 45       # 星数快照留多少天，用来算 star 增速
 REUSE_DAYS = 14      # 总结过的项目多少天内不重新总结
 README_CHARS = 8000
 MAX_PUSHED_DAYS = 180
-WORK_WORDS = re.compile(r'(\bbi\b|business intelligence|analytics|dashboard|report|sql|text2sql|chatbi|olap|etl|data ?(analysis|warehouse|agent)|knowledge ?base|\brag\b|e-?commerce|shopify|retail|crm|sales|数据分析|报表|看板|知识库|电商|门店|零售|销售|客户|问数|表格|数仓)', re.I)
+WORK_WORDS = re.compile(r'(\bbi\b|business intelligence|analytics|dashboard|report|sql|text2sql|chatbi|olap|etl|data ?(analysis|warehouse|agent)|e-?commerce|shopify|retail|crm|sales|数据分析|报表|看板|电商|门店|零售|销售|客户|问数|表格|数仓)', re.I)
 WORK_QUERIES = (
     ('BI', '数据分析', '报表自动化'),
     ('知识库', 'RAG 知识库', '电商数据'),
