@@ -4,6 +4,7 @@
 
 ## 文件
 - `index.html`：整个页面（样式和脚本都在里面），左侧导航栏（电脑上可收起，状态存 localStorage `wb-side`；手机上从左边滑出），用 `#overview` `#intel` `#playground` `#usage` `#playbook` 切换视图。
+- `playbook.json`：联想每周生成，只放不含客户与个人信息的通用方法；页面只增不改，删除过的自动条目不再加回。
 - `tools/picks.py`：**2026-10-30 起由联想工作机每天 06:30 运行**（`~/AI-Projects/scripts/workbench-picks`，没有 API Key 时用本机已登录的 Codex CLI，所有候选合并成一次调用写中文总结），`.github/workflows/picks.yml` 只留手动触发作备用。原来的说明：每天北京时间凌晨 4:17 定时（GitHub 常推迟几小时，目标是上午 10 点前完成）从 GitHub Trending（本周/今天新增 star）和搜索里挑 star 涨得最快的 AI 项目（不限创建时间，推荐过的记在 `shown` 里不再推荐，每天最多 8 个新的），读 README，用 Claude（仓库 Secret `ANTHROPIC_API_KEY`，
   模型可用 Variable `PICKS_MODEL` 改，默认 claude-opus-5-5）翻译简介并总结“能做什么、对 Peter 的用处、怎么上手、适合度 1-5”，
   结果 `picks.json` 强推到 `picks` 分支（只留一份，不碰 main），页面从 raw.githubusercontent.com 读。没有 Key 时只输出项目列表、没有中文总结。

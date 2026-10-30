@@ -1060,6 +1060,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
   ]
   const guessCat = text => (PB_CATS.find(([, re]) => re.test(text)) || PB_CATS[PB_CATS.length - 1])[0]
   const PB_KEY = 'wb-playbook'
+  const PB_HIDDEN_KEY = 'wb-playbook-hidden'
   let pb = store.get(PB_KEY, null)   // { items: [...] }
   if (!pb || !Array.isArray(pb.items)) pb = { items: [] }
   let pbCat = ''
@@ -1069,6 +1070,40 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
 
   function savePlaybook() {
     try { localStorage.setItem(PB_KEY, JSON.stringify(pb)) } catch { throw new Error('这个浏览器不允许保存（可能是无痕模式），请先导出备份') }
+  }
+  function hiddenPlaybookIds() {
+    try {
+      const ids = JSON.parse(localStorage.getItem(PB_HIDDEN_KEY) || '[]')
+      return Array.isArray(ids) ? ids.filter(id => typeof id === 'string') : []
+    } catch { return [] }
+  }
+  function hidePlaybookId(id) {
+    try { localStorage.setItem(PB_HIDDEN_KEY, JSON.stringify([...new Set([...hiddenPlaybookIds(), id])])) } catch { /* 无痕模式等 */ }
+  }
+  // 联想每周整理的通用方法只补新条目，不覆盖浏览器里的修改
+  async function loadRepoPlaybook() {
+    try {
+      const res = await fetch(`playbook.json?v=${dayKey()}`, { cache: 'no-cache' })
+      if (!res.ok) return
+      const data = await res.json()
+      if (!data || !Array.isArray(data.items)) return
+      const ids = new Set(pb.items.map(x => x.id))
+      const hidden = new Set(hiddenPlaybookIds())
+      const add = []
+      for (const x of data.items) {
+        if (!x || typeof x.id !== 'string' || !x.id.startsWith('auto-') || ids.has(x.id) || hidden.has(x.id)
+          || typeof x.title !== 'string' || !x.title.trim() || typeof x.text !== 'string' || !x.text.trim()) continue
+        add.push({ id: x.id, kind: Object.hasOwn(PB_KINDS, x.kind) ? x.kind : 'method', title: x.title, text: x.text,
+          category: PB_CATS.some(([c]) => c === x.category) ? x.category : guessCat(`${x.title}\n${x.text}`),
+          source: '联想每周整理', created_at: typeof x.created_at === 'string' && x.created_at ? x.created_at : new Date().toISOString(), uses: 0 })
+        ids.add(x.id)
+      }
+      if (!add.length) return
+      pb.items.push(...add)
+      try { savePlaybook() } catch { /* 保存失败也显示本次整理 */ }
+      pbMsg = `联想新整理了 ${add.length} 条方法`
+      if (view === 'playbook') renderPlaybook()
+    } catch { /* 仓库文件不可用时沿用浏览器内容 */ }
   }
   function exportPlaybook() {
     const a = el('a', { href: URL.createObjectURL(new Blob([JSON.stringify(pb, null, 1)], { type: 'application/json' })), download: `workbench-playbook-${dayKey()}.json` })
@@ -1132,7 +1167,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     $('pb-list').replaceChildren(...pbCards(shown, pb.items.length))
   }
   function pbCards(shown, total) {
-    if (!total) return [el('div', { class: 'empty' }, '还没有内容。可以在 AI 玩法里点“存入方法库”，也可以直接新建。内容只存在这个浏览器里，换浏览器或手机要先导出再导入。')]
+    if (!total) return [el('div', { class: 'empty' }, '还没有内容。可以在 AI 玩法里点“存入方法库”，也可以直接新建。联想会每周自动整理通用方法进来。内容只存在这个浏览器里，换浏览器或手机要先导出再导入。')]
     if (!shown.length) return [el('div', { class: 'empty' }, '没有符合条件的内容')]
     return shown.map(it => el('div', { class: 'pb-card' },
       el('div', { class: 'rule-head' }, el('b', {}, it.title || '（无标题）'),
@@ -1145,6 +1180,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
           el('button', { class: 'link', type: 'button', onclick: () => { pbEdit = { ...it }; renderPlaybook(); scrollTo(0, 0) } }, '编辑'),
           el('button', { class: 'link', type: 'button', onclick: async () => {
             if (!confirm(`删除「${it.title}」？`)) return
+            if (it.id?.startsWith('auto-')) hidePlaybookId(it.id)
             pb.items = pb.items.filter(x => x !== it)
             try { await savePlaybook(); pbMsg = '' } catch (e) { pbMsg = e.message }
             renderPlaybook()
@@ -1307,6 +1343,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
 
   // ================= 启动 =================
   showView()
+  loadRepoPlaybook()
   loadUsage()
   document.addEventListener('visibilitychange', () => { if (!document.hidden) loadUsage() })
 })()
