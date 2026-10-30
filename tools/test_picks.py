@@ -108,6 +108,33 @@ class PicksTest(unittest.TestCase):
         self.assertEqual(data['items'], [])  # 模型觉得没用的不推荐，记下来免得明天再总结
         self.assertEqual(sorted(data['skipped']), ['a/tool', 'e/slow'])
 
+    def test_codex_batch_one_call(self):
+        """没有 ANTHROPIC_API_KEY 但有 codex：所有候选合并成一次调用，缺的、坏的、1 分的照旧处理"""
+        tmp = Path(tempfile.mkdtemp())
+        calls = []
+
+        def batch(texts):
+            calls.append(list(texts))
+            good = {'zh': '中', 'what': '能做事', 'why': '有用', 'setup': '下载就能用', 'how': '下载', 'fit': 4}
+            names = list(texts)
+            return {names[0]: {**good, 'name': names[0]}, names[1]: {**good, 'name': names[1], 'fit': 1}}
+        env = {k: v for k, v in os.environ.items() if k != 'ANTHROPIC_API_KEY'}
+        with mock.patch.object(picks, 'gh', fake_gh()), mock.patch.object(picks, 'trending', lambda: {}), \
+                mock.patch.object(picks, 'ask_codex_batch', batch), mock.patch.dict(os.environ, env, clear=True), \
+                mock.patch.object(picks.shutil, 'which', lambda c: '/bin/codex' if c == 'codex' else None), \
+                mock.patch.object(sys, 'argv', ['picks.py', '--out', str(tmp / 'out.json')]):
+            picks.main()
+        out = json.loads((tmp / 'out.json').read_text(encoding='utf-8'))
+        self.assertEqual(len(calls), 1)
+        self.assertEqual(out['engine'], 'codex-cli')
+        self.assertEqual(out['note'], '')
+        names = calls[0]
+        got = {x['name']: x for x in out['items']}
+        self.assertEqual(got[names[0]]['ai']['fit'], 4)
+        self.assertNotIn(names[1], got)            # 1 分不推荐
+        self.assertIn(names[1], out['skipped'])
+        self.assertTrue(all('ai' not in got[n] for n in names[2:] if n in got))  # 模型漏掉的照常推荐、没有总结
+
     def test_trending_parser(self):
         class Resp:
             def __init__(self, body): self.body = body

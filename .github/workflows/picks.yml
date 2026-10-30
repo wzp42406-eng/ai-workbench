@@ -1,16 +1,12 @@
-# AI 玩法的 GitHub 项目精选：每天北京时间凌晨 4 点多找最近新建的 AI 项目，翻译并总结后推到 picks 分支，
+# AI 玩法的 GitHub 项目精选：找最近 star 涨得快的 AI 项目，翻译并总结后推到 picks 分支，
 # 页面从 raw.githubusercontent.com 读 picks/picks.json。不改 main，不会和本机脚本的推送冲突。
+# 2026-10-30 起每日任务由联想工作机运行（~/AI-Projects/scripts/workbench-picks，Codex CLI 一次调用写中文总结，
+# 每天 06:30），这里只留手动触发作为备用（没有 ANTHROPIC_API_KEY 时只有项目列表、没有中文总结）。
 # 中文总结需要在仓库 Settings → Secrets and variables → Actions 里加 ANTHROPIC_API_KEY；
 # 想换模型就在同一页的 Variables 里加 PICKS_MODEL（例如 claude-haiku-5-5）。
 name: GitHub 项目精选
 on:
-  schedule:
-    # GitHub 定时常晚好几个小时（整点更挤），所以定在凌晨、避开整点，10 点前一般能跑完
-    - cron: '17 20 * * *'
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths: [tools/picks.py, .github/workflows/picks.yml]
 permissions:
   contents: write
 concurrency:

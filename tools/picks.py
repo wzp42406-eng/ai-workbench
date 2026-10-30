@@ -2,7 +2,7 @@
 """AI 玩法的 GitHub 项目精选：挑最近 star 涨得快、能直接上手的 AI 项目，翻译简介，并总结“能做什么、对 Peter 有什么用、怎么上手”。
 
 由 .github/workflows/picks.yml 每天跑一次，结果 picks.json 推到 picks 分支，页面从 raw.githubusercontent.com 读。
-也可以在本机跑：python3 tools/picks.py --out picks.json（有 ANTHROPIC_API_KEY 用 Claude，否则试本机 Kimi CLI）。
+也可以在本机跑：python3 tools/picks.py --out picks.json（有 ANTHROPIC_API_KEY 用 Claude，否则试本机 Codex CLI（一次调用总结全部），再试 Kimi CLI）。
 
 - 不限创建时间，按 star 增速排：GitHub Trending（本周 / 今天新增的 star）、上次记下的星数快照，都没有时用“星数 ÷ 创建天数”。
 - 推荐过的项目不再推荐（--prev 传入上次的 picks.json，里面记着推荐过的名单和星数快照）。
@@ -153,6 +153,49 @@ def ask_claude(text):
     return json.loads(next(b.text for b in r.content if b.type == 'text'))
 
 
+BATCH_README_CHARS = 5000   # 批量模式每个 README 截短一些，省 token
+BATCH_SCHEMA = {
+    'type': 'object',
+    'properties': {'items': {'type': 'array', 'items': {
+        'type': 'object',
+        'properties': {'name': {'type': 'string', 'description': '项目全名 owner/repo'}, **SCHEMA['properties']},
+        'required': ['name', *SCHEMA['required']],
+        'additionalProperties': False}}},
+    'required': ['items'],
+    'additionalProperties': False,
+}
+
+
+def ask_codex_batch(texts):
+    """一次 codex exec 总结全部项目（Codex 每次调用固定开销约 1.4 万 token，所以合并成一次）。
+    texts: {项目全名: 项目信息和 README}；返回 {项目全名: 字段 dict}，缺的项目不在结果里"""
+    body = '\n\n'.join(f'=== {name} ===\n{t}' for name, t in texts.items())
+    text = (f'{SYSTEM}\n\n{PROFILE}\n\n下面有 {len(texts)} 个项目，每个都按字段输出一条，name 填项目全名。'
+            f'setup 从 {SCHEMA["properties"]["setup"]["enum"]} 里选，fit 是 1-5 的整数。\n\n{body}')
+    with tempfile.TemporaryDirectory() as d:
+        schema, out = Path(d) / 'schema.json', Path(d) / 'out.json'
+        schema.write_text(json.dumps(BATCH_SCHEMA, ensure_ascii=False), encoding='utf-8')
+        r = subprocess.run([shutil.which('codex'), 'exec', '--skip-git-repo-check', '--ephemeral', '--ignore-rules',
+                            '-s', 'read-only', '-C', d, '--output-schema', str(schema), '-o', str(out), '-'],
+                           input=text, capture_output=True, text=True, timeout=1500)
+        if r.returncode or not out.is_file():
+            raise RuntimeError((r.stderr or r.stdout).strip()[-300:])
+        items = json.loads(out.read_text(encoding='utf-8'))['items']
+    return {x['name']: x for x in items if x.get('name') in texts}
+
+
+def batch_text(repo, readme):
+    meta = {k: repo[k] for k in ('name', 'desc', 'stars', 'lang', 'topics', 'license', 'home')}
+    return f'项目信息：{json.dumps(meta, ensure_ascii=False)}\n<readme>\n{readme[:BATCH_README_CHARS]}\n</readme>'
+
+
+def readme_of(repo):
+    try:
+        return gh(f"/repos/{repo['name']}/readme", 'application/vnd.github.raw')
+    except Exception:  # 没有 README 也能只看简介总结
+        return ''
+
+
 KIMI_DIR = Path(__file__).resolve().parent / 'kimi'
 
 
@@ -194,9 +237,11 @@ def main():
 
     now = dt.datetime.now(dt.timezone.utc)
     stamp = now.isoformat(timespec='seconds')
-    ask, engine = None, ''
+    ask, batch, engine = None, None, ''
     if os.environ.get('ANTHROPIC_API_KEY'):
         ask, engine = ask_claude, MODEL
+    elif shutil.which('codex'):
+        batch, engine = ask_codex_batch, 'codex-cli'
     elif shutil.which('kimi'):
         ask, engine = ask_kimi, 'kimi-cli'
     prev = load_prev(args.prev)
@@ -211,16 +256,33 @@ def main():
 
     cands = candidates(now, seen)
     fresh, calls, failed = [], 0, 0
+    pre, todo = {}, set()
+    if batch:
+        picked = [r for r in cands if r['name'] not in shown and r['name'] not in skipped][:args.max_new]
+        todo = {r['name'] for r in picked}
+        if picked:
+            calls = 1
+            try:
+                pre = batch({r['name']: batch_text(r, readme_of(r)) for r in picked})
+            except Exception as e:  # 整批失败：这次的项目照常推荐，只是没有中文总结
+                print(f"批量总结失败：{str(e)[:200]}", file=sys.stderr)
     for r in cands:
         if len(fresh) >= NEW_PER_DAY:
             break
         if r['name'] in shown or r['name'] in skipped:
             continue
-        if ask and calls < args.max_new:
+        if r['name'] in todo:
             try:
-                readme = gh(f"/repos/{r['name']}/readme", 'application/vnd.github.raw')
-            except Exception:  # 没有 README 也能只看简介总结
-                readme = ''
+                r['ai'] = {**clean(pre.get(r['name']) or {}), 'by': engine, 'at': stamp}
+                print(f"已总结：{r['name']}（{r['ai']['fit']}/5）")
+            except Exception as e:
+                failed += 1
+                print(f"总结失败：{r['name']}：{str(e)[:200]}", file=sys.stderr)
+            if r.get('ai', {}).get('fit') == 1:
+                skipped[r['name']] = stamp
+                continue
+        elif ask and calls < args.max_new:
+            readme = readme_of(r)
             calls += 1
             try:
                 r['ai'] = {**clean(ask(prompt(r, readme))), 'by': engine, 'at': stamp}
@@ -240,7 +302,7 @@ def main():
             seen[r['name']] = {'stars': r['stars'], 'at': stamp}
 
     data = {'generated_at': stamp, 'engine': engine,
-            'note': '' if ask else '没有设置 ANTHROPIC_API_KEY，也没有 Kimi CLI，所以没有中文总结',
+            'note': '' if ask or batch else '没有设置 ANTHROPIC_API_KEY，也没有 Codex 或 Kimi CLI，所以没有中文总结',
             'items': fresh + items, 'shown': sorted(shown), 'skipped': skipped, 'seen': seen}
     Path(args.out).write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding='utf-8')
     print(f'新推荐 {len(fresh)} 个，共 {len(data["items"])} 个，调用模型 {calls} 次，失败 {failed} 次，写入 {args.out}')
