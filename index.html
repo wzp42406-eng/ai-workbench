@@ -347,6 +347,7 @@ a:hover { text-decoration-color: var(--accent); }
 .play-title { font-weight:600; min-width:0; max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .play-description { color:var(--ink-2); display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical; overflow:hidden; }
 .play-summary-meta { display:flex; align-items:center; gap:10px; white-space:nowrap; min-width:0; }
+.play-tags { display:inline-flex; align-items:center; gap:6px; }
 .play-summary-meta .chip { max-width:125px; overflow:hidden; text-overflow:ellipsis; }
 .fit-dots { display:inline-flex; gap:3px; }
 .fit-dots i { width:7px; height:7px; border-radius:50%; background:var(--line); }
@@ -422,6 +423,7 @@ a:hover { text-decoration-color: var(--accent); }
   .play-summary-meta { display:contents; }
   .play-summary-meta .fit-dots { grid-column:2; grid-row:1; justify-self:end; }
   .play-summary-meta .chip { grid-column:1 / -1; grid-row:3; max-width:100%; justify-self:start; }
+  .play-summary-meta .play-tags { grid-column:1 / -1; grid-row:4; }
   .usage-today { grid-template-columns:repeat(3,minmax(0,1fr)); }
   .hero { grid-template-columns:repeat(2,minmax(0,1fr)); }
   .pb-row { grid-template-columns:repeat(2,minmax(0,1fr)); }
@@ -1124,6 +1126,9 @@ a:hover { text-decoration-color: var(--accent); }
         el('span', { class:'play-summary-meta' },
           x.ai?.fit ? fitDots(Math.min(5, Math.max(0, x.ai.fit))) : null,
           x.ai?.setup ? el('span', { class:'chip' }, displayText(x.ai.setup)) : null,
+          r?.track === 'work' || r?.quality?.license_note ? el('span', { class:'play-tags' },
+            r?.track === 'work' ? el('span', { class:'chip' }, '工作相关') : null,
+            r?.quality?.license_note ? el('span', { class:'chip', title:r.quality.license_note }, r.quality.license_note.split('：')[0]) : null) : null,
           r?.growth ? el('span', { class:'growth' }, `+${growthText(r.growth.per_day)} 星/天`) : null)),
       x.ai ? el('div', { class:'play-ai' },
         el('div', {}, el('b', {}, '能做什么'), displayText(x.ai.what)),

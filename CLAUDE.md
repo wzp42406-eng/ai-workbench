@@ -9,6 +9,7 @@
   模型可用 Variable `PICKS_MODEL` 改，默认 claude-opus-5-5）翻译简介并总结“能做什么、对 Peter 的用处、怎么上手、适合度 1-5”，
   结果 `picks.json` 强推到 `picks` 分支（只留一份，不碰 main），页面从 raw.githubusercontent.com 读。没有 Key 时只输出项目列表、没有中文总结。
   本机没有 Key 但装了 Kimi CLI 时用 `tools/kimi/agent.yaml`（不带工具）。总结过的项目 14 天内不重复调用模型。
+  当前每天最多推荐 5 个：另用 4 次合并 OR 搜索补充 BI、数据分析、知识库和销售等中文工作方向；有合格候选时其中 1–2 个为 `track: work`。候选需最近 180 天推送、未归档；README 少于 300 字符且无主页的不进入总结。结果含 `quality.pushed_days` 和高风险许可证提示。默认最多读取 10 份 README；GitHub API 最多约 55 次（40 个 Trending 仓库 + 1 次英文搜索 + 4 次工作搜索 + 10 份 README），另读 2 个 Trending 网页。
 - `data.json`：用量数据，由本机脚本每小时生成并推送。**不要手改、不要改字段结构**，页面只读。
   - `periods.{day,week,month,year,all}`：各区间合计，`all` 含全部历史。
   - `daily[]`：按天的明细；没有出现的日期表示那天没有记录（页面显示“无记录”，不当 0）。
@@ -24,6 +25,7 @@
   不把内容存进仓库或 localStorage（AIHOT 条款不允许公开副本），不使用 AIHOT 的名字和 Logo 做品牌。
 - AI 情报的“今日推荐”从最近 24 小时精选里按 AIHOT 评分取 5-10 条（不低于最高分的 80%），评分不够时沿用 AIHOT 的顺序，不自己编分数。
 - AI 玩法只放能直接上手的：每天生成的 GitHub 精选（页面按推荐日期分本周/本月，按适合度、再按 star 增速排，适合度 1 分的不推荐）；精选读不到或超过 3 天没更新时，浏览器直接搜 GitHub（localStorage `wb-gh-cache` 缓存 6 小时，只有英文简介）。另有 AIHOT 本周教程里有开源地址或上手步骤的。
+- GitHub 精选的工作方向和许可证风险在项目行显示灰色标签；许可证标签的悬停说明来自 `quality.license_note`。
 - picks.json 只放 GitHub 公开数据和模型写的总结，不放 AIHOT 的任何内容。
 - AI 玩法的收藏、已尝试、备注存在 localStorage（`wb-play-marks`），存条目 id、标题、状态、备注和原文链接（Peter 同意存标题），不存摘要。
 - 方法库存在 localStorage（`wb-playbook`），页面上可以导出/导入 JSON 备份。

@@ -5,6 +5,7 @@ import os
 import sys
 import tempfile
 import unittest
+import urllib.parse
 from pathlib import Path
 from unittest import mock
 
@@ -24,7 +25,7 @@ def repo(name, desc='An MCP server for Claude Code', pushed=1, stars=100, create
             'homepage': '', **kw}
 
 
-SEARCH = [repo('a/tool', stars=500), repo('b/awesome-llm'), repo('c/nodesc', desc=None), repo('d/stale', pushed=30),
+SEARCH = [repo('a/tool', stars=500), repo('b/awesome-llm'), repo('c/nodesc', desc=None), repo('d/stale', pushed=181),
           repo('e/slow', stars=100, created=50), repo('f/cooking', desc='Recipes for dinner', topics=[]), repo('g/pose', desc='NSFW pose skill')]
 GOOD = {'zh': '给 Claude Code 用的 MCP 服务', 'what': '让 Claude Code 操作浏览器', 'why': '你常用 Claude Code', 'setup': '要在终端安装', 'how': '复制一行命令安装', 'fit': 4}
 TRENDING_HTML = '''
@@ -38,14 +39,18 @@ TRENDING_HTML = '''
 '''
 
 
-def fake_gh(search=SEARCH, extra=None):
+def fake_gh(search=SEARCH, extra=None, work=None, readmes=None):
     extra = extra or {}
+    readmes = readmes or {}
 
     def gh(path, accept=''):
         if path.startswith('/search/'):
+            q = urllib.parse.parse_qs(urllib.parse.urlsplit(path).query).get('q', [''])[0]
+            if 'pushed:>' in q:
+                return {'items': work or []}
             return {'items': search}
         if path.startswith('/repos/') and path.endswith('/readme'):
-            return 'README 内容'
+            return readmes.get(path.split('/')[2] + '/' + path.split('/')[3], 'README 内容' + 'x' * 300)
         return extra[path[len('/repos/'):]]
     return gh
 
@@ -77,6 +82,7 @@ class PicksTest(unittest.TestCase):
         self.assertEqual(data['items'][0]['growth'], {'per_day': 100.0, 'basis': 'age'})
         self.assertEqual(data['items'][0]['ai']['fit'], 4)
         self.assertIn('README 内容', calls[0])
+        self.assertIn('"pushed_days":', calls[0])
         self.assertEqual(data['shown'], ['a/tool', 'e/slow'])
 
     def test_trending_counts_and_old_projects_allowed(self):
@@ -173,6 +179,38 @@ class PicksTest(unittest.TestCase):
             def __exit__(self, *a): pass
         with mock.patch.object(picks.urllib.request, 'urlopen', lambda req, timeout: Resp(TRENDING_HTML)):
             self.assertEqual(picks.trending(), {'old/agent-kit': 1000.0})
+
+    def test_180_day_cutoff_and_archived(self):
+        repos = [repo('a/fresh', pushed=179), repo('b/stale', pushed=181),
+                 repo('c/archived', archived=True)]
+        data, _ = self.run_main(GOOD, gh=fake_gh(search=repos))
+        self.assertEqual([x['name'] for x in data['items']], ['a/fresh'])
+        self.assertEqual(data['items'][0]['quality']['pushed_days'], 179)
+
+    def test_short_readme_needs_homepage(self):
+        repos = [repo('a/short'), repo('b/home', homepage='https://example.com')]
+        data, calls = self.run_main(GOOD, gh=fake_gh(search=repos, readmes={'a/short': 'short', 'b/home': 'short'}))
+        self.assertEqual([x['name'] for x in data['items']], ['b/home'])
+        self.assertEqual(len(calls), 1)
+
+    def test_license_notes(self):
+        cases = {'AGPL-3.0': 'AGPL：商用需开源', 'GPL-3.0': 'GPL：商用需开源',
+                 'LGPL-2.1': 'LGPL：商用需检查链接与分发义务', 'SSPL-1.0': 'SSPL：商用需检查服务端开源义务',
+                 '': '未写许可证：使用前确认授权', 'MIT': '', 'Apache-2.0': '', 'BSD-3-Clause': ''}
+        for license_id, expected in cases.items():
+            with self.subTest(license_id=license_id):
+                self.assertEqual(picks.license_note(license_id), expected)
+
+    def test_work_quota_with_eight_candidates(self):
+        ai = [repo(f'ai/agent-{i}', stars=800-i*20) for i in range(5)]
+        work = [repo(f'work/bi-{i}', desc='BI 数据分析工具', stars=900-i*10) for i in range(3)]
+        data, _ = self.run_main(GOOD, gh=fake_gh(search=ai, work=work))
+        self.assertEqual(len(data['items']), 5)
+        self.assertEqual(sum(x.get('track') == 'work' for x in data['items']), 2)
+        self.assertTrue(all('quality' in x for x in data['items']))
+        low_work = [repo(f'work/bi-{i}', desc='BI 数据分析工具', stars=300-i*10) for i in range(3)]
+        data, _ = self.run_main(GOOD, gh=fake_gh(search=ai, work=low_work))
+        self.assertEqual(sum(x.get('track') == 'work' for x in data['items']), 1)
 
 
 if __name__ == '__main__':
