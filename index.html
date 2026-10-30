@@ -4,51 +4,30 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>月之工作台</title>
-<meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#131312" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F7F5F0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="月之工作台">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23b5562f'/%3E%3Cpath d='M40 14a20 20 0 1 0 10 34A16 16 0 1 1 40 14z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%233B5BDB'/%3E%3Cpath d='M40 14a20 20 0 1 0 10 34A16 16 0 1 1 40 14z' fill='%23fff'/%3E%3C/svg%3E">
 <meta name="description" content="个人 AI 工作台：AI 情报、AI 玩法、AI 使用分析、方法库。">
 <script>try { if (localStorage.getItem('wb-side') === '1') document.documentElement.classList.add('side-collapsed') } catch {}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@600&display=swap" rel="stylesheet">
 <style>
-:root {
-  color-scheme: light;
-  --bg: #f6f5f1; --panel: #fffffe; --ink: #1b1a17; --ink-2: #57554f; --ink-3: #8e8b83;
-  --line: #e7e4dc; --line-2: #efede7; --accent: #b5562f; --hover: #f1efe9;
-  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100; --s5: #8b5cf6;
-  --cli: #2a78d6; --desktop: #eb6834; --web: #1baf7a; --trend: #3d3b36;
-  --good: #1f7a4d; --warn: #b26b00; --bad: #c0392b;
-  --shadow: 0 1px 2px rgb(40 30 10 / 4%), 0 8px 24px rgb(40 30 10 / 5%);
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    color-scheme: dark;
-    --bg: #131312; --panel: #1b1b19; --ink: #efede8; --ink-2: #b9b6ad; --ink-3: #85827a;
-    --line: #2c2b28; --line-2: #242321; --accent: #e07a4f; --hover: #23221f;
-    --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #9b7bf0;
-    --cli: #3987e5; --desktop: #d95926; --web: #199e70; --trend: #d8d5cc;
-    --good: #4cbb84; --warn: #e0a33a; --bad: #e66767; --shadow: none;
-  }
-}
-:root[data-theme="dark"] {
-  color-scheme: dark;
-  --bg: #131312; --panel: #1b1b19; --ink: #efede8; --ink-2: #b9b6ad; --ink-3: #85827a;
-  --line: #2c2b28; --line-2: #242321; --accent: #e07a4f; --hover: #23221f;
-  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #9b7bf0;
-  --cli: #3987e5; --desktop: #d95926; --web: #199e70; --trend: #d8d5cc;
-  --good: #4cbb84; --warn: #e0a33a; --bad: #e66767; --shadow: none;
-}
+:root { color-scheme: light; --bg:#F7F5F0; --panel:#FFFFFF; --ink:#1C1B19; --ink-2:#6B6862; --ink-3:#6B6862; --line:#E7E3DA; --line-2:#E7E3DA; --accent:#3B5BDB; --new:#B84200; --hover:#F1EFEA; --web:#3B5BDB; --cli:#7188CC; --desktop:#A9B7DC; --s1:#3B5BDB; --s2:#7188CC; --s3:#A9B7DC; --s4:#786B9B; --s5:#8196B6; --trend:#6B6862; --good:#22734D; --warn:#9A5900; --bad:#B43838; --shadow:0 1px 2px rgb(0 0 0 / 4%); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { color-scheme:dark; --bg:#121212; --panel:#1B1B1D; --ink:#EDEBE6; --ink-2:#9A968E; --ink-3:#9A968E; --line:#2A2A2D; --line-2:#2A2A2D; --accent:#7C96F0; --new:#FF9B56; --hover:#252529; --web:#7C96F0; --cli:#A5B7EF; --desktop:#677AAE; --s1:#7C96F0; --s2:#A5B7EF; --s3:#677AAE; --s4:#B1A3D0; --s5:#8399C7; --trend:#9A968E; --good:#72C69A; --warn:#E6AD63; --bad:#ED8484; --shadow:0 1px 2px rgb(0 0 0 / 4%); } }
+:root[data-theme="dark"] { color-scheme:dark; --bg:#121212; --panel:#1B1B1D; --ink:#EDEBE6; --ink-2:#9A968E; --ink-3:#9A968E; --line:#2A2A2D; --line-2:#2A2A2D; --accent:#7C96F0; --new:#FF9B56; --hover:#252529; --web:#7C96F0; --cli:#A5B7EF; --desktop:#677AAE; --s1:#7C96F0; --s2:#A5B7EF; --s3:#677AAE; --s4:#B1A3D0; --s5:#8399C7; --trend:#9A968E; --good:#72C69A; --warn:#E6AD63; --bad:#ED8484; --shadow:0 1px 2px rgb(0 0 0 / 4%); }
 * { box-sizing: border-box; }
 html, body { margin: 0; }
 body {
   background: var(--bg); color: var(--ink);
-  font: 15px/1.55 -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", "Hiragino Sans GB", sans-serif;
+  font: 14px/1.6 "Inter", "Noto Sans SC", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 button, input, textarea, select { font: inherit; color: inherit; }
 .num { font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
-.serif { font-family: "New York", "Iowan Old Style", Georgia, "Songti SC", serif; }
+.serif { font-family: "Noto Serif SC", "Songti SC", serif; font-weight: 600; }
 .wrap { max-width: 1240px; margin: 0 auto; padding: 28px 24px 48px; }
 header.top { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 22px; }
 header.top h1 { margin: 0 auto 0 0; font-size: 24px; font-weight: 600; letter-spacing: 0.02em; }
@@ -90,7 +69,7 @@ header.top .meta { color: var(--ink-3); font-size: 14px; display: flex; gap: 14p
 .end-main b { font-size: 22px; font-weight: 600; letter-spacing: -0.01em; }
 .end-main em { font-style: normal; color: var(--ink-2); font-size: 13px; }
 .share { height: 3px; border-radius: 2px; background: var(--line-2); margin: 10px 0 9px; overflow: hidden; }
-.share i { display: block; height: 100%; border-radius: 2px; transition: width 600ms ease; }
+.share i { display: block; height: 100%; border-radius: 2px; transition: none; }
 .end-sub { display: grid; gap: 3px; color: var(--ink-3); font-size: 12px; }
 .end-sub div { display: flex; justify-content: space-between; gap: 8px; }
 .end-sub div span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -108,7 +87,7 @@ header.top .meta { color: var(--ink-3); font-size: 14px; display: flex; gap: 14p
 .chart .grid-line { stroke: var(--line-2); stroke-width: 1; }
 .chart .trend { fill: none; stroke: var(--trend); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
 .chart .cursor { stroke: var(--ink-3); stroke-width: 1; stroke-dasharray: 2 3; }
-.tip { position: absolute; pointer-events: none; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 9px 11px; font-size: 12px; box-shadow: 0 8px 24px rgb(0 0 0 / 10%); min-width: 180px; opacity: 0; transition: opacity 120ms; z-index: 5; }
+.tip { position: absolute; pointer-events: none; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 9px 11px; font-size: 12px; box-shadow: 0 8px 24px rgb(0 0 0 / 10%); min-width: 180px; opacity: 0; transition: opacity 150ms ease; z-index: 5; }
 .tip.on { opacity: 1; }
 .tip .tt { color: var(--ink-3); margin-bottom: 5px; }
 .tip .tr { display: grid; grid-template-columns: 14px 1fr auto; gap: 6px; align-items: center; line-height: 1.6; }
@@ -179,7 +158,7 @@ header.top { align-items: center; flex-wrap: wrap; }
 .side-nav a[aria-current="page"]::before { content: ""; position: absolute; left: -14px; top: 10px; bottom: 10px; width: 3px; border-radius: 0 3px 3px 0; background: var(--accent); }
 .side-foot { margin-top: auto; border-top: 1px solid var(--line-2); padding-top: 10px; }
 .side-btn { width: 100%; border: 0; background: none; cursor: pointer; font-size: 14px; color: var(--ink-3); }
-.side-btn svg { transition: transform 200ms ease; }
+.side-btn svg { transition: none; }
 .sidebar .label { transition: opacity 150ms ease; }
 .menu-btn { display: none; border: 1px solid var(--line); background: var(--panel); color: var(--ink-2); border-radius: 10px; width: 40px; height: 40px; padding: 0; cursor: pointer; place-items: center; }
 .menu-btn svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
@@ -296,6 +275,165 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
 .cmd-foot { border-top: 1px solid var(--line-2); padding: 8px 14px; }
 @media (max-width: 560px) { .cmd-open .kbd { display: none; } .play-grid { grid-template-columns: 1fr; } dialog.cmd { margin-top: 8vh; } }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+/* 每日晨报：留白、细线和按需展开。 */
+.wrap { max-width: 1260px; padding: 32px 32px 72px; }
+.grid { gap: 24px; }
+.panel { border-radius: 10px; padding: 24px; }
+.panel-head { margin-bottom: 12px; }
+.panel-head h2 { font-size: 16px; letter-spacing: 0; }
+.panel-head h2 span { font-size: 12px; }
+.serif, .morning-head h2 { font-family: "Noto Serif SC", "Songti SC", serif; font-weight: 600; }
+header.top { margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+header.top h1 { font-size: 20px; font-family: "Noto Serif SC", "Songti SC", serif; font-weight: 600; }
+a.link, .news-meta a, .brief-title a { color: var(--accent); }
+a:hover { text-decoration-color: var(--accent); }
+.sidebar { width: 184px; padding: 24px 12px 16px; transition: none; }
+.brand { gap: 8px; padding: 0 7px 24px; }
+.brand-logo { background: var(--accent); border-radius: 10px; width: 30px; height: 30px; }
+.brand b { font-family: "Noto Serif SC", "Songti SC", serif; font-size: 14px; }
+.side-nav a, .side-btn { font-size: 14px; padding: 9px 11px; border-radius: 10px; gap: 10px; }
+.side-nav svg, .side-btn svg { width: 19px; height: 19px; }
+.side-nav a[aria-current="page"] { background: var(--hover); color: var(--accent); }
+.side-nav a[aria-current="page"]::before { display: none; }
+.side-collapsed .sidebar { width: 58px; }
+.morning { display: block; }
+.morning-head { display:flex; justify-content:space-between; align-items:end; gap:24px; padding: 8px 0 24px; }
+.eyebrow { color:var(--ink-2); font-size:12px; letter-spacing:.12em; }
+.morning-head h2 { font-size:28px; line-height:1.35; margin:8px 0 0; }
+.morning-head p { color:var(--ink-2); margin:0 0 3px; }
+.morning-grid { display:grid; grid-template-columns:minmax(0,1.8fr) minmax(260px,.85fr); gap:24px; align-items:start; }
+.morning-main, .ov-side { display:grid; gap:24px; min-width:0; }
+.morning .panel { box-shadow: var(--shadow); }
+.news-item { border-color:var(--line); padding:12px 0; }
+.news-detail { min-width:0; }
+.news-detail summary { display:block; cursor:pointer; list-style:none; }
+.news-detail summary::-webkit-details-marker { display:none; }
+.news-title { color:var(--ink); font-size:14px; font-weight:600; }
+.news-detail summary:hover .news-title, .play-summary:hover .play-title { color:var(--accent); }
+.news-meta { color:var(--ink-2); font-size:12px; margin-top:3px; }
+.news-sum, .news-why { max-width:72ch; }
+.news-detail[open] .news-sum { margin-top:10px; }
+.rank { color:var(--accent); }
+.mini-bars { height:42px; display:flex; align-items:end; gap:4px; margin:20px 0 4px; border-bottom:1px solid var(--line); }
+.mini-bars span { display:block; flex:1; max-width:15px; border-radius:3px 3px 0 0; background:var(--accent); opacity:.8; }
+.mini-bars .missing-bar { background:var(--line); opacity:1; }
+.mini-caption { color:var(--ink-3); font-size:11px; }
+.share.stack { margin-top:10px; }
+.brief-item { border-bottom:1px solid var(--line); padding:12px 0; }
+.brief-item:last-child { border-bottom:0; }
+.brief-title { font-weight:600; line-height:1.5; }
+.brief-item p { margin:8px 0 0; max-width:72ch; }
+.brief-item .chip { margin-top:6px; }
+.brief-meta { display:flex; align-items:center; gap:8px; min-width:0; }
+.brief-meta .sub { margin-left:auto; text-align:right; overflow-wrap:anywhere; }
+.brief-item.compact .brief-summary { color:var(--ink-2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:3px; }
+.brief-section { margin-bottom:28px; }
+.brief-section .section-title { margin-top:0; }
+.usage-today { display:grid; grid-template-columns:repeat(3,1fr); margin:16px 0 24px; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.usage-today > div { padding:20px 16px; display:grid; gap:4px; }
+.usage-today > div:first-child { padding-left:0; }
+.usage-today > div+div { border-left:1px solid var(--line); }
+.usage-today span { color:var(--ink-2); font-size:12px; }
+.usage-today b { color:var(--accent); font-size:28px; line-height:1.3; font-weight:600; font-variant-numeric:tabular-nums; }
+.usage-extra { margin-bottom:20px; }
+.usage-extra summary, details.data summary { cursor:pointer; color:var(--accent); font-size:13px; }
+.usage-extra .hero { margin-top:16px; }
+.chart svg { height:240px; }
+.play-grid, .play-list { display:grid; grid-template-columns:1fr; gap:0; }
+.play-card { display:block; padding:0; border:0; border-radius:0; border-bottom:1px solid var(--line); }
+.play-card:last-child { border-bottom:0; }
+.play-summary { display:grid; grid-template-columns:minmax(0,220px) minmax(0,1fr) auto; gap:12px; align-items:center; padding:15px 0; cursor:pointer; list-style:none; }
+.play-summary::-webkit-details-marker { display:none; }
+.play-title { font-weight:600; min-width:0; max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.play-description { color:var(--ink-2); display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical; overflow:hidden; }
+.play-summary-meta { display:flex; align-items:center; gap:10px; white-space:nowrap; min-width:0; }
+.play-summary-meta .chip { max-width:125px; overflow:hidden; text-overflow:ellipsis; }
+.fit-dots { display:inline-flex; gap:3px; }
+.fit-dots i { width:7px; height:7px; border-radius:50%; background:var(--line); }
+.fit-dots i.on { background:var(--accent); }
+.growth { color:var(--ink-2); font-size:12px; }
+.play-card > .play-ai, .play-card > .news-meta, .play-card > .play-note, .play-card > .play-noteform, .play-card > .play-foot { margin:0 0 12px; }
+.play-ai, .play-note { background:var(--bg); }
+.group-title { font-size:12px; font-weight:600; color:var(--ink-2); margin:24px 0 4px; }
+.pb-tools { flex-wrap:wrap; }
+.cats { width:170px; flex-direction:column; align-items:stretch; overflow:visible; background:transparent; padding:0; grid-row:1 / span 2; }
+.cats button { width:100%; text-align:left; padding:8px 12px; }
+.cats button[aria-pressed="true"] { color:var(--accent); background:var(--hover); box-shadow:none; }
+#pb-body { display:grid; grid-template-columns:170px minmax(0,1fr); gap:0 24px; align-items:start; }
+#pb-body > .pb-tools, #pb-body > .msg, #pb-body > .pb-editor { grid-column:2; }
+#pb-body > .pb-list { grid-column:2; }
+.pb-list { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-top:8px; }
+.pb-card { border:1px solid var(--line); border-radius:10px; background:var(--panel); padding:16px; display:block; }
+.pb-card summary { cursor:pointer; list-style:none; }
+.pb-card summary::-webkit-details-marker { display:none; }
+.pb-card summary b { font-size:14px; }
+.pb-preview { color:var(--ink-2); white-space:pre-wrap; overflow:hidden; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; margin:10px 0 0; line-height:1.6; }
+.pb-card:not([open]) .pb-text, .pb-card:not([open]) .pb-foot { display:none; }
+.pb-card[open] .pb-preview { display:none; }
+.pb-card[open] .pb-text { margin-top:12px; max-height:none; }
+.pb-card[open] .pb-foot { margin-top:12px; }
+.chip { color:var(--ink-2); border-color:var(--line); border-radius:5px; }
+:where(a,button,input,textarea,select,summary,dialog,.cmd-item):focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+.link, .btn-sm, .seg button, .news-detail summary, .play-summary { transition:opacity 150ms ease, transform 150ms ease; }
+.link:hover, .btn-sm:hover { opacity:.8; }
+@media (max-width:980px) { .morning-grid { grid-template-columns:1fr; } .ov-side { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:820px) {
+  .wrap { padding:20px 16px 100px; }
+  .sidebar { position:fixed; top:auto; left:0; right:0; bottom:0; width:100%; height:auto; transform:none; padding:7px 4px max(7px,env(safe-area-inset-bottom)); border-right:0; border-top:1px solid var(--line); box-shadow:var(--shadow); z-index:30; }
+  .side-collapsed .sidebar { width:100%; }
+  .side-collapsed .sidebar .label { opacity:1; pointer-events:auto; }
+  .sidebar .brand, .sidebar .side-foot, .menu-btn, .scrim { display:none !important; }
+  .side-nav { display:grid; grid-template-columns:repeat(5,1fr); gap:0; min-width:0; width:100%; }
+  .side-nav a { display:grid; justify-items:center; gap:2px; padding:5px 1px; font-size:11px; line-height:1.2; min-width:0; white-space:nowrap; }
+  .side-nav svg { width:20px; height:20px; }
+  .sidebar .label { opacity:1; }
+}
+@media (max-width:620px) {
+  header.top { flex-wrap:nowrap; }
+  header.top h1 { font-size:18px; }
+  #today { display:none; }
+  .morning-head { display:block; }
+  .morning-head p { margin-top:8px; }
+  .morning-grid, .ov-side { grid-template-columns:1fr; gap:16px; }
+  .panel { padding:18px 16px; }
+  .play-summary { grid-template-columns:minmax(0,1fr) auto; gap:4px 8px; }
+  .play-title { max-width:none; overflow:visible; text-overflow:clip; white-space:normal; overflow-wrap:anywhere; grid-column:1; grid-row:1; }
+  .play-description { grid-column:1 / -1; grid-row:2; -webkit-line-clamp:2; overflow-wrap:anywhere; }
+  .play-summary-meta .growth { display:none; }
+  .usage-today b { font-size:20px; }
+  .usage-today > div { padding:14px 8px; }
+  .hero { grid-template-columns:repeat(2,1fr); }
+  #pb-body { display:block; }
+  #pb-body .cats { display:flex; flex-direction:row; width:auto; overflow-x:auto; padding-bottom:5px; }
+  #pb-body .cats button { width:auto; flex:none; }
+  .pb-list { grid-template-columns:1fr; }
+}
+@media (max-width:480px) {
+  html, body { width:100%; max-width:100%; overflow-x:hidden; }
+  .app, .main, .wrap, .grid, .morning, .morning-grid, .morning-main, .ov-side, .panel,
+  .news, .news-item, .news-main, .news-detail, .play-groups, .play-list, .play-grid,
+  .play-card, .play-summary, .pb-list, .pb-card, #pb-body { min-width:0; max-width:100%; box-sizing:border-box; }
+  .app, .main, .wrap, .panel, .news, .news-item, .play-list, .play-grid, .play-card, .pb-list, .pb-card { width:100%; }
+  .wrap { padding:16px 12px 100px; }
+  .panel { padding:18px 14px; }
+  .morning-grid, .ov-side, .stats, .pb-list { grid-template-columns:minmax(0,1fr); }
+  .news-item > *, .play-summary > *, .panel-head > *, .brief-item > *, .rule-head > *, .pb-tools > * { min-width:0; }
+  .news-title, .news-sum, .news-why, .news-meta, .brief-title, .brief-summary, .pb-preview, .pb-card summary b, .play-ai { overflow-wrap:anywhere; }
+  .play-summary-meta { display:contents; }
+  .play-summary-meta .fit-dots { grid-column:2; grid-row:1; justify-self:end; }
+  .play-summary-meta .chip { grid-column:1 / -1; grid-row:3; max-width:100%; justify-self:start; }
+  .usage-today { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .hero { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .pb-row { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .side-nav { grid-template-columns:repeat(5,1fr); }
+  .side-nav a, .side-nav .label { min-width:0; white-space:nowrap; font-size:11px; }
+  .pb-tools .pb-search { width:100%; max-width:100%; }
+  .rule-head { flex-wrap:wrap; }
+  .pb-tags { flex-wrap:wrap; }
+  .seg { min-width:0; overflow-x:auto; }
+}
+@media (prefers-reduced-motion:reduce) { *, *::before, *::after { transition:none !important; animation:none !important; } }
+
 </style>
 </head>
 <body>
@@ -319,7 +457,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     <button class="menu-btn" id="menu-btn" type="button" aria-label="打开导航" aria-controls="sidebar" aria-expanded="false">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
     </button>
-    <h1 id="view-title">总览</h1>
+    <h1 id="view-title">今天</h1>
     <div class="meta">
       <span id="today"></span>
       <button class="cmd-open" id="cmd-open" type="button" title="搜索页面、方法库和资讯（Ctrl/⌘ + K）">搜索<span class="kbd"> ⌘K</span></button>
@@ -328,36 +466,30 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
   </header>
 
   <div class="grid">
-    <!-- ==================== 总览 ==================== -->
-    <section class="view overview" data-view="overview" aria-label="总览">
-      <div class="panel ov-intel">
-        <div class="panel-head">
-          <h2>今日 AI 情报<span>按价值排序</span></h2>
-          <a class="link" href="#intel">看摘要 →</a>
-        </div>
-        <ol class="news compact" id="ov-hot"><li class="empty">正在读取…</li></ol>
-      </div>
-      <div class="ov-side">
-        <div class="panel ov-usage">
-          <div class="panel-head"><h2>我的 AI 使用<span>今日</span></h2><a class="link" href="#usage">详细 →</a></div>
-          <div class="mini" id="ov-usage"><div class="empty">正在读取…</div></div>
-        </div>
-        <div class="panel ov-play">
-          <div class="panel-head"><h2>今日可上手<span>GitHub 精选</span></h2><a class="link" href="#playground">全部 →</a></div>
-          <ol class="news compact" id="ov-play"><li class="empty">正在读取…</li></ol>
-        </div>
-      </div>
+    <!-- ==================== 今天 ==================== -->
+    <section class="view morning" data-view="overview" aria-label="今天">
+      <div class="morning-head"><div><div class="eyebrow">每日晨报 / DAILY BRIEFING</div><h2 class="serif" id="morning-date"></h2></div><p id="morning-status">正在整理今天的信息…</p></div>
+      <div class="morning-grid"><div class="morning-main">
+        <section class="panel"><div class="panel-head"><h2>今日 AI 情报</h2><a class="link" href="#intel">更多情报 →</a></div><ol class="news compact" id="ov-hot"><li class="empty">正在读取…</li></ol></section>
+        <section class="panel"><div class="panel-head"><h2>今日可上手</h2><a class="link" href="#playground">所有玩法 →</a></div><div id="ov-play" class="play-list"><div class="empty">正在读取…</div></div></section>
+      </div><div class="ov-side">
+        <section class="panel"><div class="panel-head"><h2>我的 AI 用量</h2><a class="link" href="#usage">查看分析 →</a></div><div class="mini" id="ov-usage"><div class="empty">正在读取…</div></div></section>
+        <section class="panel" id="ov-pb-card" hidden><div class="panel-head"><h2>方法库</h2><a class="link" href="#playbook">打开 →</a></div><div id="ov-pb"></div></section>
+        <section class="panel" id="ov-brief-card" hidden><div class="panel-head"><h2>今日简报</h2><a class="link" href="#intel">全部 →</a></div><div id="ov-brief"></div></section>
+      </div></div>
     </section>
 
-    <!-- ==================== AI 情报 ==================== -->
+    <!-- ==================== 情报 ==================== -->
     <section class="panel view" data-view="intel" aria-labelledby="intel-h">
       <div class="panel-head">
-        <h2 id="intel-h">AI 情报</h2>
+        <h2 id="intel-h">情报</h2>
         <div class="head-right">
           <span class="update" id="intel-status"></span>
           <div class="seg" id="intel-tab" role="group" aria-label="情报类型"></div>
         </div>
       </div>
+      <div id="brief-section" class="brief-section"><div class="section-title"><span>今日简报</span><span class="sub" id="brief-date"></span></div><div id="brief-body" class="empty">正在读取…</div></div>
+      <div class="section-title"><span>AI 资讯</span></div>
       <div id="intel-body"></div>
       <div class="foot">内容来自 AIHOT 公开 API（aihot.news），在你的浏览器里实时读取，本站不保存副本。标题和摘要由 AIHOT 根据第三方来源生成，以原文为准。“今日推荐”从最近 24 小时的精选里按 AIHOT 评分挑出 5 到 10 条；热度和日报直接沿用 AIHOT 的结果。</div>
     </section>
@@ -372,17 +504,18 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
         </div>
       </div>
 
-      <div class="hero">
+      <div class="usage-today" id="usage-today"><div><span>今日时长</span><b id="u-day">无记录</b></div><div><span>本周时长</span><b id="u-week">无记录</b></div><div><span>本月时长</span><b id="u-month">无记录</b></div></div>
+      <details class="usage-extra"><summary>查看 Token 与来源统计</summary><div class="hero">
         <div><div class="k" id="k-time">使用时长</div><div class="v num" id="h-time">—</div></div>
         <div><div class="k" id="k-tok">Token</div><div class="v num" id="h-tok">—</div></div>
         <div><div class="k">累计 Token</div><div class="v num" id="h-all">—</div><div class="qsub" id="h-all-sub"></div></div>
         <div><div class="k">Codex 账户累计 Token</div><div class="v num" id="h-life">—</div><div class="qsub" id="h-life-sub"></div></div>
       </div>
 
-      <div class="ends" id="ends"></div>
+      <div class="ends" id="ends"></div></details>
 
       <div class="chart-head">
-        <h3 id="chart-title">每日用量</h3>
+        <h3 id="chart-title">近 30 天用量</h3>
         <div class="seg small" id="range" role="group" aria-label="时间范围"></div>
         <div class="seg small" id="metric" role="group" aria-label="指标"></div>
       </div>
@@ -499,7 +632,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
   const pick = (key, list, d) => { const v = store.get(key, d); return list.some(x => x[0] === v) ? v : d }
   let period = pick('wb-period', PERIODS, 'day')
   let metric = pick('wb-metric', METRICS, 'time')
-  let range = pick('wb-range', RANGES, 'since')
+  let range = pick('wb-range', RANGES, '30')
   let entry = pick('wb-entry', ENTRIES, 'all')
   let vendor = pick('wb-vendor', VENDORS, 'all')
   let data = null
@@ -553,6 +686,12 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     const label = PERIODS.find(x => x[0] === period)[1]
     $('k-time').textContent = `${label}使用时长`
     $('k-tok').textContent = `${label} Token`
+    const recorded = (data.daily || []).map(x => x.date)
+    const todayKey = dayKey(), weekStart = addDays(todayKey, -((new Date().getDay() + 6) % 7)), monthStart = todayKey.slice(0,7) + '-01'
+    for (const [id, key, start] of [['u-day','day',todayKey],['u-week','week',weekStart],['u-month','month',monthStart]]) {
+      const v = data.periods[key]?.total?.minutes
+      $(id).textContent = v == null || !recorded.some(d => d >= start && d <= todayKey) ? '无记录' : fmtTimeStr(v)
+    }
     $('h-time').replaceChildren(...big(fmtTime(p.total.minutes)))
     $('h-tok').replaceChildren(...big(fmtTok(p.total.tokens)))
     const first = (data.daily || [])[0]?.date
@@ -586,7 +725,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     $('update-status').textContent = ok ? `更新于 ${pad2(updated.getHours())}:${pad2(updated.getMinutes())}${stale ? '（已超过 2 小时）' : ''}` : '更新时间未知'
     const local = location.hostname === '127.0.0.1' || location.hostname === 'localhost'
     $('foot').textContent = `${local ? '本机实时数据' : '公开数据每小时同步'}。终端（Claude Code、Codex CLI、Kimi Code）的 Token 来自本机会话记录（实际值，缓存读取不计入合计）；Codex 账户累计来自 Codex CLI app-server 只读接口；桌面对话只统计前台时长，没有 Token 记录；网页 Token 按文字估算。图上空白的日期表示那天没有任何记录，不等于 0。`
-    renderOverviewUsage()
+    renderOverviewUsage(); updateMorningStatus(window.morningCount ?? null)
   }
 
   // 每日堆叠柱 + 7 日均线（同一纵轴、同一单位）
@@ -727,14 +866,18 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
   // 总览里的今日用量
   function renderOverviewUsage() {
     const p = data.periods.day, w = data.periods.week
+    const todayRecorded = (data.daily || []).some(x => x.date === dayKey())
     const stat = (k, v, sub) => el('div', { class: 'stat' }, el('div', { class: 'k' }, k), el('div', { class: 'v num' }, ...big(v)), sub ? el('div', { class: 'qsub' }, sub) : null)
-    const total = Math.max(1, p.total.minutes)
+    const recent = (data.daily || []).filter(x => x.date >= addDays(dayKey(), -13))
+    const byDay = new Map(recent.map(x => [x.date, x]))
+    const vals = Array.from({length:14}, (_,i) => byDay.get(addDays(dayKey(), i-13))?.total?.minutes ?? null)
+    const maxMini = Math.max(1, ...vals.filter(v => v != null))
     $('ov-usage').replaceChildren(
       el('div', { class: 'stats' },
-        stat('使用时长', fmtTime(p.total.minutes), `本周 ${fmtTimeStr(w.total.minutes)}`),
-        stat('Token', fmtTok(p.total.tokens), `本周 ${fmtTokStr(w.total.tokens)}`)),
-      el('div', { class: 'share stack', title: '各入口占今日时长' }, ...ENDS.map(e =>
-        el('i', { style: `width:${((p[e.id]?.minutes || 0) / total * 100).toFixed(1)}%;background:var(${e.color})` }))),
+        stat('使用时长', todayRecorded ? fmtTime(p.total.minutes) : ['无记录',''], `本周 ${fmtTimeStr(w.total.minutes)}`),
+        stat('Token', todayRecorded ? fmtTok(p.total.tokens) : ['无记录',''], `本周 ${fmtTokStr(w.total.tokens)}`)),
+      el('div', { class: 'mini-bars', 'aria-label': '近 14 天每日时长' }, ...vals.map((v,i) => el('span', { class: v == null ? 'missing-bar' : '', title: `${addDays(dayKey(),i-13)}：${v == null ? '无记录' : fmtTimeStr(v)}`, style: `height:${v == null ? 2 : Math.max(4, v/maxMini*38)}px` }))),
+      el('div', { class: 'mini-caption' }, '近 14 天'),
       el('div', { class: 'legend' }, ...ENDS.map(e => el('span', {}, el('i', { style: `background:var(${e.color})` }), `${e.name} ${fmtTimeStr(p[e.id]?.minutes || 0)}`))))
   }
 
@@ -787,15 +930,14 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     const when = x.publishedAt || x.latestAt || x.discoveredAt
     return el('li', { class: 'news-item' },
       rank ? el('span', { class: 'rank num' }, String(rank)) : null,
-      el('div', { class: 'news-main' },
-        el('div', { class: 'news-title' }, extLink(x.links?.original || x.links?.aihot, x.title)),
+      el('details', { class: 'news-main news-detail' },
+        el('summary', {}, el('span', { class: 'news-title' }, x.title || '未命名资讯'),
+          el('span', { class: 'news-meta' }, x.source?.name || '未知来源', when ? ` · ${ago(when)}` : '')),
         summary && x.summary ? el('div', { class: 'news-sum' }, x.summary) : null,
         summary && x.reason ? el('div', { class: 'news-why' }, `推荐理由：${x.reason}`) : null,
         el('div', { class: 'news-meta' },
-          el('span', {}, x.source?.name || '未知来源'),
-          when ? el('span', { title: fullTime(when) }, ago(when)) : null,
           x.category && CATS[x.category] ? el('span', {}, CATS[x.category]) : null,
-          ...meta,
+          ...meta, extLink(x.links?.original || x.links?.aihot, '阅读原文 ↗'),
           x.links?.aihot ? extLink(x.links.aihot, '详情') : null)))
   }
   const hotMeta = x => [el('span', { title: '报道这件事的独立来源数；同一来源多篇只算一次' }, `${x.sourceCount} 个来源`),
@@ -941,6 +1083,8 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     segButtons($('play-show'), PLAY_SHOW, playShow, id => { playShow = id; renderPlay() })
     segButtons($('play-range'), GH_RANGES, ghRange, id => { ghRange = id; store.set('wb-gh-range', id); pressed($('play-range'), id); loadPlay() })
   }
+  const pickedDay = iso => { const d = new Date(iso); return Number.isFinite(d.getTime()) ? dayKey(d) : '' }
+  const pickGroup = date => { const d = pickedDay(date); return !d ? '更早' : d === dayKey() ? '今天' : d === addDays(dayKey(),-1) ? '昨天' : d >= addDays(dayKey(),-6) ? '本周早些时候' : '更早' }
   function renderPlay() {
     pressed($('play-show'), playShow); pressed($('play-range'), ghRange)
     $('play-range').hidden = playShow !== 'all'
@@ -955,8 +1099,8 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     const { repos, tips, ghError, tipError } = playItems
     box.replaceChildren(...[
       el('div', { class: 'section-title' }, el('span', {}, `GitHub ${GH_RANGES.find(r => r[0] === ghRange)[1]} · ${playItems.picks?.engine ? '按对你的价值' : playItems.picks ? '按 star 增速' : '按星数'}`),
-        el('span', {}, playItems.picks ? `每天上午 10 点前更新，上次 ${fullTime(playItems.picks.generated_at)}${playItems.picks.engine ? '' : '（还没有中文总结）'}` : '只留有简介、最近两周还在更新的，去掉资源合集')),
-      repos.length ? el('div', { class: 'play-grid' }, ...repos.map(playCard)) : el('div', { class: 'empty' }, ghError ? `暂时读不到 GitHub（${ghError}）` : playItems.picks ? '这段时间还没有新推荐' : '这段时间没有符合条件的新项目'),
+        el('span', {}, playItems.picks ? `每天 7 点前更新，上次 ${fullTime(playItems.picks.generated_at)}${playItems.picks.engine ? '' : '（还没有中文总结）'}` : '只留有简介、最近两周还在更新的，去掉资源合集')),
+      repos.length ? el('div', { class: 'play-groups' }, ...['今天','昨天','本周早些时候','更早'].flatMap(label => { const group = repos.filter(x => pickGroup(x.repo?.picked) === label); return group.length ? [el('h3', {class:'group-title'}, label), el('div',{class:'play-list'},...group.map(playCard))] : [] })) : el('div', { class: 'empty' }, ghError ? `暂时读不到 GitHub（${ghError}）` : playItems.picks ? '这段时间还没有新推荐' : '这段时间没有符合条件的新项目'),
       ghError && repos.length ? el('div', { class: 'qsub' }, ghError) : null,
       el('div', { class: 'section-title' }, el('span', {}, '本周可以照着做的教程 · 按 AIHOT 评分'), el('span', {}, '只留有开源地址或上手步骤的')),
       tips.length ? el('div', { class: 'play-grid' }, ...tips.map(playCard)) : el('div', { class: 'empty' }, tipError ? `暂时读不到教程（${tipError}）` : '最近 7 天没有符合条件的教程')].filter(Boolean))
@@ -966,42 +1110,42 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     if (!m.status && !m.note) delete marks[x.id]; else marks[x.id] = m
     saveMarks(); renderPlay()
   }
+  const displayText = t => String(t || '').replace(/\bPeter\b/gi, '你')
+  const fitDots = n => el('span', { class:'fit-dots', 'aria-label': `适合度 ${n}/5`, title:`适合度 ${n}/5` }, ...Array.from({length:5},(_,i) => el('i',{class:i < n ? 'on' : ''})))
   function playCard(x) {
     const m = marks[x.id] || {}
     const toggle = (s, label) => el('button', { class: 'link', type: 'button', 'aria-pressed': String(m.status === s), onclick: () => setMark(x, { status: m.status === s ? '' : s }) }, label)
     const r = x.repo, t = x.tip
     const when = t && (t.publishedAt || t.discoveredAt)
-    return el('div', { class: 'play-card' },
-      el('div', { class: 'news-title' }, extLink(x.url, x.title)),
-      x.summary ? el('div', { class: 'news-sum', title: x.original || null }, x.summary) : null,
-      x.ai ? el('div', { class: 'play-ai' },
-        el('div', {}, el('b', {}, '能做什么'), x.ai.what),
-        el('div', {}, el('b', {}, '对你的用处'), x.ai.why),
-        el('div', {}, el('b', {}, '怎么上手'), [x.ai.setup, x.ai.how].filter(Boolean).join('：'))) : null,
-      x.gone ? null : el('div', { class: 'news-meta' },
-        x.ai ? el('span', { class: 'chip', style: '--c: var(--accent)', title: '模型按你的使用习惯打的分，5 分最高' }, `适合你 ${x.ai.fit}/5`) : null,
-        !x.ai && x.mine ? el('span', { class: 'chip', style: '--c: var(--accent)', title: '标题或简介里提到 Claude、Codex、Kimi、MCP 或 Skill' }, '能配合你常用的工具') : null,
+    const details = el('details', { class: `play-card${x.compact ? ' compact' : ''}` },
+      el('summary', { class:'play-summary' },
+        el('span', { class:'play-title', title: x.title }, displayText(x.title)),
+        x.summary ? el('span', { class:'play-description' }, displayText(x.summary)) : null,
+        el('span', { class:'play-summary-meta' },
+          x.ai?.fit ? fitDots(Math.min(5, Math.max(0, x.ai.fit))) : null,
+          x.ai?.setup ? el('span', { class:'chip' }, displayText(x.ai.setup)) : null,
+          r?.growth ? el('span', { class:'growth' }, `+${growthText(r.growth.per_day)} 星/天`) : null)),
+      x.ai ? el('div', { class:'play-ai' },
+        el('div', {}, el('b', {}, '能做什么'), displayText(x.ai.what)),
+        el('div', {}, el('b', {}, '对你的用处'), displayText(x.ai.why)),
+        el('div', {}, el('b', {}, '怎么上手'), displayText([x.ai.setup, x.ai.how].filter(Boolean).join('：')))) : null,
+      el('div', { class:'news-meta' },
         x.job ? el('span', {}, x.job) : null,
-        r ? el('span', { title: 'GitHub 星数' }, `★ ${r.stars.toLocaleString()}`) : null,
-        r?.growth ? el('span', { title: GROWTH_BASIS[r.growth.basis] || '' }, `+${growthText(r.growth.per_day)} 星/天`) : null,
-        r?.lang ? el('span', {}, r.lang) : null,
-        r ? el('span', { title: fullTime(r.created) }, `${ago(r.created)}创建`) : null,
-        r ? el('span', { title: r.license ? '开源许可' : '没写开源许可，商用前先确认' }, r.license || '未写许可') : null,
-        t ? el('span', {}, t.source?.name || '未知来源') : null,
-        when ? el('span', { title: fullTime(when) }, ago(when)) : null,
-        t?.score != null ? el('span', { title: 'AIHOT 给这条资讯的评分' }, `评分 ${t.score}`) : null,
-        r ? extLink(`${r.url}#readme`, '怎么用') : null,
-        r?.home && safeUrl(r.home) ? extLink(r.home, '官网') : null,
-        t?.links?.aihot ? extLink(t.links.aihot, '详情') : null),
-      playNote === x.id ? noteForm(x, m) : m.note ? el('div', { class: 'play-note' }, m.note) : null,
-      el('div', { class: 'play-foot' },
-        el('span', { class: 'pb-actions' },
-          toggle('saved', m.status === 'saved' ? '★ 已收藏' : '☆ 收藏'),
-          toggle('tried', m.status === 'tried' ? '✓ 已尝试' : '已尝试'),
-          el('button', { class: 'link', type: 'button', onclick: () => { playNote = playNote === x.id ? '' : x.id; renderPlay() } }, m.note ? '改备注' : '备注'),
-          x.gone ? el('button', { class: 'link', type: 'button', onclick: () => { delete marks[x.id]; saveMarks(); renderPlay() } }, '移除') : null),
-        pbButton('存入方法库', () => ({ kind: 'method', title: x.title, text: [m.note, x.url].filter(Boolean).join('\n'), source: 'AI 玩法' }))))
+        r?.stars != null ? el('span', {}, `★ ${r.stars.toLocaleString()}`) : null,
+        r?.license ? el('span', {}, r.license) : null,
+        t?.source?.name ? el('span', {}, t.source.name) : null,
+        when ? el('span', {}, ago(when)) : null,
+        extLink(x.url, x.kind === 'repo' ? '打开仓库 ↗' : '阅读教程 ↗')),
+      playNote === x.id ? noteForm(x, m) : m.note ? el('div', { class:'play-note' }, m.note) : null,
+      el('div', { class:'play-foot' }, el('span', { class:'pb-actions' },
+        toggle('saved', m.status === 'saved' ? '★ 已收藏' : '☆ 收藏'),
+        toggle('tried', m.status === 'tried' ? '✓ 已尝试' : '已尝试'),
+        el('button', { class:'link', type:'button', onclick: () => { playNote = playNote === x.id ? '' : x.id; renderPlay() } }, m.note ? '改备注' : '备注'),
+        x.gone ? el('button', { class:'link', type:'button', onclick: () => { delete marks[x.id]; saveMarks(); renderPlay() } }, '移除') : null),
+        pbButton('存入方法库', () => ({kind:'method', title:x.title, text:[m.note,x.url].filter(Boolean).join('\n'), source:'AI 玩法'}))))
+    return details
   }
+
   function noteForm(x, m) {
     const f = el('form', { class: 'play-noteform' },
       el('textarea', { class: 'field', name: 'note', placeholder: '试了什么、效果怎样、下次怎么用（只存在这个浏览器里）' }),
@@ -1015,23 +1159,25 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     return f
   }
 
-  // 总览里的 GitHub 精选：本周推荐里最适合你的 3 个，只看每天生成的精选，读不到就不显示这块
+  // 今天只展示当天生成的精选；不把缺失数据补成推荐。
   async function renderOverviewPlay() {
     const box = $('ov-play')
     try {
-      const { items, picks } = await repoList(7)
-      if (!picks || !items.length) throw new Error()
-      box.replaceChildren(...items.slice(0, 3).map(x => el('li', { class: 'news-item' }, el('div', { class: 'news-main' },
-        el('div', { class: 'news-title' }, extLink(x.url, x.name)),
-        el('div', { class: 'news-sum' }, x.ai?.what || x.ai?.zh || x.desc),
-        el('div', { class: 'news-meta' }, x.ai ? el('span', {}, `适合你 ${x.ai.fit}/5`) : null, x.ai?.setup ? el('span', {}, x.ai.setup) : null, el('span', {}, `★ ${x.stars.toLocaleString()}`), x.growth ? el('span', {}, `+${growthText(x.growth.per_day)} 星/天`) : null)))))
-    } catch { box.closest('.panel').hidden = true }
+      const d = await loadPicks()
+      const today = dayKey()
+      const items = d.items.filter(x => pickedDay(x.picked) === today && (x.ai?.fit ?? 3) >= 2)
+        .sort((a,b) => (b.ai?.fit ?? 0) - (a.ai?.fit ?? 0) || (b.growth?.per_day ?? 0) - (a.growth?.per_day ?? 0)).slice(0,5)
+      box.replaceChildren(...(items.length ? items.map(x => playCard({ id:`gh:${x.name}`, kind:'repo', title:x.name, url:x.url,
+        summary:x.ai?.zh || x.desc, ai:x.ai, repo:x, job:jobName(`${x.name} ${x.desc || ''}`), compact:true }))
+        : [el('div', { class:'empty' }, '今天还没有新推荐')]))
+      window.morningCount = items.length; updateMorningStatus(items.length)
+    } catch { box.replaceChildren(el('div', { class:'empty' }, '今日精选暂时读不到')); updateMorningStatus(null) }
   }
   async function renderOverviewIntel() {
     const box = $('ov-hot')
     try {
       const top = topPicks((await aihot(PICK_PATH)).items)
-      box.replaceChildren(...top.length ? top.map((x, i) => newsItem(x, { rank: i + 1, summary: false, meta: scoreMeta(x) }))
+      box.replaceChildren(...top.length ? top.slice(0, 5).map((x, i) => newsItem(x, { rank: i + 1, meta: scoreMeta(x) }))
         : [el('li', { class: 'empty' }, '最近 24 小时还没有精选')])
     } catch (e) { intelError(box, e) }
   }
@@ -1153,7 +1299,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
         pbEdit ? null : el('button', { class: 'btn-sm', type: 'button', onclick: () => draftToPlaybook({}) }, '新建'),
         el('span', { class: 'pb-actions pb-io' },
           items.length ? el('button', { class: 'link', type: 'button', onclick: exportPlaybook }, '导出备份') : null,
-          el('label', { class: 'link', title: '导入以前导出的备份，或本机服务存的 playbook.json' }, '导入',
+          el('label', { class: 'link', title: '导入以前导出的备份，或本机服务存的 playbook.json', role:'button', tabindex:'0', onkeydown:e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.currentTarget.querySelector('input').click() } } }, '导入',
             el('input', { type: 'file', accept: '.json,application/json', hidden: '', onchange: e => { if (e.target.files[0]) importPlaybook(e.target.files[0]); e.target.value = '' } })))),
       el('div', { class: 'seg small cats', role: 'group', 'aria-label': '分类' },
         ...[['', `全部 ${items.length}`], ...PB_CATS.filter(([c]) => counts[c]).map(([c]) => [c, `${c} ${counts[c]}`])].map(([id, label]) =>
@@ -1169,9 +1315,10 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
   function pbCards(shown, total) {
     if (!total) return [el('div', { class: 'empty' }, '还没有内容。可以在 AI 玩法里点“存入方法库”，也可以直接新建。联想会每周自动整理通用方法进来。内容只存在这个浏览器里，换浏览器或手机要先导出再导入。')]
     if (!shown.length) return [el('div', { class: 'empty' }, '没有符合条件的内容')]
-    return shown.map(it => el('div', { class: 'pb-card' },
-      el('div', { class: 'rule-head' }, el('b', {}, it.title || '（无标题）'),
-        el('span', { class: 'pb-tags' }, el('span', { class: 'chip' }, PB_KINDS[it.kind] || it.kind), el('span', { class: 'chip' }, it.category))),
+    return shown.map(it => el('details', { class: 'pb-card' },
+      el('summary', { class: 'rule-head' }, el('b', {}, it.title || '（无标题）'),
+        el('span', { class: 'pb-tags' }, el('span', { class: 'chip' }, PB_KINDS[it.kind] || it.kind), el('span', { class: 'chip' }, it.category), it.source === '联想每周整理' ? el('span', {class:'chip'}, '联想每周整理') : null)),
+      el('div', { class:'pb-preview' }, it.text.split('\n').slice(0,3).join('\n')),
       el('pre', { class: 'pd-pre pb-text' }, it.text),
       el('div', { class: 'pb-foot' },
         el('span', { class: 'sub' }, [it.source, `存于 ${it.created_at.slice(0, 10)}`, it.uses ? `用过 ${it.uses} 次` : ''].filter(Boolean).join(' · ')),
@@ -1213,8 +1360,43 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
     return f
   }
 
+  // 同源简报只在内存展示；文件不存在时首页卡片隐藏。
+  let brief = null
+  async function loadBrief() {
+    try {
+      const r = await fetch(`brief.json?v=${dayKey()}`, {cache:'no-cache'})
+      if (!r.ok) throw new Error('missing')
+      const d = await r.json()
+      if (!Array.isArray(d.items)) throw new Error('invalid')
+      brief = d
+      $('brief-date').textContent = d.date || ''
+      $('brief-body').className = ''
+      $('brief-body').replaceChildren(...(d.items.length ? d.items.map(briefItem) : [el('div',{class:'empty'},'简报还没生成')]))
+      if (d.items.length) { $('ov-brief-card').hidden = false; $('ov-brief').replaceChildren(...d.items.slice(0,3).map(x => briefItem(x,true))) }
+    } catch { $('brief-body').className = 'empty'; $('brief-body').textContent = '简报还没生成'; $('ov-brief-card').hidden = true }
+  }
+  function briefItem(x, compact=false) {
+    return el('article', {class:`brief-item${compact ? ' compact' : ''}`},
+      el('div', {class:'brief-title'}, extLink(x.url, x.title || '未命名简报')),
+      compact ? null : el('div', {class:'brief-meta'},
+        x.tag ? el('span',{class:'chip'}, x.tag) : null,
+        x.source ? el('span',{class:'sub'},x.source) : null),
+      x.summary ? el('p',{class:'brief-summary', title: compact ? x.summary : null},x.summary) : null,
+      compact ? null : x.why ? el('p',{class:'sub brief-why'},`对销售：${x.why}`) : null)
+  }
+  function updateMorningStatus(count) {
+    const minutes = (data?.daily || []).some(x => x.date === dayKey()) ? data?.periods?.day?.total?.minutes : null
+    $('morning-status').textContent = `${count == null ? '今日新项目无记录' : `今日 ${count} 个新项目`} · 用量 ${minutes == null ? '无记录' : fmtTimeStr(minutes)}`
+  }
+  function renderOverviewPb() {
+    const items = pb.items
+    if (!items.length) { $('ov-pb-card').hidden = true; return }
+    const it = items[Math.floor(Math.random() * items.length)]
+    $('ov-pb-card').hidden = false
+    $('ov-pb').replaceChildren(el('div',{class:'brief-title'},it.title), el('p',{class:'pb-preview'},it.text.split('\n').slice(0,2).join('\n')),copyBtn('复制',()=>{markUsed(it);return it.text}))
+  }
   // ================= 页面切换 =================
-  const VIEWS = [['overview', '总览'], ['intel', 'AI 情报'], ['playground', 'AI 玩法'], ['usage', 'AI 用量'], ['playbook', '方法库']]
+  const VIEWS = [['overview', '今天'], ['intel', '情报'], ['playground', 'AI 玩法'], ['usage', 'AI 用量'], ['playbook', '方法库']]
   const NAV_ICONS = {
     overview: '<rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/>',
     intel: '<rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><path d="M7.5 9h9M7.5 12.5h9M7.5 16h5"/>',
@@ -1227,7 +1409,7 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
   let intelReady = false
   $('nav').replaceChildren(...VIEWS.map(([id, label]) => el('a', { href: `#${id}`, 'data-id': id, title: label }, navIcon(id), el('span', { class: 'label' }, label))))
 
-  // 侧栏：电脑上可以收起成图标，手机上是从左边滑出的抽屉
+  // 桌面侧栏可收起；手机端直接显示五个底部标签。
   const root = document.documentElement
   function setCollapsed(c) {
     root.classList.toggle('side-collapsed', c)
@@ -1342,8 +1524,11 @@ dialog.cmd::backdrop { background: rgb(0 0 0 / 30%); }
   })
 
   // ================= 启动 =================
+  $('morning-date').textContent = new Date().toLocaleDateString('zh-CN',{month:'long',day:'numeric',weekday:'long'})
   showView()
-  loadRepoPlaybook()
+  loadBrief()
+  renderOverviewPb()
+  loadRepoPlaybook().then(renderOverviewPb)
   loadUsage()
   document.addEventListener('visibilitychange', () => { if (!document.hidden) loadUsage() })
 })()

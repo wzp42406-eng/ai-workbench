@@ -3,7 +3,7 @@
 个人 AI 工作台：AI 情报、AI 玩法、AI 用量、方法库，Ctrl/⌘+K 打开命令面板。GitHub Pages 静态部署，没有后端。
 
 ## 文件
-- `index.html`：整个页面（样式和脚本都在里面），左侧导航栏（电脑上可收起，状态存 localStorage `wb-side`；手机上从左边滑出），用 `#overview` `#intel` `#playground` `#usage` `#playbook` 切换视图。
+- `index.html`：整个页面（样式和脚本都在里面），左侧导航栏（电脑上可收起，状态存 localStorage `wb-side`；手机上显示底部五标签），用 `#overview` `#intel` `#playground` `#usage` `#playbook` 切换视图。
 - `playbook.json`：联想每周生成，只放不含客户与个人信息的通用方法；页面只增不改，删除过的自动条目不再加回。
 - `tools/picks.py`：**2026-10-30 起由联想工作机每天 06:30 运行**（`~/AI-Projects/scripts/workbench-picks`，没有 API Key 时用本机已登录的 Codex CLI，所有候选合并成一次调用写中文总结），`.github/workflows/picks.yml` 只留手动触发作备用。原来的说明：每天北京时间凌晨 4:17 定时（GitHub 常推迟几小时，目标是上午 10 点前完成）从 GitHub Trending（本周/今天新增 star）和搜索里挑 star 涨得最快的 AI 项目（不限创建时间，推荐过的记在 `shown` 里不再推荐，每天最多 8 个新的），读 README，用 Claude（仓库 Secret `ANTHROPIC_API_KEY`，
   模型可用 Variable `PICKS_MODEL` 改，默认 claude-opus-5-5）翻译简介并总结“能做什么、对 Peter 的用处、怎么上手、适合度 1-5”，
@@ -36,3 +36,11 @@ python3 tools/picks.py --out picks.json   # 本机试跑 GitHub 精选（需要 
 python3 -m unittest discover tools
 ```
 改动后在桌面（1280px）和手机（390px）宽度、深浅色下各看一遍所有视图，并确认控制台没有报错。
+
+## 每日晨报设计（2026-10-30）
+- 默认视图 `#overview` 是「今天」：左栏今日情报与当天精选，右栏用量、随机方法与可选简报；内容按需展开。
+- `brief.json` 是同源只读可选文件，结构为 `{ "date": "YYYY-MM-DD", "generated_at": "ISO", "items": [{ "title": "", "summary": "", "why": "对销售工作的意义", "tag": "行业|竞品|AI+BI|客户行业", "source": "", "url": "https://..." }] }`；读不到时首页卡片隐藏、情报页提示未生成。
+- 视觉变量在 `index.html`：浅色暖纸 `#F7F5F0`、月夜蓝 `#3B5BDB`；深色 `#121212`、强调 `#7C96F0`；系统深浅色加手动切换。
+- 标题用 Noto Serif SC，正文用 Inter / Noto Sans SC；卡片 10px 圆角、细线、轻阴影，正文上限约 72ch。
+- 桌面窄侧栏可收起，手机为底部五标签；玩法列表按推荐日期分组，方法库按分类浏览并点击展开。
+- 不变更上方数据规则、数据文件结构与 localStorage 键名。
