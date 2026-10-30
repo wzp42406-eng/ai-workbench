@@ -23,7 +23,7 @@ import urllib.request
 from pathlib import Path
 
 MODEL = os.environ.get('PICKS_MODEL') or 'claude-opus-5-5'
-NEW_PER_DAY = 8      # 每天最多新推荐几个（推荐过的不再出现）
+NEW_PER_DAY = 5      # 每天最多新推荐几个（推荐过的不再出现）
 KEEP_DAYS = 60       # 推荐记录留多少天（页面按推荐日期分本周 / 本月）
 SEEN_DAYS = 45       # 星数快照留多少天，用来算 star 增速
 REUSE_DAYS = 14      # 总结过的项目多少天内不重新总结
@@ -256,31 +256,41 @@ def main():
 
     cands = candidates(now, seen)
     fresh, calls, failed = [], 0, 0
-    pre, todo = {}, set()
+    pre = {}
+    batch_ok = False
     if batch:
         picked = [r for r in cands if r['name'] not in shown and r['name'] not in skipped][:args.max_new]
-        todo = {r['name'] for r in picked}
         if picked:
             calls = 1
             try:
                 pre = batch({r['name']: batch_text(r, readme_of(r)) for r in picked})
+                batch_ok = True
             except Exception as e:  # 整批失败：这次的项目照常推荐，只是没有中文总结
                 print(f"批量总结失败：{str(e)[:200]}", file=sys.stderr)
-    for r in cands:
+    cleaned = {}
+    if batch_ok:
+        for r in picked:
+            try:
+                cleaned[r['name']] = clean(pre.get(r['name']) or {})
+                if cleaned[r['name']]['fit'] == 1:
+                    skipped[r['name']] = stamp
+            except Exception as e:
+                failed += 1
+                print(f"总结失败：{r['name']}：{str(e)[:200]}", file=sys.stderr)
+    # Python 的稳定排序保留同分项目原有的 star 增速顺序。
+    ranked = sorted(picked, key=lambda r: -cleaned.get(r['name'], {}).get('fit', 0)) if batch_ok else cands
+    for r in ranked:
         if len(fresh) >= NEW_PER_DAY:
             break
         if r['name'] in shown or r['name'] in skipped:
             continue
-        if r['name'] in todo:
-            try:
-                r['ai'] = {**clean(pre.get(r['name']) or {}), 'by': engine, 'at': stamp}
-                print(f"已总结：{r['name']}（{r['ai']['fit']}/5）")
-            except Exception as e:
-                failed += 1
-                print(f"总结失败：{r['name']}：{str(e)[:200]}", file=sys.stderr)
-            if r.get('ai', {}).get('fit') == 1:
-                skipped[r['name']] = stamp
+        if batch_ok:
+            if r['name'] not in cleaned:
                 continue
+            if r['name'] in skipped:
+                continue
+            r['ai'] = {**cleaned[r['name']], 'by': engine, 'at': stamp}
+            print(f"已总结：{r['name']}（{r['ai']['fit']}/5）")
         elif ask and calls < args.max_new:
             readme = readme_of(r)
             calls += 1

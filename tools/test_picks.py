@@ -133,7 +133,37 @@ class PicksTest(unittest.TestCase):
         self.assertEqual(got[names[0]]['ai']['fit'], 4)
         self.assertNotIn(names[1], got)            # 1 分不推荐
         self.assertIn(names[1], out['skipped'])
-        self.assertTrue(all('ai' not in got[n] for n in names[2:] if n in got))  # 模型漏掉的照常推荐、没有总结
+        self.assertTrue(all(n not in got for n in names[2:]))  # 批量成功时只推荐总结有效且 fit >= 2 的项目
+
+    def test_batch_ranks_top_five_by_fit_then_growth(self):
+        repos = [repo(f'owner/ai-tool-{i}', stars=800-i*50) for i in range(8)]
+        fits = [2, 4, 5, 3, 5, 1, 4, 5]
+        tmp = Path(tempfile.mkdtemp())
+        def batch(texts):
+            return {name: {**GOOD, 'fit': fits[i]} for i, name in enumerate(texts)}
+        env = {k: v for k, v in os.environ.items() if k != 'ANTHROPIC_API_KEY'}
+        with mock.patch.object(picks, 'gh', fake_gh(search=repos)), mock.patch.object(picks, 'trending', lambda: {}), \
+                mock.patch.object(picks, 'ask_codex_batch', batch), mock.patch.dict(os.environ, env, clear=True), \
+                mock.patch.object(picks.shutil, 'which', lambda c: '/bin/codex' if c == 'codex' else None), \
+                mock.patch.object(sys, 'argv', ['picks.py', '--out', str(tmp / 'out.json')]):
+            picks.main()
+        out = json.loads((tmp / 'out.json').read_text(encoding='utf-8'))
+        self.assertEqual([x['name'] for x in out['items']],
+                         ['owner/ai-tool-2', 'owner/ai-tool-4', 'owner/ai-tool-7', 'owner/ai-tool-1', 'owner/ai-tool-6'])
+        self.assertIn('owner/ai-tool-5', out['skipped'])
+
+    def test_batch_failure_falls_back_to_growth_without_ai(self):
+        repos = [repo(f'owner/ai-tool-{i}', stars=800-i*50) for i in range(8)]
+        tmp = Path(tempfile.mkdtemp())
+        env = {k: v for k, v in os.environ.items() if k != 'ANTHROPIC_API_KEY'}
+        with mock.patch.object(picks, 'gh', fake_gh(search=repos)), mock.patch.object(picks, 'trending', lambda: {}), \
+                mock.patch.object(picks, 'ask_codex_batch', side_effect=RuntimeError('failed')), mock.patch.dict(os.environ, env, clear=True), \
+                mock.patch.object(picks.shutil, 'which', lambda c: '/bin/codex' if c == 'codex' else None), \
+                mock.patch.object(sys, 'argv', ['picks.py', '--out', str(tmp / 'out.json')]):
+            picks.main()
+        out = json.loads((tmp / 'out.json').read_text(encoding='utf-8'))
+        self.assertEqual([x['name'] for x in out['items']], [f'owner/ai-tool-{i}' for i in range(5)])
+        self.assertTrue(all('ai' not in x for x in out['items']))
 
     def test_trending_parser(self):
         class Resp:
