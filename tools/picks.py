@@ -221,7 +221,8 @@ def ask_codex_batch(texts):
     with tempfile.TemporaryDirectory() as d:
         schema, out = Path(d) / 'schema.json', Path(d) / 'out.json'
         schema.write_text(json.dumps(BATCH_SCHEMA, ensure_ascii=False), encoding='utf-8')
-        r = subprocess.run([shutil.which('codex'), 'exec', '--skip-git-repo-check', '--ephemeral', '--ignore-rules',
+        r = subprocess.run([shutil.which('codex'), 'exec', '--skip-git-repo-check', '--ephemeral', '--ignore-rules', '-m', 'gpt-6-luna', '-c', 'model_reasoning_effort="low"',  # 批量翻译总结，简单
+                           
                             '-s', 'read-only', '-C', d, '--output-schema', str(schema), '-o', str(out), '-'],
                            input=text, capture_output=True, text=True, timeout=1500)
         if r.returncode or not out.is_file():
