@@ -1,13 +1,13 @@
 {
- "updated_at": "2026-10-31T16:53:33+08:00",
+ "updated_at": "2026-10-31T16:57:48+08:00",
  "note": "Codex 额度与账户累计 token 来自本机 app-server 只读 API；CLI 时长与当前周期 token 来自会话记录。会话 token 不含 cache_read_tokens，缓存读取另列。Claude、ChatGPT、Kimi 桌面对话无 token 记录",
  "quota": {
   "claude": {
    "five_hour": {
-    "used_percent": 35.0,
-    "remaining_percent": 65.0,
+    "used_percent": 38.0,
+    "remaining_percent": 62.0,
     "resets_at": "2026-10-31T11:00:00.000Z",
-    "observed_at": "2026-10-31T16:53:17+08:00",
+    "observed_at": "2026-10-31T16:57:30+08:00",
     "reset_since": false,
     "source": "local_report"
    },
@@ -15,17 +15,17 @@
     "used_percent": 46.0,
     "remaining_percent": 54.0,
     "resets_at": "2026-11-03T19:00:00.000Z",
-    "observed_at": "2026-10-31T16:53:17+08:00",
+    "observed_at": "2026-10-31T16:57:30+08:00",
     "reset_since": false,
     "source": "local_report"
    }
   },
   "codex": {
    "five_hour": {
-    "used_percent": 22.0,
-    "remaining_percent": 78.0,
+    "used_percent": 25.0,
+    "remaining_percent": 75.0,
     "resets_at": "2026-10-31T19:09:34+08:00",
-    "observed_at": "2026-10-31T16:53:33+08:00",
+    "observed_at": "2026-10-31T16:57:12+08:00",
     "reset_since": false,
     "source": "codex_app_server"
    },
@@ -33,14 +33,14 @@
     "used_percent": 34.0,
     "remaining_percent": 66.0,
     "resets_at": "2026-11-04T16:48:15+08:00",
-    "observed_at": "2026-10-31T16:53:33+08:00",
+    "observed_at": "2026-10-31T16:57:12+08:00",
     "reset_since": false,
     "source": "codex_app_server"
    }
   }
  },
  "codex_api": {
-  "updated_at": "2026-10-31T16:53:33+08:00",
+  "updated_at": "2026-10-31T16:57:12+08:00",
   "token_usage": {
    "lifetime_tokens": 724955714,
    "peak_daily_tokens": 64198884,
@@ -302,9 +302,9 @@
     "tokens": 0
    },
    "claude_code": {
-    "minutes": 162.1,
-    "tokens": 1822296,
-    "cache_read_tokens": 85061035
+    "minutes": 166.3,
+    "tokens": 1840851,
+    "cache_read_tokens": 91144494
    },
    "codex": {
     "minutes": 19.8,
@@ -345,9 +345,9 @@
     "tokens": 0
    },
    "cli_total": {
-    "minutes": 181.9,
-    "tokens": 2189500,
-    "cache_read_tokens": 88875435
+    "minutes": 186.1,
+    "tokens": 2208055,
+    "cache_read_tokens": 94958894
    },
    "desktop_total": {
     "minutes": 1.0,
@@ -355,8 +355,8 @@
     "cache_read_tokens": 0
    },
    "total": {
-    "minutes": 182.9,
-    "tokens": 2189500
+    "minutes": 187.1,
+    "tokens": 2208055
    },
    "from": "2026-10-31"
   },
@@ -370,9 +370,9 @@
     "tokens": 0
    },
    "claude_code": {
-    "minutes": 610.2,
-    "tokens": 4170748,
-    "cache_read_tokens": 329524103
+    "minutes": 614.4,
+    "tokens": 4189303,
+    "cache_read_tokens": 335607562
    },
    "codex": {
     "minutes": 40.0,
@@ -413,9 +413,9 @@
     "tokens": 0
    },
    "cli_total": {
-    "minutes": 650.2,
-    "tokens": 5215624,
-    "cache_read_tokens": 342726151
+    "minutes": 654.4,
+    "tokens": 5234179,
+    "cache_read_tokens": 348809610
    },
    "desktop_total": {
     "minutes": 600.2,
@@ -423,8 +423,8 @@
     "cache_read_tokens": 19234182
    },
    "total": {
-    "minutes": 1250.4,
-    "tokens": 6218762
+    "minutes": 1254.7,
+    "tokens": 6237317
    },
    "from": "2026-10-26"
   },
@@ -438,9 +438,9 @@
     "tokens": 0
    },
    "claude_code": {
-    "minutes": 907.8,
-    "tokens": 5309411,
-    "cache_read_tokens": 363565860
+    "minutes": 912.0,
+    "tokens": 5327966,
+    "cache_read_tokens": 369649319
    },
    "codex": {
     "minutes": 249.1,
@@ -481,9 +481,9 @@
     "tokens": 0
    },
    "cli_total": {
-    "minutes": 1159.7,
-    "tokens": 9424093,
-    "cache_read_tokens": 434069642
+    "minutes": 1163.9,
+    "tokens": 9442648,
+    "cache_read_tokens": 440153101
    },
    "desktop_total": {
     "minutes": 1655.1,
@@ -491,8 +491,8 @@
     "cache_read_tokens": 335216430
    },
    "total": {
-    "minutes": 2819.6,
-    "tokens": 17236793
+    "minutes": 2823.8,
+    "tokens": 17255348
    },
    "from": "2026-10-01"
   },
@@ -506,9 +506,9 @@
     "tokens": 0
    },
    "claude_code": {
-    "minutes": 916.7,
-    "tokens": 5309411,
-    "cache_read_tokens": 363565860
+    "minutes": 920.9,
+    "tokens": 5327966,
+    "cache_read_tokens": 369649319
    },
    "codex": {
     "minutes": 288.5,
@@ -549,9 +549,9 @@
     "tokens": 0
    },
    "cli_total": {
-    "minutes": 1208.1,
-    "tokens": 9574398,
-    "cache_read_tokens": 440033802
+    "minutes": 1212.4,
+    "tokens": 9592953,
+    "cache_read_tokens": 446117261
    },
    "desktop_total": {
     "minutes": 2283.0,
@@ -559,8 +559,8 @@
     "cache_read_tokens": 442577625
    },
    "total": {
-    "minutes": 3496.0,
-    "tokens": 21066082
+    "minutes": 3500.2,
+    "tokens": 21084637
    },
    "from": "2026-01-01"
   },
@@ -574,9 +574,9 @@
     "tokens": 0
    },
    "claude_code": {
-    "minutes": 916.7,
-    "tokens": 5309411,
-    "cache_read_tokens": 363565860
+    "minutes": 920.9,
+    "tokens": 5327966,
+    "cache_read_tokens": 369649319
    },
    "codex": {
     "minutes": 288.5,
@@ -617,9 +617,9 @@
     "tokens": 0
    },
    "cli_total": {
-    "minutes": 1208.1,
-    "tokens": 9574398,
-    "cache_read_tokens": 440033802
+    "minutes": 1212.4,
+    "tokens": 9592953,
+    "cache_read_tokens": 446117261
    },
    "desktop_total": {
     "minutes": 2283.0,
@@ -627,8 +627,8 @@
     "cache_read_tokens": 442577625
    },
    "total": {
-    "minutes": 3496.0,
-    "tokens": 21066082
+    "minutes": 3500.2,
+    "tokens": 21084637
    },
    "from": null
   }
@@ -2685,9 +2685,9 @@
     "tokens": 0
    },
    "claude_code": {
-    "minutes": 162.1,
-    "tokens": 1822296,
-    "cache_read_tokens": 85061035
+    "minutes": 166.3,
+    "tokens": 1840851,
+    "cache_read_tokens": 91144494
    },
    "codex": {
     "minutes": 19.8,
@@ -2728,9 +2728,9 @@
     "tokens": 0
    },
    "cli_total": {
-    "minutes": 181.9,
-    "tokens": 2189500,
-    "cache_read_tokens": 88875435
+    "minutes": 186.1,
+    "tokens": 2208055,
+    "cache_read_tokens": 94958894
    },
    "desktop_total": {
     "minutes": 1.0,
@@ -2738,8 +2738,8 @@
     "cache_read_tokens": 0
    },
    "total": {
-    "minutes": 182.9,
-    "tokens": 2189500
+    "minutes": 187.1,
+    "tokens": 2208055
    }
   }
  ]
