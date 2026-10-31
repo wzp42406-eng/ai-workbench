@@ -1,6 +1,54 @@
 {
- "updated_at": "2026-10-31T08:32:36+08:00",
+ "updated_at": "2026-11-01T04:51:08+08:00",
  "items": [
+  {
+   "date": "2026-11-01",
+   "kind": "skill",
+   "title": "★ artifacts-builder",
+   "desc": "用现成脚手架构建 React 交互页面，并打包成可分享的单个 HTML 文件。 推荐理由：提供初始化、开发、打包和交付的具体命令，能减少反复配置组件库与整理交付文件的工作。相比普通网页生成，单文件打包是明确增量，尤其适合需要发给客户演示的复杂交互页面。 问题：scripts/init-artifact.sh、scripts/bundle-artifact.sh：通过 pnpm create vite、未固定版本的依赖安装和 pnpm exec 下载并执行第三方代码；未提供可核验的依赖锁文件或完整。改法：移除自动全局安装，缺少工具时退出提示。使用经过审查的本地模板，固定直接及传递依赖并提供锁文件；安装默认禁用生命周期脚本，必要的执行步骤在无凭据、限制文件访问的隔离环境内完成。提供原始压缩包供逐项审查，",
+   "url": "https://github.com/ComposioHQ/awesome-claude-skills/tree/master/artifacts-builder",
+   "status": "思路好但有安全问题 · 要不要改成安全版？",
+   "action": "值得改就跟 Claude 说“改造 skill artifacts-builder”"
+  },
+  {
+   "date": "2026-11-01",
+   "kind": "skill",
+   "title": "★ understand-chat",
+   "desc": "基于已有知识图谱，按需检索项目实体及关系来回答问题，并检查图谱是否过期。 推荐理由：明确规定先检索再局部读取，并检查提交、暂存区、工作区及未跟踪文件，能减少读取成本和陈旧信息误导。相比每次让助手重新浏览整个项目，它能复用已有结构化索引，适合用户长期积累的网页与自动化资产。",
+   "url": "https://github.com/Egonex-AI/Understand-Anything/tree/main/understand-anything-plugin/skills/understand-chat",
+   "status": "两轮审查通过 · 自动安装",
+   "action": ""
+  },
+  {
+   "date": "2026-11-01",
+   "kind": "skill",
+   "title": "test-value",
+   "desc": "按实际风险和维护成本选择测试，识别重复、脆弱及缺乏独立依据的测试。 推荐理由：给出三个具体判断问题及对应决策表，并明确审计只读、审查不代表授权提交，操作边界清楚。相比单纯要求助手补测试，它更关注数据完整性、可观察结果和真实失败风险，适合控制个人自动化项目的维护负担。 问题：SKILL.md：「Learn from use」允许代理根据使用经验原地修改已安装的技能，仅要求事后告知，未要求用户明确授权技能维护。这使普通测试任务可能持久改写后续会话使用的指令；agents/openai.yaml 又允许隐式调用，扩。改法：删除自行原地更新技能的授权，改为：使用中发现改进点时只提出具体补丁；只有用户明确要求修改该技能后才允许写入。其余所列文件未发现实质风险；未发现明确的隐藏注入、敏感数据读取或外传、下载执行、关闭安全确认",
+   "url": "https://github.com/tt-a1i/archify/tree/main/.agents/skills/test-value",
+   "status": "思路好但有安全问题 · 要不要改成安全版？",
+   "action": "值得改就跟 Claude 说“改造 skill test-value”"
+  },
+  {
+   "date": "2026-10-31",
+   "kind": "rule",
+   "title": "在 ssh lenovo 里用 pkill -f \"某命令\" 会匹配并杀掉自己这条 ssh 的 bash -c，导致 e",
+   "desc": "远程 pkill 改用 pgrep 先看 PID，或用更精确的模式",
+   "status": "已记录，待升级"
+  },
+  {
+   "date": "2026-10-31",
+   "kind": "rule",
+   "title": "用户要的是“升维”：从没想到的维度给更好路线，而不是只优化原答案（远程方案曾兜圈）",
+   "desc": "已做 upgrade-thinking skill + UserPromptSubmit hook",
+   "status": "已记录，待升级"
+  },
+  {
+   "date": "2026-10-31",
+   "kind": "rule",
+   "title": "在超长会话里设 CronCreate 唤醒做大任务：每次唤醒都要处理整段历史，非常耗 Claude 额度（用户问几个问题",
+   "desc": "无人值守的大任务写成提示词文件，用独立执行器（nohup）到点运行 `claude -p ... --permission-mode auto`（新会话、背景小），额度用完每 30 分钟重试、进度写报告文件；长会话里只留一个读报告的轻量唤醒。范例：~/AI-Workspace/Claude/night-tasks/ru",
+   "status": "已记录，待升级"
+  },
   {
    "date": "2026-10-31",
    "kind": "skill",
@@ -12,26 +60,12 @@
   },
   {
    "date": "2026-10-31",
-   "kind": "rule",
-   "title": "军团分级：计划与审查用最强模型，执行用够用的",
-   "desc": "新增 Claude 岗位参谋长、总审官（Opus）、执行员（Sonnet）、文书（Haiku）；Codex 审查官固定 gpt-6-astra·high；一句话派单用 legion",
-   "status": "已生效"
-  },
-  {
-   "date": "2026-10-31",
    "kind": "skill",
    "title": "frontend-ui-engineering",
    "desc": "通过组件组织、数据与展示分离及状态管理等具体模式，构建可维护的网页界面。 适合制作 BI 演示页、客户门户和销售小工具，比单纯强调视觉风格更便于落实。 原版因触发过宽、引用目录外文件未通过；已收窄触发范围、删除外部引用，重新两轮审查通过。",
    "url": "https://github.com/addyosmani/agent-skills/tree/main/skills/frontend-ui-engineering",
    "status": "安全改造版 · 两轮审查通过 · 已安装",
    "action": ""
-  },
-  {
-   "date": "2026-10-31",
-   "kind": "rule",
-   "title": "在超长会话里设 CronCreate 唤醒做大任务：每次唤醒都要处理整段历史，非常耗 Claude 额度（用户问几个问题",
-   "desc": "无人值守的大任务写成提示词文件，用独立执行器（nohup）到点运行 `claude -p ... --permission-mode auto`（新会话、背景小），额度用完每 30 分钟重试、进度写报告文件；长会话里只留一个读报告的轻量唤醒。范例：~/AI-Workspace/Claude/night-tasks/ru",
-   "status": "已记录，待升级"
   },
   {
    "date": "2026-10-30",
