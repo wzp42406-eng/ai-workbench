@@ -4,24 +4,6 @@
   {
    "date": "2026-10-31",
    "kind": "skill",
-   "title": "doc-coauthoring",
-   "desc": "通过背景收集、分节迭代和独立读者测试，协作产出结构化文档。 适合撰写客户方案、销售提案和知识库文档，读者测试能发现只有作者理解的背景与论证缺口。",
-   "url": "https://github.com/anthropics/skills/tree/main/skills/doc-coauthoring",
-   "status": "审查通过 · 自动安装",
-   "action": ""
-  },
-  {
-   "date": "2026-10-31",
-   "kind": "skill",
-   "title": "pdf",
-   "desc": "提供 PDF 文本与表格提取、合并拆分及生成等操作的具体代码和工具流程。 便于批量整理客户资料、提取报告数据，并将销售材料加工为知识库输入。",
-   "url": "https://github.com/anthropics/skills/tree/main/skills/pdf",
-   "status": "带代码 · 待你确认",
-   "action": "跟 Claude 说“安装 skill pdf”"
-  },
-  {
-   "date": "2026-10-31",
-   "kind": "skill",
    "title": "frontend-ui-engineering",
    "desc": "通过组件组织、数据与展示分离及状态管理等具体模式，构建可维护的网页界面。 适合制作 BI 演示页、客户门户和销售小工具，比单纯强调视觉风格更便于落实。",
    "url": "https://github.com/addyosmani/agent-skills/tree/main/skills/frontend-ui-engineering",
