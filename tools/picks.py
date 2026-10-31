@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""AI 玩法的 GitHub 项目精选：挑最近 star 涨得快、能直接上手的 AI 项目，翻译简介，并总结“能做什么、对 Peter 有什么用、怎么上手”。
+"""AI 玩法的 GitHub 项目精选：挑最近 star 涨得快、能直接上手的 AI 项目，翻译简介，并总结“能做什么、对用户有什么用、怎么上手”。
 
 由 .github/workflows/picks.yml 每天跑一次，结果 picks.json 推到 picks 分支，页面从 raw.githubusercontent.com 读。
 也可以在本机跑：python3 tools/picks.py --out picks.json（有 ANTHROPIC_API_KEY 用 Claude，否则试本机 Codex CLI（一次调用总结全部），再试 Kimi CLI）。
@@ -39,7 +39,7 @@ WORK_QUERIES = (
 AI_WORDS = re.compile(r'\b(ai|llms?|agents?|agentic|mcp|gpt|claude|codex|openai|anthropic|gemini|kimi|deepseek|qwen|rag|chatbot|copilot|'
                       r'prompts?|diffusion|transformers?|langchain|whisper|tts|vlm|embeddings?|fine-?tun\w*|inference|vibe)\b')
 
-PROFILE = """用户是个人使用者 Peter：
+PROFILE = """用户是一位个人使用者（输出里称“你”，不要写任何名字）：
 - 每天用 Claude Code、Codex、Kimi Code 写代码和做自动化，也常用 ChatGPT、Claude 的桌面 App 聊天。
 - 不太熟悉终端命令，更喜欢下载就能用、网页打开就能用的工具；需要终端时最好是复制一两行命令就能装好。
 - 在维护一个个人 AI 工作台网页（GitHub Pages 静态页面），关注 AI 使用统计、AI 资讯、提示词和工作流。
@@ -50,10 +50,10 @@ SCHEMA = {
     'properties': {
         'zh': {'type': 'string', 'description': '把项目简介准确翻译成简体中文，一句话'},
         'what': {'type': 'string', 'description': '这个项目具体能做什么，1-2 句，说清输入和结果'},
-        'why': {'type': 'string', 'description': '对 Peter 有什么用，结合他的工具和场景；没什么用就直说'},
+        'why': {'type': 'string', 'description': '对用户有什么用，结合他的工具和场景；没什么用就直说'},
         'setup': {'type': 'string', 'enum': ['下载就能用', '网页打开就能用', '要在终端安装', '要写代码接入']},
         'how': {'type': 'string', 'description': '上手第一步，一句话'},
-        'fit': {'type': 'integer', 'enum': [1, 2, 3, 4, 5], 'description': '对 Peter 的价值，5 最高'},
+        'fit': {'type': 'integer', 'enum': [1, 2, 3, 4, 5], 'description': '对用户的价值，5 最高'},
     },
     'required': ['zh', 'what', 'why', 'setup', 'how', 'fit'],
     'additionalProperties': False,
