@@ -4,6 +4,22 @@
   {
    "date": "2026-10-31",
    "kind": "skill",
+   "title": "★ differential-review",
+   "url": "https://github.com/trailofbits/skills/tree/main/plugins/differential-review",
+   "desc": "只审改动、算影响范围、出分级审查报告（来自 Trail of Bits）。推荐理由：补上“改动会不会弄坏别处”的系统检查。原版会切换工作区、把代码拼进命令，已改造为只读安全版。",
+   "status": "安全改造版 · 两轮审查通过 · 已安装",
+   "action": ""
+  },
+  {
+   "date": "2026-10-31",
+   "kind": "rule",
+   "title": "军团分级：计划与审查用最强模型，执行用够用的",
+   "desc": "新增 Claude 岗位参谋长、总审官（Opus）、执行员（Sonnet）、文书（Haiku）；Codex 审查官固定 gpt-6-astra·high；一句话派单用 legion",
+   "status": "已生效"
+  },
+  {
+   "date": "2026-10-31",
+   "kind": "skill",
    "title": "frontend-ui-engineering",
    "desc": "通过组件组织、数据与展示分离及状态管理等具体模式，构建可维护的网页界面。 适合制作 BI 演示页、客户门户和销售小工具，比单纯强调视觉风格更便于落实。 原版因触发过宽、引用目录外文件未通过；已收窄触发范围、删除外部引用，重新两轮审查通过。",
    "url": "https://github.com/addyosmani/agent-skills/tree/main/skills/frontend-ui-engineering",
