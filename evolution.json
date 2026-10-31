@@ -1,0 +1,186 @@
+{
+ "updated_at": "2026-10-31T08:32:36+08:00",
+ "items": [
+  {
+   "date": "2026-10-31",
+   "kind": "skill",
+   "title": "doc-coauthoring",
+   "desc": "通过背景收集、分节迭代和独立读者测试，协作产出结构化文档。 适合撰写客户方案、销售提案和知识库文档，读者测试能发现只有作者理解的背景与论证缺口。",
+   "url": "https://github.com/anthropics/skills/tree/main/skills/doc-coauthoring",
+   "status": "审查通过 · 自动安装",
+   "action": ""
+  },
+  {
+   "date": "2026-10-31",
+   "kind": "skill",
+   "title": "pdf",
+   "desc": "提供 PDF 文本与表格提取、合并拆分及生成等操作的具体代码和工具流程。 便于批量整理客户资料、提取报告数据，并将销售材料加工为知识库输入。",
+   "url": "https://github.com/anthropics/skills/tree/main/skills/pdf",
+   "status": "带代码 · 待你确认",
+   "action": "跟 Claude 说“安装 skill pdf”"
+  },
+  {
+   "date": "2026-10-31",
+   "kind": "skill",
+   "title": "frontend-ui-engineering",
+   "desc": "通过组件组织、数据与展示分离及状态管理等具体模式，构建可维护的网页界面。 适合制作 BI 演示页、客户门户和销售小工具，比单纯强调视觉风格更便于落实。",
+   "url": "https://github.com/addyosmani/agent-skills/tree/main/skills/frontend-ui-engineering",
+   "status": "审查通过 · 自动安装",
+   "action": ""
+  },
+  {
+   "date": "2026-10-31",
+   "kind": "rule",
+   "title": "在超长会话里设 CronCreate 唤醒做大任务：每次唤醒都要处理整段历史，非常耗 Claude 额度（用户问几个问题",
+   "desc": "无人值守的大任务写成提示词文件，用独立执行器（nohup）到点运行 `claude -p ... --permission-mode auto`（新会话、背景小），额度用完每 30 分钟重试、进度写报告文件；长会话里只留一个读报告的轻量唤醒。范例：~/AI-Workspace/Claude/night-tasks/ru",
+   "status": "已记录，待升级"
+  },
+  {
+   "date": "2026-10-30",
+   "kind": "rule",
+   "title": "codex-octopus 自带的 Codex 0.131 用 ChatGPT 账号调用新模型会被拒（model_not",
+   "desc": "用本地安装目录 + npm overrides 把 @openai/codex-sdk 固定为与本机一致的 0.166；另外 Codex 要求工作目录是受信任的 git 仓库，所以默认 CODEX_CWD 设为 ~/AI-Memory",
+   "status": "已记录，待升级"
+  },
+  {
+   "date": "2026-10-30",
+   "kind": "rule",
+   "title": "用户在 Claude Code 里装 xiaolai 插件报“不在市场上”，用命令行 `claude plugin in",
+   "desc": "让用户在终端用 CLI 装，或先 `claude plugin marketplace update xiaolai`",
+   "status": "已记录，待升级"
+  },
+  {
+   "date": "2026-10-30",
+   "kind": "rule",
+   "title": "无界面 Chrome 的窗口最小宽度是 500px，`--window-size=390,…` 截出来的图像是“右侧溢出",
+   "desc": "测手机版用 390px iframe 宿主页，或先在页面里打印 innerWidth 再下结论",
+   "status": "已记录，待升级"
+  },
+  {
+   "date": "2026-10-30",
+   "kind": "rule",
+   "title": "`pkill -f \"<模式>\"` 会匹配到执行它的那个 ssh shell，把自己的连接杀掉（exit 255）",
+   "desc": "用 `pgrep -f \"[c]odex\"` 这种写法，或者直接 kill PID",
+   "status": "已记录，待升级"
+  },
+  {
+   "date": "2026-10-30",
+   "kind": "rule",
+   "title": "`ssh lenovo '…'` 里内嵌带单引号的 Python heredoc，会被本地 zsh 拆坏，什么都没执行",
+   "desc": "复杂脚本先写到 scratchpad，再用 `ssh lenovo 'python3 -' < 文件` 通过 stdin 传过去",
+   "status": "已记录，待升级"
+  },
+  {
+   "date": "2026-10-30",
+   "kind": "rule",
+   "title": "页面类改动交给联想 Codex：写清需求文件（字段、合并规则、风格、自检方式），用 stdin 传给 `codex ex",
+   "desc": "省 Claude 额度，质量可控（这次约 16 万 token，其中 13.6 万命中缓存）",
+   "status": "已记录，待升级"
+  },
+  {
+   "date": "2026-10-30",
+   "kind": "rule",
+   "title": "清理时依据被 `head` 截断的列表下结论（以为某些任务没有 outputs），按“有 outputs 才清 work",
+   "desc": "判断“有没有”要看完整结果并检查内容非空；批量删除前先打印将要处理的完整清单；一律移废纸篓、名字可推回（~/.Trash 终端不可列目录，需记下确切文件名）",
+   "status": "已记录，待升级"
+  },
+  {
+   "date": "2026-10-30",
+   "kind": "rule",
+   "title": "Codex 0.154 前后移除了 `codex mcp-server`，原 `codex-cli` MCP 每次启动都",
+   "desc": "本机派单用 `codex exec ... < /dev/null`（`--json` 取 thread_id，`exec resume` 续接）；联想用 MCP `lenovo-codex` （指南第八节、01 第二节、军团总则第三节）",
+   "status": "已写进规则"
+  },
+  {
+   "date": "2026-10-30",
+   "kind": "rule",
+   "title": "sudo 交接脚本里的子进程碰终端会被挂起（ps 显示 T）：嵌套调用另一个读 /dev/tty 的脚本，以及 apt-",
+   "desc": "输入只在主脚本里 `read -rs </dev/tty`；apt 加 `</dev/null -o Dpkg::Progress-Fancy=0`。合计 2 次 （项目卡 10 规则与坑）",
+   "status": "已写进规则"
+  },
+  {
+   "date": "2026-10-30",
+   "kind": "rule",
+   "title": "用户说“跑完了”时脚本其实没执行，连续出现 2 次",
+   "desc": "先查日志、sudo 记录、ssh 登录记录再下结论；给用户命令要一步一行，先给连通性测试 （项目卡 10）",
+   "status": "已写进规则"
+  },
+  {
+   "date": "2026-10-30",
+   "kind": "rule",
+   "title": "往 Mac `authorized_keys` 写密钥（Unauthorized Persistence）、把个人记忆推",
+   "desc": "不绕过；给出整行命令让用户亲自执行，说明为什么需要",
+   "status": "已记录，待升级"
+  },
+  {
+   "date": "2026-10-30",
+   "kind": "rule",
+   "title": "改 SSH 认证方式时加“确认文件 + 5 分钟自动撤销”保险：由 Mac 新开的公钥连接写入确认文件，才保留新配置",
+   "desc": "远程改认证、改 sshd 都照此",
+   "status": "已记录，待升级"
+  },
+  {
+   "date": "2026-10-30",
+   "kind": "rule",
+   "title": "官方删掉某个集成入口时（如 `codex mcp-server`），用仍受支持的 CLI（`codex exec --j",
+   "desc": "少依赖，可审计",
+   "status": "已记录，待升级"
+  },
+  {
+   "date": "2026-10-29",
+   "kind": "rule",
+   "title": "需要交互输入的远程命令在对话框回 `y` 传不到远端",
+   "desc": "交给用户在 Mac「终端」App 跑，并给出单行完整命令",
+   "status": "已记录，待升级"
+  },
+  {
+   "date": "2026-10-29",
+   "kind": "rule",
+   "title": "远程改防火墙/网络先设 10 分钟自动回滚保险，两条路验证通过再取消；transient timer 重启前换持久 ti",
+   "desc": "远程加固都照此",
+   "status": "已记录，待升级"
+  },
+  {
+   "date": "2026-10-28",
+   "kind": "rule",
+   "title": "终端没有屏幕录制、辅助功能、可移除宗卷三项 macOS 权限：截不了图、点不了确认框、读不了 /Volumes/Kind",
+   "desc": "遇到就停下，告诉用户在「系统设置 → 隐私与安全性」开哪一项或请他手点，不绕过；验证不了的效果要明说没验证",
+   "status": "已记录，待升级"
+  },
+  {
+   "date": "2026-10-28",
+   "kind": "rule",
+   "title": "Calibre GUI 运行时 calibredb 拒绝写库；Calibre 9 是打包版没有源码",
+   "desc": "加书用 `open -a calibre 文件` 交给 GUI；查配置键名用 calibre-debug 反查 gprefs.defaults",
+   "status": "已记录，待升级"
+  },
+  {
+   "date": "2026-10-28",
+   "kind": "rule",
+   "title": "用户点名要下的书有版权（《小王子》英译、批判性思维教材）或只有无许可第三方副本时，不下载，改下公版/开放许可的同级替代并",
+   "desc": "下载资料先查许可",
+   "status": "已记录，待升级"
+  },
+  {
+   "date": "2026-10-26",
+   "kind": "rule",
+   "title": "旧会话被重新打开后 jsonl 修改时间会变新，但只追加了元数据（cost-state、last-prompt），没有新",
+   "desc": "每日扫描按消息 timestamp 过滤，不能只看文件修改时间",
+   "status": "已记录，待升级"
+  },
+  {
+   "date": "2026-10-25",
+   "kind": "rule",
+   "title": "电脑休眠打断定时任务：10-18、10-20、10-21 都出现 “computer went to sleep”，10",
+   "desc": "与 10-20 条合计 3 次 （方法第六节）",
+   "status": "已写进规则"
+  },
+  {
+   "date": "2026-10-25",
+   "kind": "rule",
+   "title": "用户说“表格填充色还没去掉”，其实是 Claude Docs 的评论高亮",
+   "desc": "改格式前先分清是文档样式还是界面高亮",
+   "status": "已记录，待升级"
+  }
+ ]
+}
