@@ -5,10 +5,10 @@
    "date": "2026-10-31",
    "kind": "skill",
    "title": "frontend-ui-engineering",
-   "desc": "通过组件组织、数据与展示分离及状态管理等具体模式，构建可维护的网页界面。 适合制作 BI 演示页、客户门户和销售小工具，比单纯强调视觉风格更便于落实。",
+   "desc": "通过组件组织、数据与展示分离及状态管理等具体模式，构建可维护的网页界面。 适合制作 BI 演示页、客户门户和销售小工具，比单纯强调视觉风格更便于落实。 第二轮审查：触发描述过宽，可能在无关任务里被调用；引用了技能目录外、未提供的文件。改法：收窄触发描述、删掉外部引用。",
    "url": "https://github.com/addyosmani/agent-skills/tree/main/skills/frontend-ui-engineering",
-   "status": "审查通过 · 自动安装",
-   "action": ""
+   "status": "思路好但有安全问题 · 要不要改成安全版？",
+   "action": "值得改就跟 Claude 说“改造 skill frontend-ui-engineering”"
   },
   {
    "date": "2026-10-31",
