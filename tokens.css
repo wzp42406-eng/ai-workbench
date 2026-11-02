@@ -104,3 +104,15 @@
   --red-strong: #e27e76;
   --paper-glass: #1b1a18cc;
 }
+/* 电脑上小字号放大（2026-11-02 用户反馈：电脑上看字偏小）；手机保持原梯度 */
+@media (min-width: 901px) {
+  :root {
+    --fs-1: 12px;
+    --fs-2: 13px;
+    --fs-3: 14px;
+    --fs-4: 15px;
+    --fs-5: 16px;
+    --fs-6: 17px;
+    --fs-7: 19px;
+  }
+}
