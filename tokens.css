@@ -1,0 +1,106 @@
+/* tokens.css —— 月之工作台设计规范（2026-11-02）。改颜色、字号、间距只改这里。 */
+:root {
+  color-scheme: light dark;
+  /* 颜色 */
+  --paper: #f7f5ef;
+  --ink: #27241f;
+  --muted: #777168;
+  --line: #d5d0c5;
+  --soft: #ebe7dd;
+  --red: #932f2a;
+  --blue: #3B5BDB;
+  --cli: #3B5BDB;
+  --desktop: #8C9EDB;
+  --web: #C9D1EC;
+  --muted-strong: #5e584f;
+  --overlay: #27241f55;
+  --line-strong: #6B6862;
+  --red-strong: #B43838;
+  --paper-glass: #f7f5efb8;
+  /* 字体族 */
+  --serif: 'Noto Serif SC',Georgia,serif;
+  --sans: Inter,'Noto Sans SC',system-ui,sans-serif;
+  --mono: ui-monospace,SFMono-Regular,monospace;
+  /* 字号梯度 */
+  --fs-1: 10px;
+  --fs-2: 11px;
+  --fs-3: 12px;
+  --fs-4: 13px;
+  --fs-5: 14px;
+  --fs-6: 16px;
+  --fs-7: 18px;
+  --fs-8: 20px;
+  --fs-9: 24px;
+  --fs-10: 30px;
+  --fs-11: 36px;
+  --fs-12: 48px;
+  /* 间距梯度 */
+  --space-1: 1px;
+  --space-2: 2px;
+  --space-4: 4px;
+  --space-6: 6px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-40: 40px;
+  --space-48: 48px;
+  --space-56: 56px;
+  --space-64: 64px;
+  --space-80: 80px;
+  --space-96: 96px;
+  --space-120: 120px;
+  /* 圆角 */
+  --radius-2: 2px;
+  --radius-4: 4px;
+  --radius-8: 8px;
+  --radius-12: 12px;
+  --radius-full: 999px;
+  /* 响应式（随屏宽变化的字号、间距） */
+  --fs-fluid-1: clamp(48px,6vw,90px);
+  --space-fluid-1: clamp(56px,9vw,120px);
+  --fs-fluid-2: clamp(28px,3vw,42px);
+  --fs-fluid-3: clamp(20px,2vw,28px);
+  --fs-fluid-4: clamp(22px,2.4vw,31px);
+  --fs-fluid-5: clamp(19px,2vw,25px);
+  --fs-fluid-6: clamp(45px,13vw,65px);
+  --fs-fluid-7: clamp(22px,2.6vw,32px);
+  --fs-fluid-8: clamp(38px,11.6vw,65px);
+}
+/* 暗色：只重定义颜色 token */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #1b1a18;
+    --ink: #ebe6dc;
+    --muted: #a29c90;
+    --line: #3a3732;
+    --soft: #24221f;
+    --red: #d46a62;
+    --blue: #7f97ff;
+    --cli: #7f97ff;
+    --desktop: #9aa9e0;
+    --muted-strong: #c6c0b4;
+    --overlay: #000000a6;
+    --line-strong: #5d5951;
+    --red-strong: #e27e76;
+    --paper-glass: #1b1a18cc;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #1b1a18;
+  --ink: #ebe6dc;
+  --muted: #a29c90;
+  --line: #3a3732;
+  --soft: #24221f;
+  --red: #d46a62;
+  --blue: #7f97ff;
+  --cli: #7f97ff;
+  --desktop: #9aa9e0;
+  --muted-strong: #c6c0b4;
+  --overlay: #000000a6;
+  --line-strong: #5d5951;
+  --red-strong: #e27e76;
+  --paper-glass: #1b1a18cc;
+}
