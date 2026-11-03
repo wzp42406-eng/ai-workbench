@@ -46,3 +46,6 @@ python3 -m unittest discover tools
 - 标题用 Noto Serif SC，正文用 Inter / Noto Sans SC；卡片 10px 圆角、细线、轻阴影，正文上限约 72ch。
 - 桌面窄侧栏可收起，手机为底部五标签；玩法列表按推荐日期分组，方法库按分类浏览并点击展开。
 - 不变更上方数据规则、数据文件结构与 localStorage 键名。
+
+## 样式缓存
+改了 tokens.css 或 site.css 后，提交前必须运行 `bash tools/css-version.sh`，给样式链接更新内容版本号（?v=哈希）。不更新的话，浏览器会继续用缓存里的旧样式，新组件会显示错乱（2026-11-03 折线图因此显示成黑块）。
