@@ -49,3 +49,7 @@ python3 -m unittest discover tools
 
 ## 样式缓存
 改了 tokens.css 或 site.css 后，提交前必须运行 `bash tools/css-version.sh`，给样式链接更新内容版本号（?v=哈希）。不更新的话，浏览器会继续用缓存里的旧样式，新组件会显示错乱（2026-11-03 折线图因此显示成黑块）。
+
+## 开发与发布分开（2026-11-03）
+- `~/AI-Projects/workbench/ai-workbench` 是**生产目录**，只给定时任务用（简报、精选、用量、方法库会先 git pull 再提交）。**不要在这里改页面**：改到一半留下未提交改动，会让所有定时任务因“请提交或储藏修改”失败（11-03 简报、精选因此停更）。
+- 改页面、改样式一律在 `~/AI-Projects/workbench/ai-workbench-dev`（开发副本）里做，改完运行 `bash tools/css-version.sh`、提交、推送；生产目录下次运行时自动拉到。
