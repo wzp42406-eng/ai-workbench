@@ -1,21 +1,21 @@
 {
- "updated_at": "2026-11-03T17:48:49+08:00",
+ "updated_at": "2026-11-03T20:37:09+08:00",
  "note": "Codex 额度与账户累计 token 来自本机 app-server 只读 API；CLI 时长与当前周期 token 来自会话记录。会话 token 不含 cache_read_tokens，缓存读取另列。Claude、ChatGPT、Kimi 桌面对话无 token 记录",
  "quota": {
   "claude": {
    "five_hour": {
-    "used_percent": 61.0,
-    "remaining_percent": 39.0,
-    "resets_at": "2026-11-03T10:40:00.000Z",
-    "observed_at": "2026-11-03T15:59:17+08:00",
+    "used_percent": 17.0,
+    "remaining_percent": 83.0,
+    "resets_at": "2026-11-03T15:40:00.000Z",
+    "observed_at": "2026-11-03T20:37:03+08:00",
     "reset_since": false,
     "source": "local_report"
    },
    "seven_day": {
-    "used_percent": 73.0,
-    "remaining_percent": 27.0,
+    "used_percent": 78.0,
+    "remaining_percent": 22.0,
     "resets_at": "2026-11-03T19:00:00.000Z",
-    "observed_at": "2026-11-03T15:59:17+08:00",
+    "observed_at": "2026-11-03T20:37:03+08:00",
     "reset_since": false,
     "source": "local_report"
    }
@@ -302,28 +302,28 @@
     "tokens": 0
    },
    "claude_code": {
-    "minutes": 168.5,
-    "tokens": 1751644,
-    "cache_read_tokens": 144392091
+    "minutes": 207.4,
+    "tokens": 2670817,
+    "cache_read_tokens": 181308957
    },
    "codex": {
-    "minutes": 0.0,
-    "tokens": 0,
-    "cache_read_tokens": 0
+    "minutes": 1.4,
+    "tokens": 87508,
+    "cache_read_tokens": 755328
    },
    "kimi": {
-    "minutes": 0.0,
-    "tokens": 0,
-    "cache_read_tokens": 0,
-    "input_tokens": 0,
-    "output_tokens": 0
+    "minutes": 0.3,
+    "tokens": 1641,
+    "cache_read_tokens": 17920,
+    "input_tokens": 930,
+    "output_tokens": 711
    },
    "claude_desktop": {
     "minutes": 5.0,
     "tokens": null
    },
    "chatgpt_desktop": {
-    "minutes": 3.0,
+    "minutes": 11.0,
     "tokens": null
    },
    "kimi_desktop": {
@@ -345,18 +345,18 @@
     "tokens": 0
    },
    "cli_total": {
-    "minutes": 168.5,
-    "tokens": 1751644,
-    "cache_read_tokens": 144392091
+    "minutes": 209.1,
+    "tokens": 2759966,
+    "cache_read_tokens": 182082205
    },
    "desktop_total": {
-    "minutes": 8.0,
+    "minutes": 16.1,
     "tokens": 7409,
     "cache_read_tokens": 428011
    },
    "total": {
-    "minutes": 176.6,
-    "tokens": 1759053
+    "minutes": 225.1,
+    "tokens": 2767375
    },
    "from": "2026-11-03"
   },
@@ -370,28 +370,28 @@
     "tokens": 0
    },
    "claude_code": {
-    "minutes": 347.3,
-    "tokens": 2430308,
-    "cache_read_tokens": 208170934
+    "minutes": 386.2,
+    "tokens": 3349481,
+    "cache_read_tokens": 245087800
    },
    "codex": {
-    "minutes": 65.2,
-    "tokens": 670034,
-    "cache_read_tokens": 29030912
+    "minutes": 66.6,
+    "tokens": 757542,
+    "cache_read_tokens": 29786240
    },
    "kimi": {
-    "minutes": 0.0,
-    "tokens": 0,
-    "cache_read_tokens": 0,
-    "input_tokens": 0,
-    "output_tokens": 0
+    "minutes": 0.3,
+    "tokens": 1641,
+    "cache_read_tokens": 17920,
+    "input_tokens": 930,
+    "output_tokens": 711
    },
    "claude_desktop": {
     "minutes": 13.0,
     "tokens": null
    },
    "chatgpt_desktop": {
-    "minutes": 5.0,
+    "minutes": 13.1,
     "tokens": null
    },
    "kimi_desktop": {
@@ -413,18 +413,18 @@
     "tokens": 0
    },
    "cli_total": {
-    "minutes": 412.5,
-    "tokens": 3100342,
-    "cache_read_tokens": 237201846
+    "minutes": 453.1,
+    "tokens": 4108664,
+    "cache_read_tokens": 274891960
    },
    "desktop_total": {
-    "minutes": 18.1,
+    "minutes": 26.1,
     "tokens": 46520,
     "cache_read_tokens": 630505
    },
    "total": {
-    "minutes": 430.6,
-    "tokens": 3146862
+    "minutes": 479.2,
+    "tokens": 4155184
    },
    "from": "2026-11-02"
   },
@@ -438,28 +438,28 @@
     "tokens": 0
    },
    "claude_code": {
-    "minutes": 356.9,
-    "tokens": 2430308,
-    "cache_read_tokens": 208170934
+    "minutes": 395.8,
+    "tokens": 3349481,
+    "cache_read_tokens": 245087800
    },
    "codex": {
-    "minutes": 165.5,
-    "tokens": 834366,
-    "cache_read_tokens": 33233280
+    "minutes": 166.9,
+    "tokens": 921874,
+    "cache_read_tokens": 33988608
    },
    "kimi": {
-    "minutes": 0.0,
-    "tokens": 0,
-    "cache_read_tokens": 0,
-    "input_tokens": 0,
-    "output_tokens": 0
+    "minutes": 0.3,
+    "tokens": 1641,
+    "cache_read_tokens": 17920,
+    "input_tokens": 930,
+    "output_tokens": 711
    },
    "claude_desktop": {
     "minutes": 13.0,
     "tokens": null
    },
    "chatgpt_desktop": {
-    "minutes": 5.0,
+    "minutes": 13.1,
     "tokens": null
    },
    "kimi_desktop": {
@@ -481,18 +481,18 @@
     "tokens": 0
    },
    "cli_total": {
-    "minutes": 522.4,
-    "tokens": 3264674,
-    "cache_read_tokens": 241404214
+    "minutes": 563.0,
+    "tokens": 4272996,
+    "cache_read_tokens": 279094328
    },
    "desktop_total": {
-    "minutes": 18.1,
+    "minutes": 26.1,
     "tokens": 177183,
     "cache_read_tokens": 4214837
    },
    "total": {
-    "minutes": 540.5,
-    "tokens": 3441857
+    "minutes": 589.0,
+    "tokens": 4450179
    },
    "from": "2026-11-01"
   },
@@ -506,28 +506,28 @@
     "tokens": 0
    },
    "claude_code": {
-    "minutes": 1336.3,
-    "tokens": 7828640,
-    "cache_read_tokens": 599178474
+    "minutes": 1375.2,
+    "tokens": 8747813,
+    "cache_read_tokens": 636095340
    },
    "codex": {
-    "minutes": 454.1,
-    "tokens": 5003141,
-    "cache_read_tokens": 109552896
+    "minutes": 455.6,
+    "tokens": 5090649,
+    "cache_read_tokens": 110308224
    },
    "kimi": {
-    "minutes": 2.9,
-    "tokens": 96212,
-    "cache_read_tokens": 148326,
-    "input_tokens": 92704,
-    "output_tokens": 3508
+    "minutes": 3.2,
+    "tokens": 97853,
+    "cache_read_tokens": 166246,
+    "input_tokens": 93634,
+    "output_tokens": 4219
    },
    "claude_desktop": {
     "minutes": 764.2,
     "tokens": null
    },
    "chatgpt_desktop": {
-    "minutes": 751.2,
+    "minutes": 759.2,
     "tokens": null
    },
    "kimi_desktop": {
@@ -549,18 +549,18 @@
     "tokens": 0
    },
    "cli_total": {
-    "minutes": 1793.3,
-    "tokens": 12927993,
-    "cache_read_tokens": 708879696
+    "minutes": 1834.0,
+    "tokens": 13936315,
+    "cache_read_tokens": 746569810
    },
    "desktop_total": {
-    "minutes": 2301.1,
+    "minutes": 2309.1,
     "tokens": 11787421,
     "cache_read_tokens": 448341604
    },
    "total": {
-    "minutes": 4099.2,
-    "tokens": 24715414
+    "minutes": 4147.9,
+    "tokens": 25723736
    },
    "from": "2026-01-01"
   },
@@ -574,28 +574,28 @@
     "tokens": 0
    },
    "claude_code": {
-    "minutes": 1336.3,
-    "tokens": 7828640,
-    "cache_read_tokens": 599178474
+    "minutes": 1375.2,
+    "tokens": 8747813,
+    "cache_read_tokens": 636095340
    },
    "codex": {
-    "minutes": 454.1,
-    "tokens": 5003141,
-    "cache_read_tokens": 109552896
+    "minutes": 455.6,
+    "tokens": 5090649,
+    "cache_read_tokens": 110308224
    },
    "kimi": {
-    "minutes": 2.9,
-    "tokens": 96212,
-    "cache_read_tokens": 148326,
-    "input_tokens": 92704,
-    "output_tokens": 3508
+    "minutes": 3.2,
+    "tokens": 97853,
+    "cache_read_tokens": 166246,
+    "input_tokens": 93634,
+    "output_tokens": 4219
    },
    "claude_desktop": {
     "minutes": 764.2,
     "tokens": null
    },
    "chatgpt_desktop": {
-    "minutes": 751.2,
+    "minutes": 759.2,
     "tokens": null
    },
    "kimi_desktop": {
@@ -617,18 +617,18 @@
     "tokens": 0
    },
    "cli_total": {
-    "minutes": 1793.3,
-    "tokens": 12927993,
-    "cache_read_tokens": 708879696
+    "minutes": 1834.0,
+    "tokens": 13936315,
+    "cache_read_tokens": 746569810
    },
    "desktop_total": {
-    "minutes": 2301.1,
+    "minutes": 2309.1,
     "tokens": 11787421,
     "cache_read_tokens": 448341604
    },
    "total": {
-    "minutes": 4099.2,
-    "tokens": 24715414
+    "minutes": 4147.9,
+    "tokens": 25723736
    },
    "from": null
   }
@@ -2622,7 +2622,7 @@
     "cache_read_tokens": 220998362
    },
    "codex": {
-    "minutes": 20.2,
+    "minutes": 20.4,
     "tokens": 677672,
     "cache_read_tokens": 9387648
    },
@@ -2660,7 +2660,7 @@
     "tokens": 0
    },
    "cli_total": {
-    "minutes": 334.9,
+    "minutes": 335.1,
     "tokens": 2453188,
     "cache_read_tokens": 230386010
    },
@@ -2670,7 +2670,7 @@
     "cache_read_tokens": 1216512
    },
    "total": {
-    "minutes": 351.0,
+    "minutes": 351.2,
     "tokens": 2599389
    }
   },
@@ -2889,28 +2889,28 @@
     "tokens": 0
    },
    "claude_code": {
-    "minutes": 168.5,
-    "tokens": 1751644,
-    "cache_read_tokens": 144392091
+    "minutes": 207.4,
+    "tokens": 2670817,
+    "cache_read_tokens": 181308957
    },
    "codex": {
-    "minutes": 0.0,
-    "tokens": 0,
-    "cache_read_tokens": 0
+    "minutes": 1.4,
+    "tokens": 87508,
+    "cache_read_tokens": 755328
    },
    "kimi": {
-    "minutes": 0.0,
-    "tokens": 0,
-    "cache_read_tokens": 0,
-    "input_tokens": 0,
-    "output_tokens": 0
+    "minutes": 0.3,
+    "tokens": 1641,
+    "cache_read_tokens": 17920,
+    "input_tokens": 930,
+    "output_tokens": 711
    },
    "claude_desktop": {
     "minutes": 5.0,
     "tokens": null
    },
    "chatgpt_desktop": {
-    "minutes": 3.0,
+    "minutes": 11.0,
     "tokens": null
    },
    "kimi_desktop": {
@@ -2932,18 +2932,18 @@
     "tokens": 0
    },
    "cli_total": {
-    "minutes": 168.5,
-    "tokens": 1751644,
-    "cache_read_tokens": 144392091
+    "minutes": 209.1,
+    "tokens": 2759966,
+    "cache_read_tokens": 182082205
    },
    "desktop_total": {
-    "minutes": 8.0,
+    "minutes": 16.1,
     "tokens": 7409,
     "cache_read_tokens": 428011
    },
    "total": {
-    "minutes": 176.6,
-    "tokens": 1759053
+    "minutes": 225.1,
+    "tokens": 2767375
    }
   }
  ]
