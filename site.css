@@ -113,7 +113,7 @@ html{overflow-x:clip}body{overflow-wrap:anywhere}.nav-scroll{gap:var(--space-40)
 .trend-axis span{justify-self:center;white-space:nowrap}
 .trend-axis span:first-child{justify-self:start}
 .trend-axis span:last-child{justify-self:end}
-.toc-search{display:flex;align-items:center;gap:var(--space-8);width:100%;margin-top:var(--space-24);padding:var(--space-12) 0;border:0;border-top:1px solid var(--line);background:none;color:var(--muted);font:600 var(--fs-3) var(--sans);letter-spacing:.08em;text-align:left;cursor:pointer}
+.toc-search{display:flex;align-items:center;gap:var(--space-8);width:100%;margin:0;padding:var(--space-12) 0;border:0;border-bottom:1px solid var(--line);background:none;color:var(--muted);font:var(--fs-3) var(--sans);text-align:left;cursor:pointer}
 .toc-search:hover{color:var(--red)}
 .toc-search kbd{font:var(--fs-1) var(--mono);border:1px solid var(--line);padding:var(--space-2) var(--space-4);color:var(--muted)}
 .mobile-toc .toc-search{flex:none;width:auto;margin:0 0 0 auto;border:0;padding:var(--space-12) 0;font-size:var(--fs-2)}
