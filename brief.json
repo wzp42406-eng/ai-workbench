@@ -1,30 +1,30 @@
 {
  "date": "2026-11-03",
- "generated_at": "2026-11-03T01:06:35+00:00",
+ "generated_at": "2026-11-03T13:39:30+00:00",
  "items": [
   {
-   "title": "Claude 消息线程减少长会话等待",
-   "summary": "11 月 2 日，Anthropic 将消息线程功能开放公测，后续请求只需发送新增消息。官方称，Claude Code 中 50 万至 100 万 token 请求的首字延迟中位数降低约 35%，token 用量不变。",
-   "why": "今天可在文档分析或多轮客户研究脚本中试加 thread 参数，对比响应等待时间；线程闲置 5 分钟会过期，需保留完整历史以便重建。",
+   "title": "GetMCP 支持跨客户端迁移配置",
+   "summary": "11 月 1 日，GetMCP 发布 v1.8.0，支持导入 Claude、Cursor、Codex 等客户端的 MCP 配置并转换格式。新增项目网关，可将最多 50 个服务器的工具合并到一个入口。",
+   "why": "今天可拿一份已有 MCP 配置测试导入预览，再转换为另一客户端格式，减少重复配置；转换时密钥会被替换为占位符，需要另行填写。",
    "tag": "新工具",
-   "source": "Anthropic 官方博客",
-   "url": "https://claude.com/resources/articles/message-threads"
+   "source": "GetMCP 官方发布说明",
+   "url": "https://getmcp.com/changelog/"
   },
   {
-   "title": "Gemini 2.5 公布弃用与迁移安排",
-   "summary": "11 月 2 日，Google 宣布弃用 Gemini 2.5 Pro 和 Flash；自 12 月 1 日起，API 请求将分别自动转向 3.8 Flash 和 3.5 Flash-Lite，按目标模型费率计费。迁移涉及函数调用、思考参数等不兼容变化。",
-   "why": "今天让 Claude Code 或 Codex 搜索工作流中的 gemini-2.5 配置，再用客户摘要、信息提取等固定样本测试替代模型，检查工具调用与输出格式。",
-   "tag": "行业动态",
-   "source": "Google Gemini API 官方发布说明",
-   "url": "https://aistudio.google.com/docs/changelog#11-02-2026"
-  },
-  {
-   "title": "给 AI 批处理加上限流重试",
-   "summary": "10 月 30 日，n8n 发布工作流限流指南：遇到 429 优先遵循 Retry-After，否则采用指数退避与随机延迟，并设置重试上限。文章给出分批请求、等待节点及失败告警的实现路径。",
-   "why": "今天可给批量客户研究或会议纪要整理流程加上“分批处理→请求→等待”，将持续失败转入告警；涉及 CRM 写入时，先检查幂等支持，避免重试造成重复记录。",
+   "title": "把销售通话与商机数据一起问",
+   "summary": "Databricks 11 月 2 日宣布，Genie Agent 分析 Unity Catalog 卷内文件的功能进入公开预览，支持 PDF、演示文稿和图片，回答可引用具体来源页。",
+   "why": "已有 Databricks 环境可申请启用，将销售通话记录所在卷加入 Agent 的 Sources，开启 Agent mode，试问“后期商机为何停滞，通话里最常见的异议是什么”，再核对引用。",
    "tag": "玩法",
-   "source": "n8n 官方博客",
-   "url": "https://blog.n8n.io/throttling-vs-rate-limiting/"
+   "source": "Databricks 官方发布说明与操作文档",
+   "url": "https://docs.databricks.com/gcp/en/ai-bi/release-notes/2026"
+  },
+  {
+   "title": "Meet 实时媒体接口将关闭",
+   "summary": "Google 10 月 28 日宣布结束 Meet Media API 开发者预览，并于 2027 年 1 月 15 日永久关闭端点。官方建议智能会议、行动项提取和会后摘要工作流迁移至 Meet REST API。",
+   "why": "今天检查会议 AI 工具或自建流程是否依赖 Meet Media API；若使用该接口，让 Claude Code 或 Codex 先梳理调用位置，再评估 REST API 能否满足现有需求。",
+   "tag": "行业动态",
+   "source": "Google Workspace 官方发布说明",
+   "url": "https://developers.google.com/workspace/release-notes#october_28_2026"
   }
  ]
 }
