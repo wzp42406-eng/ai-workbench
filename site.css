@@ -74,3 +74,23 @@ html{overflow-x:clip}body{overflow-wrap:anywhere}.nav-scroll{gap:var(--space-40)
 .summary-desc{font-size:var(--fs-2)!important;min-height:0!important}
 .summary-foot{font-size:var(--fs-1)!important}
 }
+
+/* 单页 AI 首页 */
+.utility{display:flex}
+.view-nav{justify-content:flex-end}
+.ai-section{scroll-margin-top:var(--space-64)}
+.ai-section .ai-panel:first-child{border-top:0}
+#ai-picks .space-row:first-of-type{border-top:0}
+.account-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.account-grid>div{min-width:0;overflow-wrap:anywhere}
+.account-grid h3{margin:0 0 var(--space-12)}
+.account-grid .ai-label{display:block;margin-top:var(--space-8)}
+.account-grid strong{overflow-wrap:anywhere}
+@media(max-width:560px){
+  .view-nav{display:flex;justify-content:flex-end}
+  .account-grid{gap:var(--space-12)}
+  .account-grid strong{font-size:var(--fs-7)}
+  .mobile-toc a{white-space:normal;text-align:center;min-width:0}
+  .summary-value{overflow-wrap:anywhere}
+}
+#today-view,.story,.space-row,.evolution-row,.ai-panel{min-width:0;overflow-wrap:anywhere}
