@@ -1,30 +1,30 @@
 {
- "date": "2026-11-03",
- "generated_at": "2026-11-03T13:39:30+00:00",
+ "date": "2026-11-04",
+ "generated_at": "2026-11-03T23:20:13+00:00",
  "items": [
   {
-   "title": "GetMCP 支持跨客户端迁移配置",
-   "summary": "11 月 1 日，GetMCP 发布 v1.8.0，支持导入 Claude、Cursor、Codex 等客户端的 MCP 配置并转换格式。新增项目网关，可将最多 50 个服务器的工具合并到一个入口。",
-   "why": "今天可拿一份已有 MCP 配置测试导入预览，再转换为另一客户端格式，减少重复配置；转换时密钥会被替换为占位符，需要另行填写。",
+   "title": "LongCat 2.5 上线，兼容现有编码工具",
+   "summary": "11 月 2 日，LongCat API 平台上线 LongCat-2.5，结合原生视觉理解与智能体编码能力。官方列明兼容 Claude Code、Codex 和 Hermes 等工具。",
+   "why": "今天可拿一张业务页面截图，测试它能否生成可演示的交互原型；用同一任务对比现用模型，检查布局还原和修改效果。",
+   "tag": "新模型",
+   "source": "LongCat 官方更新日志",
+   "url": "https://longcat.chat/platform/docs/ChangeLog.html"
+  },
+  {
+   "title": "Claude Code 增加定时任务连接器提醒",
+   "summary": "11 月 3 日发布的 Claude Code v2.1.317，会在新建云端定时任务附带未要求的连接器时提醒并说明移除方法。此次还修复了部分桌面会话中，本地及项目 MCP 服务器首轮后断连的问题。",
+   "why": "升级后，可用每日情报汇总任务检查连接器是否符合预期，并确认创建结果包含下次运行时间和任务链接；使用桌面端 MCP 的，也可测试连续两轮调用。",
    "tag": "新工具",
-   "source": "GetMCP 官方发布说明",
-   "url": "https://getmcp.com/changelog/"
+   "source": "Anthropic GitHub 发布说明",
+   "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.317"
   },
   {
-   "title": "把销售通话与商机数据一起问",
-   "summary": "Databricks 11 月 2 日宣布，Genie Agent 分析 Unity Catalog 卷内文件的功能进入公开预览，支持 PDF、演示文稿和图片，回答可引用具体来源页。",
-   "why": "已有 Databricks 环境可申请启用，将销售通话记录所在卷加入 Agent 的 Sources，开启 Agent mode，试问“后期商机为何停滞，通话里最常见的异议是什么”，再核对引用。",
+   "title": "Qwen Code 支持改卡片参数后继续追问",
+   "summary": "11 月 1 日发布的 Qwen Code v0.26.5 默认启用 Generated UI，交互卡片的当前参数可随下一条提问传给模型。该功能适用于支持卡片渲染的 Web Shell，终端和无界面会话不渲染卡片。",
+   "why": "今天可在本地 Web Shell 请求制作销售 ROI 测算卡，调整人数、节省工时和费用后，追问“按当前参数多久回本”，检查回答是否采用修改后的数值。",
    "tag": "玩法",
-   "source": "Databricks 官方发布说明与操作文档",
-   "url": "https://docs.databricks.com/gcp/en/ai-bi/release-notes/2026"
-  },
-  {
-   "title": "Meet 实时媒体接口将关闭",
-   "summary": "Google 10 月 28 日宣布结束 Meet Media API 开发者预览，并于 2027 年 1 月 15 日永久关闭端点。官方建议智能会议、行动项提取和会后摘要工作流迁移至 Meet REST API。",
-   "why": "今天检查会议 AI 工具或自建流程是否依赖 Meet Media API；若使用该接口，让 Claude Code 或 Codex 先梳理调用位置，再评估 REST API 能否满足现有需求。",
-   "tag": "行业动态",
-   "source": "Google Workspace 官方发布说明",
-   "url": "https://developers.google.com/workspace/release-notes#october_28_2026"
+   "source": "QwenLM GitHub 发布说明",
+   "url": "https://github.com/QwenLM/qwen-code/releases/tag/v0.26.5"
   }
  ]
 }
