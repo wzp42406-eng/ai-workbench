@@ -17,6 +17,11 @@
   --line-strong: #6B6862;
   --red-strong: #B43838;
   --paper-glass: #f7f5efb8;
+  /* 图表（2026-11-03，dataviz 校验通过：浅色底 #f7f5ef） */
+  --chart-terminal: #5F8DCB;
+  --chart-desktop: #DB7F57;
+  --chart-web: #4FAA86;
+  --chart-line: var(--red);
   /* 字体族 */
   --serif: 'Noto Serif SC',Georgia,serif;
   --sans: Inter,'Noto Sans SC',system-ui,sans-serif;
@@ -72,6 +77,9 @@
 /* 暗色：只重定义颜色 token */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
+    --chart-terminal: #5F8DCB;
+    --chart-desktop: #D27650;
+    --chart-web: #46A07D;
     --paper: #1b1a18;
     --ink: #ebe6dc;
     --muted: #a29c90;
@@ -89,6 +97,9 @@
   }
 }
 :root[data-theme="dark"] {
+  --chart-terminal: #5F8DCB;
+  --chart-desktop: #D27650;
+  --chart-web: #46A07D;
   --paper: #1b1a18;
   --ink: #ebe6dc;
   --muted: #a29c90;
