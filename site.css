@@ -94,3 +94,7 @@ html{overflow-x:clip}body{overflow-wrap:anywhere}.nav-scroll{gap:var(--space-40)
   .summary-value{overflow-wrap:anywhere}
 }
 #today-view,.story,.space-row,.evolution-row,.ai-panel{min-width:0;overflow-wrap:anywhere}
+
+/* 三件事标题是链接时保持正文颜色 */
+.story-head h3 a{color:inherit;text-decoration:none}
+.story-head h3 a:hover{text-decoration:underline;text-decoration-color:var(--red);text-underline-offset:var(--space-4)}
