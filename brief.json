@@ -1,30 +1,30 @@
 {
- "date": "2026-11-04",
- "generated_at": "2026-11-03T23:20:13+00:00",
+ "date": "2026-11-05",
+ "generated_at": "2026-11-04T23:18:54+00:00",
  "items": [
   {
-   "title": "LongCat 2.5 上线，兼容现有编码工具",
-   "summary": "11 月 2 日，LongCat API 平台上线 LongCat-2.5，结合原生视觉理解与智能体编码能力。官方列明兼容 Claude Code、Codex 和 Hermes 等工具。",
-   "why": "今天可拿一张业务页面截图，测试它能否生成可演示的交互原型；用同一任务对比现用模型，检查布局还原和修改效果。",
+   "title": "Hy4 接入网关，支持看图与电脑操作",
+   "summary": "Vercel 11 月 3 日宣布上线腾讯 Hy4，支持图像输入、工具调用、结构化输出及命令行和图形界面操作，上下文窗口为 100 万 token。AI Gateway 提供五折优惠至 2026 年 12 月 31 日。",
+   "why": "今天可用模型名 tencent/hy4，拿一份公开产品资料和图表，测试“提取关键指标→生成客户拜访提纲”，对比现有模型的准确性与调用成本。",
    "tag": "新模型",
-   "source": "LongCat 官方更新日志",
-   "url": "https://longcat.chat/platform/docs/ChangeLog.html"
+   "source": "Vercel 官方更新日志",
+   "url": "https://vercel.com/changelog/tencent-hy4-now-available-on-ai-gateway"
   },
   {
-   "title": "Claude Code 增加定时任务连接器提醒",
-   "summary": "11 月 3 日发布的 Claude Code v2.1.317，会在新建云端定时任务附带未要求的连接器时提醒并说明移除方法。此次还修复了部分桌面会话中，本地及项目 MCP 服务器首轮后断连的问题。",
-   "why": "升级后，可用每日情报汇总任务检查连接器是否符合预期，并确认创建结果包含下次运行时间和任务链接；使用桌面端 MCP 的，也可测试连续两轮调用。",
+   "title": "Dify 1.19 可追踪嵌套工作流",
+   "summary": "Dify 11 月 4 日发布 1.19.0，外部追踪可展开被调用工作流的内部步骤，查看提示词、回复及 token 用量。应用导出包也能携带所依赖的 Workflow Tools。",
+   "why": "今天可跑一次“客户资料整理→需求提取→跟进邮件”流程，在 Langfuse 中展开子流程，定位哪一步输出跑偏或消耗过多 token；迁移演示应用时，再试依赖工具一起打包。",
    "tag": "新工具",
-   "source": "Anthropic GitHub 发布说明",
-   "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.317"
+   "source": "Dify 官方 GitHub 发布说明",
+   "url": "https://github.com/langgenius/dify/releases/tag/1.19.0"
   },
   {
-   "title": "Qwen Code 支持改卡片参数后继续追问",
-   "summary": "11 月 1 日发布的 Qwen Code v0.26.5 默认启用 Generated UI，交互卡片的当前参数可随下一条提问传给模型。该功能适用于支持卡片渲染的 Web Shell，终端和无界面会话不渲染卡片。",
-   "why": "今天可在本地 Web Shell 请求制作销售 ROI 测算卡，调整人数、节省工时和费用后，追问“按当前参数多久回本”，检查回答是否采用修改后的数值。",
-   "tag": "玩法",
-   "source": "QwenLM GitHub 发布说明",
-   "url": "https://github.com/QwenLM/qwen-code/releases/tag/v0.26.5"
+   "title": "Claude 可统一授权连接业务应用",
+   "summary": "Supabase 11 月 3 日宣布支持由 Claude 签发身份断言；Claude Team、Enterprise 的自动连接测试版可让管理员统一配置，成员无需逐个确认授权。移除成员时须同时处理 Claude 与 Supabase，已签发 token 到期前仍有效。",
+   "why": "使用团队版时，可先由管理员为一个试点角色配置连接，验证成员能否直接查询演示数据。把“连接成功”和“成员移除后访问终止”一起验收，评估 AI 工作流推广到团队的实际成本。",
+   "tag": "行业动态",
+   "source": "Supabase 官方博客",
+   "url": "https://supabase.com/blog/claude-issued-enterprise-managed-auth-for-mcp"
   }
  ]
 }
