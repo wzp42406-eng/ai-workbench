@@ -1,17 +1,17 @@
 {
- "updated_at": "2026-11-04T04:40:11+08:00",
+ "updated_at": "2026-11-05T14:31:21+08:00",
  "items": [
   {
    "date": "2026-11-03",
    "kind": "rule",
-   "title": "lenovo-codex MCP 跑长任务（>30 分钟无输出）会被 Claude Code 判定超时，但联想上的 Co",
+   "title": "lenovo-codex MCP 跑长任务（>30 分钟无输出）会被 Claude Code 判定超时，但联想上的 Codex 其实还在继续干活",
    "desc": "大任务派单后，以联想仓库的实际状态为准（看 git status 和 diff），不要以 MCP 是否成功来判断；任务尽量拆小",
    "status": "已记录，待升级"
   },
   {
    "date": "2026-11-03",
    "kind": "rule",
-   "title": "从本地 file:// 用 iframe 加载线上页面截图，跨域数据加载不出来，看起来像\"页面坏了\"；无头 Chrome",
+   "title": "从本地 file:// 用 iframe 加载线上页面截图，跨域数据加载不出来，看起来像\"页面坏了\"；无头 Chrome 窗口最窄约 500 像素，390 宽截图会被截断",
    "desc": "判断渲染是否正常，用 dump-dom 检查文字；判断溢出，用同源本地服务加 390 宽 iframe 测",
    "status": "已记录，待升级"
   },
@@ -32,7 +32,7 @@
   {
    "date": "2026-11-02",
    "kind": "rule",
-   "title": "直接 ssh 进联想执行 git 时没带代理，pull 卡住；`cmd | tail` 会吞掉 cmd 的退出码，后面的",
+   "title": "直接 ssh 进联想执行 git 时没带代理，pull 卡住；`cmd | tail` 会吞掉 cmd 的退出码，后面的 && 照样往下执行",
    "desc": "联想上联网命令统一 `. ~/.config/ai-proxy/ai-proxy.sh; withproxy …`；需要判断成败的命令不要接管道",
    "status": "已记录，待升级"
   },
@@ -87,7 +87,7 @@
   {
    "date": "2026-10-31",
    "kind": "rule",
-   "title": "在 ssh lenovo 里用 pkill -f \"某命令\" 会匹配并杀掉自己这条 ssh 的 bash -c，导致 e",
+   "title": "在 ssh lenovo 里用 pkill -f \"某命令\" 会匹配并杀掉自己这条 ssh 的 bash -c，导致 exit 255",
    "desc": "远程 pkill 改用 pgrep 先看 PID，或用更精确的模式 （01 第五节，与 10-30 同条合计 2 次）",
    "status": "已写进规则"
   },
@@ -101,8 +101,8 @@
   {
    "date": "2026-10-31",
    "kind": "rule",
-   "title": "在超长会话里设 CronCreate 唤醒做大任务：每次唤醒都要处理整段历史，非常耗 Claude 额度（用户问几个问题",
-   "desc": "无人值守的大任务写成提示词文件，用独立执行器（nohup）到点运行 `claude -p ... --permission-mode auto`（新会话、背景小），额度用完每 30 分钟重试、进度写报告文件；长会话里只留一个读报告的轻量唤醒。范例：~/AI-Workspace/Claude/night-tasks/ru",
+   "title": "在超长会话里设 CronCreate 唤醒做大任务：每次唤醒都要处理整段历史，非常耗 Claude 额度（用户问几个问题就用了 5 小时额度的 17%）；而且一次性 cron 触发时如果没额度会直接失败，不会重试",
+   "desc": "无人值守的大任务写成提示词文件，用独立执行器（nohup）到点运行 `claude -p ... --permission-mode auto`（新会话、背景小），额度用完每 30 分钟重试、进度写报告文件；长会话里只留一个读报告的轻量唤醒。范例：~/AI-Workspace/Claude/night-tasks/runner.sh",
    "status": "已记录，待升级"
   },
   {
@@ -126,21 +126,21 @@
   {
    "date": "2026-10-30",
    "kind": "rule",
-   "title": "codex-octopus 自带的 Codex 0.131 用 ChatGPT 账号调用新模型会被拒（model_not",
+   "title": "codex-octopus 自带的 Codex 0.131 用 ChatGPT 账号调用新模型会被拒（model_not_found，改 CODEX_MODEL 也没用）",
    "desc": "用本地安装目录 + npm overrides 把 @openai/codex-sdk 固定为与本机一致的 0.166；另外 Codex 要求工作目录是受信任的 git 仓库，所以默认 CODEX_CWD 设为 ~/AI-Memory",
    "status": "已记录，待升级"
   },
   {
    "date": "2026-10-30",
    "kind": "rule",
-   "title": "用户在 Claude Code 里装 xiaolai 插件报“不在市场上”，用命令行 `claude plugin in",
+   "title": "用户在 Claude Code 里装 xiaolai 插件报“不在市场上”，用命令行 `claude plugin install <名>@xiaolai` 却能装上",
    "desc": "让用户在终端用 CLI 装，或先 `claude plugin marketplace update xiaolai`",
    "status": "已记录，待升级"
   },
   {
    "date": "2026-10-30",
    "kind": "rule",
-   "title": "无界面 Chrome 的窗口最小宽度是 500px，`--window-size=390,…` 截出来的图像是“右侧溢出",
+   "title": "无界面 Chrome 的窗口最小宽度是 500px，`--window-size=390,…` 截出来的图像是“右侧溢出”，其实页面是按 500px 排版的。我据此误判出 bug 并派单返工",
    "desc": "测手机版用 390px iframe 宿主页，或先在页面里打印 innerWidth 再下结论",
    "status": "已记录，待升级"
   },
@@ -161,28 +161,28 @@
   {
    "date": "2026-10-30",
    "kind": "rule",
-   "title": "页面类改动交给联想 Codex：写清需求文件（字段、合并规则、风格、自检方式），用 stdin 传给 `codex ex",
+   "title": "页面类改动交给联想 Codex：写清需求文件（字段、合并规则、风格、自检方式），用 stdin 传给 `codex exec -s workspace-write`，要求它不提交；Claude 逐行审查 diff，核对变量作用域和注入风险后再提交",
    "desc": "省 Claude 额度，质量可控（这次约 16 万 token，其中 13.6 万命中缓存）",
    "status": "已记录，待升级"
   },
   {
    "date": "2026-10-30",
    "kind": "rule",
-   "title": "清理时依据被 `head` 截断的列表下结论（以为某些任务没有 outputs），按“有 outputs 才清 work",
+   "title": "清理时依据被 `head` 截断的列表下结论（以为某些任务没有 outputs），按“有 outputs 才清 work/”执行，结果误移了 6 个 outputs 为空的 work/，已从废纸篓放回",
    "desc": "判断“有没有”要看完整结果并检查内容非空；批量删除前先打印将要处理的完整清单；一律移废纸篓、名字可推回（~/.Trash 终端不可列目录，需记下确切文件名）",
    "status": "已记录，待升级"
   },
   {
    "date": "2026-10-30",
    "kind": "rule",
-   "title": "Codex 0.154 前后移除了 `codex mcp-server`，原 `codex-cli` MCP 每次启动都",
+   "title": "Codex 0.154 前后移除了 `codex mcp-server`，原 `codex-cli` MCP 每次启动都连不上，`codex`/`codex-reply` 工具已不存在",
    "desc": "本机派单用 `codex exec ... < /dev/null`（`--json` 取 thread_id，`exec resume` 续接）；联想用 MCP `lenovo-codex` （指南第八节、01 第二节、军团总则第三节）",
    "status": "已写进规则"
   },
   {
    "date": "2026-10-30",
    "kind": "rule",
-   "title": "sudo 交接脚本里的子进程碰终端会被挂起（ps 显示 T）：嵌套调用另一个读 /dev/tty 的脚本，以及 apt-",
+   "title": "sudo 交接脚本里的子进程碰终端会被挂起（ps 显示 T）：嵌套调用另一个读 /dev/tty 的脚本，以及 apt-get 带进度条，各出现 1 次",
    "desc": "输入只在主脚本里 `read -rs </dev/tty`；apt 加 `</dev/null -o Dpkg::Progress-Fancy=0`。合计 2 次 （项目卡 10 规则与坑）",
    "status": "已写进规则"
   },
@@ -196,7 +196,7 @@
   {
    "date": "2026-10-30",
    "kind": "rule",
-   "title": "往 Mac `authorized_keys` 写密钥（Unauthorized Persistence）、把个人记忆推",
+   "title": "往 Mac `authorized_keys` 写密钥（Unauthorized Persistence）、把个人记忆推到别的机器（Remote Repoint）都被 auto 模式拦截",
    "desc": "不绕过；给出整行命令让用户亲自执行，说明为什么需要",
    "status": "已记录，待升级"
   },
@@ -210,7 +210,7 @@
   {
    "date": "2026-10-30",
    "kind": "rule",
-   "title": "官方删掉某个集成入口时（如 `codex mcp-server`），用仍受支持的 CLI（`codex exec --j",
+   "title": "官方删掉某个集成入口时（如 `codex mcp-server`），用仍受支持的 CLI（`codex exec --json`）加几十行标准库 MCP 包装来替代，先用 JSON-RPC 握手和真实调用测通再注册",
    "desc": "少依赖，可审计",
    "status": "已记录，待升级"
   },
@@ -224,29 +224,8 @@
   {
    "date": "2026-10-29",
    "kind": "rule",
-   "title": "远程改防火墙/网络先设 10 分钟自动回滚保险，两条路验证通过再取消；transient timer 重启前换持久 ti",
+   "title": "远程改防火墙/网络先设 10 分钟自动回滚保险，两条路验证通过再取消；transient timer 重启前换持久 timer",
    "desc": "远程加固都照此",
-   "status": "已记录，待升级"
-  },
-  {
-   "date": "2026-10-28",
-   "kind": "rule",
-   "title": "终端没有屏幕录制、辅助功能、可移除宗卷三项 macOS 权限：截不了图、点不了确认框、读不了 /Volumes/Kind",
-   "desc": "遇到就停下，告诉用户在「系统设置 → 隐私与安全性」开哪一项或请他手点，不绕过；验证不了的效果要明说没验证",
-   "status": "已记录，待升级"
-  },
-  {
-   "date": "2026-10-28",
-   "kind": "rule",
-   "title": "Calibre GUI 运行时 calibredb 拒绝写库；Calibre 9 是打包版没有源码",
-   "desc": "加书用 `open -a calibre 文件` 交给 GUI；查配置键名用 calibre-debug 反查 gprefs.defaults",
-   "status": "已记录，待升级"
-  },
-  {
-   "date": "2026-10-28",
-   "kind": "rule",
-   "title": "用户点名要下的书有版权（《小王子》英译、批判性思维教材）或只有无许可第三方副本时，不下载，改下公版/开放许可的同级替代并",
-   "desc": "下载资料先查许可",
    "status": "已记录，待升级"
   }
  ]
