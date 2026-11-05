@@ -1,30 +1,30 @@
 {
- "date": "2026-11-05",
- "generated_at": "2026-11-04T23:18:54+00:00",
+ "date": "2026-11-06",
+ "generated_at": "2026-11-05T23:18:01+00:00",
  "items": [
   {
-   "title": "Hy4 接入网关，支持看图与电脑操作",
-   "summary": "Vercel 11 月 3 日宣布上线腾讯 Hy4，支持图像输入、工具调用、结构化输出及命令行和图形界面操作，上下文窗口为 100 万 token。AI Gateway 提供五折优惠至 2026 年 12 月 31 日。",
-   "why": "今天可用模型名 tencent/hy4，拿一份公开产品资料和图表，测试“提取关键指标→生成客户拜访提纲”，对比现有模型的准确性与调用成本。",
+   "title": "Kimi K3.1 Pro 上线 Together",
+   "summary": "11 月 5 日，Together AI 上线 Kimi K3.1 Pro 无服务器推理，支持 1,048,576 token 上下文、图文输入、函数调用和结构化输出。每百万 token 输入 2 美元、输出 10 美元。",
+   "why": "今天可用同一份长客户资料测试商机摘要，要求按固定 JSON 字段输出需求、证据和待确认问题，再比较现有模型的准确性与成本。",
    "tag": "新模型",
-   "source": "Vercel 官方更新日志",
-   "url": "https://vercel.com/changelog/tencent-hy4-now-available-on-ai-gateway"
+   "source": "Together AI 官方发布说明",
+   "url": "https://docs.together.ai/docs/changelog"
   },
   {
-   "title": "Dify 1.19 可追踪嵌套工作流",
-   "summary": "Dify 11 月 4 日发布 1.19.0，外部追踪可展开被调用工作流的内部步骤，查看提示词、回复及 token 用量。应用导出包也能携带所依赖的 Workflow Tools。",
-   "why": "今天可跑一次“客户资料整理→需求提取→跟进邮件”流程，在 Langfuse 中展开子流程，定位哪一步输出跑偏或消耗过多 token；迁移演示应用时，再试依赖工具一起打包。",
+   "title": "Firecrawl 可在对话中补全销售线索",
+   "summary": "11 月 2 日，Firecrawl 发布 headless Clay，可在 ChatGPT、Claude 中运行数据补全流程。官方提供超过 2.5 亿人员、2600 万家公司数据的搜索，每月含 1000 免费积分。",
+   "why": "今天可在 Claude 连接 Firecrawl，先拿一小批目标企业测试公司资料、岗位和工作邮箱补全，再人工核对结果，评估是否接入客户研究流程。",
    "tag": "新工具",
-   "source": "Dify 官方 GitHub 发布说明",
-   "url": "https://github.com/langgenius/dify/releases/tag/1.19.0"
+   "source": "Firecrawl 官方更新",
+   "url": "https://www.firecrawl.dev/changelog/headless-clay"
   },
   {
-   "title": "Claude 可统一授权连接业务应用",
-   "summary": "Supabase 11 月 3 日宣布支持由 Claude 签发身份断言；Claude Team、Enterprise 的自动连接测试版可让管理员统一配置，成员无需逐个确认授权。移除成员时须同时处理 Claude 与 Supabase，已签发 token 到期前仍有效。",
-   "why": "使用团队版时，可先由管理员为一个试点角色配置连接，验证成员能否直接查询演示数据。把“连接成功”和“成员移除后访问终止”一起验收，评估 AI 工作流推广到团队的实际成本。",
+   "title": "Claude Console 新增 IP 白名单",
+   "summary": "11 月 5 日，Claude Console 上线组织级 IP 白名单测试版，支持 IPv4、IPv6 和 CIDR，每个组织最多 1000 条。受覆盖服务会拒绝白名单外地址的请求。",
+   "why": "使用 Claude API 搭建自动化时，可先盘点电脑、服务器和代理的公网出口，再配置白名单并验证调用；排查新增的 403 错误时，也应检查出口地址是否变化。",
    "tag": "行业动态",
-   "source": "Supabase 官方博客",
-   "url": "https://supabase.com/blog/claude-issued-enterprise-managed-auth-for-mcp"
+   "source": "Anthropic 官方发布说明",
+   "url": "https://platform.claude.com/docs/en/release-notes/overview"
   }
  ]
 }
