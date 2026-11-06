@@ -1,6 +1,47 @@
 {
- "updated_at": "2026-11-05T14:53:44+08:00",
+ "updated_at": "2026-11-06T13:54:45+08:00",
  "items": [
+  {
+   "date": "2026-11-06",
+   "kind": "skill",
+   "title": "★ humanizer",
+   "desc": "识别并改写常见的 AI 腔表达，同时保持原意，不补造事实。 推荐理由：在候选中，它直接对应用户高频的文档与写作任务，也能用于销售文案；规则按具体表达模式展开，适用范围比仅针对单一项目的展示稿技能广。 问题：SKILL.md：内容在末尾“but it both”处截断，无法检查剩余内容是否存在隐藏指令或危险操作，暂不能确认完整技能安全。；scripts/validate-package.py：未提供源码，但 .github/workflows/。改法：补齐 SKILL.md 全文及 scripts/validate-package.py 源码后重新审查。在完成审查前，不执行 AGENTS.md 所列检查命令。若验证脚本实际上不存在，应移除相关执行引",
+   "url": "https://github.com/blader/humanizer",
+   "status": "思路好但有安全问题 · 要不要改成安全版？",
+   "action": "值得改就跟 Claude 说“改造 skill humanizer”"
+  },
+  {
+   "date": "2026-11-04",
+   "kind": "rule",
+   "type": "坑",
+   "title": "11-02、11-03 两晚的每日定时任务分别因休眠、连续 Connection error 失败，什么都没写",
+   "desc": "以 `更新记录.md` 最后一条为起点补扫；连续失败时，向用户提出改用独立执行器（待用户定）",
+   "status": "已记录，待升级"
+  },
+  {
+   "date": "2026-11-04",
+   "kind": "rule",
+   "type": "坑",
+   "title": "launchd 后台进程不继承终端代理：agent-autoloop 拉起的 Claude 报 403，巡检直连 GitHub Pages 时断时续导致误报",
+   "desc": "后台服务显式配代理（secrets.env、`node --use-env-proxy`）（与 11-02 联想 ssh 无代理同类，第 2 次，01 第五节）",
+   "status": "已写进规则"
+  },
+  {
+   "date": "2026-11-04",
+   "kind": "rule",
+   "type": "做法",
+   "title": "无人值守巡检用免费脚本加卡片，不挂模型（Codex 排查 agent 4 轮约 114 万 token，结论只是让用户看网页）",
+   "desc": "新巡检先写检查脚本",
+   "status": "已记录，待升级"
+  },
+  {
+   "date": "2026-11-04",
+   "kind": "rule",
+   "type": "坑",
+   "title": "用户在聊天里直接贴了钉钉 webhook access_token",
+   "desc": "只写进权限 600 的配置，不进日志、记忆、Git；撤通道时收回密钥",
+   "status": "已记录，待升级"
+  },
   {
    "date": "2026-11-03",
    "kind": "rule",
@@ -38,16 +79,16 @@
    "kind": "rule",
    "type": "坑",
    "title": "直接 ssh 进联想执行 git 时没带代理，pull 卡住；`cmd | tail` 会吞掉 cmd 的退出码，后面的 && 照样往下执行",
-   "desc": "联想上联网命令统一 `. ~/.config/ai-proxy/ai-proxy.sh; withproxy …`；需要判断成败的命令不要接管道",
-   "status": "已记录，待升级"
+   "desc": "联想上联网命令统一 `. ~/.config/ai-proxy/ai-proxy.sh; withproxy …`；需要判断成败的命令不要接管道 （2026-11-04，01 第五节）",
+   "status": "已写进规则"
   },
   {
    "date": "2026-11-02",
    "kind": "rule",
    "type": "做法",
    "title": "视觉样张三个变体都从同一套配色出发，用户看不出差别",
-   "desc": "样张的变体要拉开本质差异（版式、密度、配色体系各不同），否则直接拿现有版本的截图问哪里要改",
-   "status": "已记录，待升级"
+   "desc": "样张的变体要拉开本质差异（版式、密度、配色体系各不同），否则直接拿现有版本的截图问哪里要改 （2026-11-04，01 第五节）",
+   "status": "已写进规则"
   },
   {
    "date": "2026-11-01",
@@ -236,22 +277,6 @@
    "type": "做法",
    "title": "官方删掉某个集成入口时（如 `codex mcp-server`），用仍受支持的 CLI（`codex exec --json`）加几十行标准库 MCP 包装来替代，先用 JSON-RPC 握手和真实调用测通再注册",
    "desc": "少依赖，可审计",
-   "status": "已记录，待升级"
-  },
-  {
-   "date": "2026-10-29",
-   "kind": "rule",
-   "type": "坑",
-   "title": "需要交互输入的远程命令在对话框回 `y` 传不到远端",
-   "desc": "交给用户在 Mac「终端」App 跑，并给出单行完整命令",
-   "status": "已记录，待升级"
-  },
-  {
-   "date": "2026-10-29",
-   "kind": "rule",
-   "type": "做法",
-   "title": "远程改防火墙/网络先设 10 分钟自动回滚保险，两条路验证通过再取消；transient timer 重启前换持久 timer",
-   "desc": "远程加固都照此",
    "status": "已记录，待升级"
   }
  ]
