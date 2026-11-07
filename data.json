@@ -1,21 +1,21 @@
 {
- "updated_at": "2026-11-07T21:05:05+08:00",
+ "updated_at": "2026-11-08T01:05:05+08:00",
  "note": "Codex 额度与账户累计 token 来自本机 app-server 只读 API；CLI 时长与当前周期 token 来自会话记录。会话 token 不含 cache_read_tokens，缓存读取另列。Claude、ChatGPT、Kimi 桌面对话无 token 记录",
  "quota": {
   "claude": {
    "five_hour": {
-    "used_percent": 0.0,
-    "remaining_percent": 100.0,
-    "resets_at": null,
-    "observed_at": "2026-11-06T23:43:26+08:00",
-    "reset_since": true,
+    "used_percent": 2.0,
+    "remaining_percent": 98.0,
+    "resets_at": "2026-11-07T20:40:00.000Z",
+    "observed_at": "2026-11-07T23:42:12+08:00",
+    "reset_since": false,
     "source": "local_report"
    },
    "seven_day": {
     "used_percent": 15.0,
     "remaining_percent": 85.0,
     "resets_at": "2026-11-10T19:00:00.000Z",
-    "observed_at": "2026-11-06T23:43:26+08:00",
+    "observed_at": "2026-11-07T23:42:12+08:00",
     "reset_since": false,
     "source": "local_report"
    }
@@ -358,7 +358,7 @@
     "minutes": 0.0,
     "tokens": 0
    },
-   "from": "2026-11-07"
+   "from": "2026-11-08"
   },
   "week": {
    "claude": {
@@ -370,7 +370,7 @@
     "tokens": 0
    },
    "claude_code": {
-    "minutes": 657.7,
+    "minutes": 657.8,
     "tokens": 6065810,
     "cache_read_tokens": 356698487
    },
@@ -400,8 +400,8 @@
    },
    "claude_desktop_code": {
     "minutes": 0.0,
-    "tokens": 437482,
-    "cache_read_tokens": 8868222
+    "tokens": 513934,
+    "cache_read_tokens": 10192606
    },
    "codex_desktop_code": {
     "minutes": 0.0,
@@ -419,12 +419,12 @@
    },
    "desktop_total": {
     "minutes": 63.3,
-    "tokens": 437482,
-    "cache_read_tokens": 8868222
+    "tokens": 513934,
+    "cache_read_tokens": 10192606
    },
    "total": {
     "minutes": 798.6,
-    "tokens": 7386837
+    "tokens": 7463289
    },
    "from": "2026-11-02"
   },
@@ -468,8 +468,8 @@
    },
    "claude_desktop_code": {
     "minutes": 0.0,
-    "tokens": 568145,
-    "cache_read_tokens": 12452554
+    "tokens": 644597,
+    "cache_read_tokens": 13776938
    },
    "codex_desktop_code": {
     "minutes": 0.0,
@@ -481,18 +481,18 @@
     "tokens": 0
    },
    "cli_total": {
-    "minutes": 845.2,
+    "minutes": 845.3,
     "tokens": 7113687,
     "cache_read_tokens": 395366263
    },
    "desktop_total": {
     "minutes": 63.3,
-    "tokens": 568145,
-    "cache_read_tokens": 12452554
+    "tokens": 644597,
+    "cache_read_tokens": 13776938
    },
    "total": {
     "minutes": 908.5,
-    "tokens": 7681832
+    "tokens": 7758284
    },
    "from": "2026-11-01"
   },
@@ -536,8 +536,8 @@
    },
    "claude_desktop_code": {
     "minutes": 139.0,
-    "tokens": 5636438,
-    "cache_read_tokens": 299438969
+    "tokens": 5712890,
+    "cache_read_tokens": 300763353
    },
    "codex_desktop_code": {
     "minutes": 646.7,
@@ -555,12 +555,12 @@
    },
    "desktop_total": {
     "minutes": 2346.3,
-    "tokens": 12178383,
-    "cache_read_tokens": 456579321
+    "tokens": 12254835,
+    "cache_read_tokens": 457903705
    },
    "total": {
     "minutes": 4467.4,
-    "tokens": 28955389
+    "tokens": 29031841
    },
    "from": "2026-01-01"
   },
@@ -604,8 +604,8 @@
    },
    "claude_desktop_code": {
     "minutes": 139.0,
-    "tokens": 5636438,
-    "cache_read_tokens": 299438969
+    "tokens": 5712890,
+    "cache_read_tokens": 300763353
    },
    "codex_desktop_code": {
     "minutes": 646.7,
@@ -623,12 +623,12 @@
    },
    "desktop_total": {
     "minutes": 2346.3,
-    "tokens": 12178383,
-    "cache_read_tokens": 456579321
+    "tokens": 12254835,
+    "cache_read_tokens": 457903705
    },
    "total": {
     "minutes": 4467.4,
-    "tokens": 28955389
+    "tokens": 29031841
    },
    "from": null
   }
@@ -3191,8 +3191,8 @@
    },
    "claude_desktop_code": {
     "minutes": 0.0,
-    "tokens": 0,
-    "cache_read_tokens": 0
+    "tokens": 76452,
+    "cache_read_tokens": 1324384
    },
    "codex_desktop_code": {
     "minutes": 0.0,
@@ -3210,12 +3210,12 @@
    },
    "desktop_total": {
     "minutes": 0.0,
-    "tokens": 0,
-    "cache_read_tokens": 0
+    "tokens": 76452,
+    "cache_read_tokens": 1324384
    },
    "total": {
     "minutes": 0.0,
-    "tokens": 0
+    "tokens": 76452
    }
   }
  ]
