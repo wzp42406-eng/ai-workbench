@@ -1,30 +1,30 @@
 {
- "date": "2026-11-06",
- "generated_at": "2026-11-05T23:18:01+00:00",
+ "date": "2026-11-11",
+ "generated_at": "2026-11-11T15:01:58+00:00",
  "items": [
   {
-   "title": "Kimi K3.1 Pro 上线 Together",
-   "summary": "11 月 5 日，Together AI 上线 Kimi K3.1 Pro 无服务器推理，支持 1,048,576 token 上下文、图文输入、函数调用和结构化输出。每百万 token 输入 2 美元、输出 10 美元。",
-   "why": "今天可用同一份长客户资料测试商机摘要，要求按固定 JSON 字段输出需求、证据和待确认问题，再比较现有模型的准确性与成本。",
+   "title": "Gemini 4 Carbon 开放使用",
+   "summary": "Google 于 2026 年 11 月 10 日开放 Gemini 4 Carbon，称其面向复杂知识工作、软件工程、科学推理及长周期智能体任务。",
+   "why": "可用它处理一个需要多步分析的销售研究或代码任务，观察它是否能持续推进并完成验证，再与常用模型对比。",
    "tag": "新模型",
-   "source": "Together AI 官方发布说明",
-   "url": "https://docs.together.ai/docs/changelog"
+   "source": "Google",
+   "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/"
   },
   {
-   "title": "Firecrawl 可在对话中补全销售线索",
-   "summary": "11 月 2 日，Firecrawl 发布 headless Clay，可在 ChatGPT、Claude 中运行数据补全流程。官方提供超过 2.5 亿人员、2600 万家公司数据的搜索，每月含 1000 免费积分。",
-   "why": "今天可在 Claude 连接 Firecrawl，先拿一小批目标企业测试公司资料、岗位和工作邮箱补全，再人工核对结果，评估是否接入客户研究流程。",
+   "title": "Claude Code 支持后台运行 MCP 任务",
+   "summary": "Claude Code 2.1.319 于 2026 年 11 月 6 日加入终端 MCP 任务支持：工具调用作为任务运行时，会立即转到后台，完成后再通知 Claude；也可用环境变量关闭后台处理。",
+   "why": "今天可在 Claude Code 中试一个耗时较长的 MCP 调用，看看能否在任务运行期间继续推进其他步骤；需要同步等待时，可查看并调整对应环境变量。",
    "tag": "新工具",
-   "source": "Firecrawl 官方更新",
-   "url": "https://www.firecrawl.dev/changelog/headless-clay"
+   "source": "Anthropic / GitHub",
+   "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.319"
   },
   {
-   "title": "Claude Console 新增 IP 白名单",
-   "summary": "11 月 5 日，Claude Console 上线组织级 IP 白名单测试版，支持 IPv4、IPv6 和 CIDR，每个组织最多 1000 条。受覆盖服务会拒绝白名单外地址的请求。",
-   "why": "使用 Claude API 搭建自动化时，可先盘点电脑、服务器和代理的公网出口，再配置白名单并验证调用；排查新增的 403 错误时，也应检查出口地址是否变化。",
+   "title": "GPT‑6 Cyber 发布并强化授权边界",
+   "summary": "OpenAI 于 2026 年 11 月 5 日发布 GPT‑6 Cyber，称其在 ExploitGym 上得分为 48.5%，高于 GPT‑5.6 Cyber 的 32.1%；官方同时介绍了分级访问和网络限制等安全措施。",
+   "why": "如果工作涉及代码审查或安全评估，可先阅读官方发布说明与系统卡，了解授权范围、适用任务和访问限制，再判断是否适合纳入流程。",
    "tag": "行业动态",
-   "source": "Anthropic 官方发布说明",
-   "url": "https://platform.claude.com/docs/en/release-notes/overview"
+   "source": "OpenAI",
+   "url": "https://openai.com/index/introducing-gpt-6-cyber/"
   }
  ]
 }
