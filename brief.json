@@ -1,30 +1,30 @@
 {
- "date": "2026-11-11",
- "generated_at": "2026-11-11T15:01:58+00:00",
+ "date": "2026-11-12",
+ "generated_at": "2026-11-11T23:19:47+00:00",
  "items": [
   {
-   "title": "Gemini 4 Carbon 开放使用",
-   "summary": "Google 于 2026 年 11 月 10 日开放 Gemini 4 Carbon，称其面向复杂知识工作、软件工程、科学推理及长周期智能体任务。",
-   "why": "可用它处理一个需要多步分析的销售研究或代码任务，观察它是否能持续推进并完成验证，再与常用模型对比。",
-   "tag": "新模型",
-   "source": "Google",
-   "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/"
-  },
-  {
-   "title": "Claude Code 支持后台运行 MCP 任务",
-   "summary": "Claude Code 2.1.319 于 2026 年 11 月 6 日加入终端 MCP 任务支持：工具调用作为任务运行时，会立即转到后台，完成后再通知 Claude；也可用环境变量关闭后台处理。",
-   "why": "今天可在 Claude Code 中试一个耗时较长的 MCP 调用，看看能否在任务运行期间继续推进其他步骤；需要同步等待时，可查看并调整对应环境变量。",
+   "title": "Claude 可加入会议并协作整理成果",
+   "summary": "Anthropic 于 11 月 10 日发布 Claude Meetings、Whiteboards 和 Sheets：Claude Meetings 可跟进视频会议、记录笔记并起草计划；Whiteboards 可整理讨论内容，Sheets 支持协作编辑表格。",
+   "why": "今天可挑一场内部复盘或客户需求讨论，试着让 Claude 汇总行动项，再把待跟进事项整理成表格；先核对会议记录与客户原话。",
    "tag": "新工具",
-   "source": "Anthropic / GitHub",
-   "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.319"
+   "source": "TechRadar",
+   "url": "https://www.techradar.com/pro/claude-can-now-join-your-weekly-meeting-to-take-notes-and-even-start-work-for-you-and-thats-not-all-with-new-spreadsheet-whiteboard-tools-and-more-helping-conquer-the-world-of-frontier-work"
   },
   {
-   "title": "GPT‑6 Cyber 发布并强化授权边界",
-   "summary": "OpenAI 于 2026 年 11 月 5 日发布 GPT‑6 Cyber，称其在 ExploitGym 上得分为 48.5%，高于 GPT‑5.6 Cyber 的 32.1%；官方同时介绍了分级访问和网络限制等安全措施。",
-   "why": "如果工作涉及代码审查或安全评估，可先阅读官方发布说明与系统卡，了解授权范围、适用任务和访问限制，再判断是否适合纳入流程。",
-   "tag": "行业动态",
-   "source": "OpenAI",
-   "url": "https://openai.com/index/introducing-gpt-6-cyber/"
+   "title": "MCP 官方服务器发布 11 月 11 日版",
+   "summary": "Model Context Protocol 官方服务器仓库发布 2026.11.11 版本，更新包含 server-everything 2.3.0、server-filesystem 2.3.0、server-memory 2.1.1，以及 fetch、git 和 time 服务器的新包。",
+   "why": "今天可检查个人工作流里使用的官方 MCP 服务器是否落后，并在隔离配置中试用新版；尤其留意 HTTP 传输默认绑定 loopback 的变化。",
+   "tag": "新工具",
+   "source": "Model Context Protocol / GitHub",
+   "url": "https://github.com/modelcontextprotocol/servers/releases"
+  },
+  {
+   "title": "Codex 发布 v0.167.1",
+   "summary": "OpenAI Codex 仓库于 11 月 10 日发布客户端 v0.167.1。该发布页提供完整变更记录链接，但页面未列出本版具体变更说明。",
+   "why": "今天可查看官方变更记录并更新常用开发环境，随后用一个熟悉的小任务确认现有项目工作流正常。",
+   "tag": "玩法",
+   "source": "OpenAI / GitHub",
+   "url": "https://github.com/openai/codex/releases/tag/rust-v0.167.1"
   }
  ]
 }
