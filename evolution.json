@@ -1,6 +1,15 @@
 {
- "updated_at": "2026-11-11T23:02:02+08:00",
+ "updated_at": "2026-11-12T04:42:06+08:00",
  "items": [
+  {
+   "date": "2026-11-12",
+   "kind": "skill",
+   "title": "★ planning-with-files",
+   "desc": "用 task_plan.md、findings.md、progress.md 持续记录多步任务计划、发现和进度，并通过生命周期钩子恢复项目内上下文。 推荐理由：这是对高频多步任务的直接补强：把计划、发现和进度持久化到文件，比只依赖对话上下文更利于跨会话接续。候选提供了明确文件约定和恢复流程，且没有网络上传路径；选择 Codex 版本更贴合用户同时使用 Codex 的习惯。 问题：SKILL.md：触发描述覆盖“5+ tool calls”的一般研究或工作，范围过宽，可能让 skill 在大量无关任务中自动启用；且要求恢复计划、运行 catchup 脚本并通过生命周期 hooks 注入项目内容，扩大了自动读取和执行面。改法：将未提供的所有可执行脚本及模板纳入审查后再决定是否安装，重点核实 hooks 实际调用链、所有读取/写入/删除路径的项目边界、session-catchup 的数据来源与输出、以及注入内容是否明确作为",
+   "url": "https://github.com/OthmanAdi/planning-with-files/tree/master/.codex/skills/planning-with-files",
+   "status": "思路好但有安全问题 · 要不要改成安全版？",
+   "action": "值得改就跟 Claude 说“改造 skill planning-with-files”"
+  },
   {
    "date": "2026-11-06",
    "kind": "skill",
@@ -40,38 +49,6 @@
    "type": "做法",
    "title": "升级第三方工具时，旧版自带 update 会拉未发布的开发分支",
    "desc": "审查过哪个 tag 就手动 checkout 哪个，记下回滚命令",
-   "status": "已记录，待升级"
-  },
-  {
-   "date": "2026-11-04",
-   "kind": "rule",
-   "type": "坑",
-   "title": "11-02、11-03 两晚的每日定时任务分别因休眠、连续 Connection error 失败，什么都没写",
-   "desc": "以 `更新记录.md` 最后一条为起点补扫；连续失败时，向用户提出改用独立执行器（待用户定）",
-   "status": "已记录，待升级"
-  },
-  {
-   "date": "2026-11-04",
-   "kind": "rule",
-   "type": "坑",
-   "title": "launchd 后台进程不继承终端代理：agent-autoloop 拉起的 Claude 报 403，巡检直连 GitHub Pages 时断时续导致误报",
-   "desc": "后台服务显式配代理（secrets.env、`node --use-env-proxy`）（与 11-02 联想 ssh 无代理同类，第 2 次，01 第五节）",
-   "status": "已写进规则"
-  },
-  {
-   "date": "2026-11-04",
-   "kind": "rule",
-   "type": "做法",
-   "title": "无人值守巡检用免费脚本加卡片，不挂模型（Codex 排查 agent 4 轮约 114 万 token，结论只是让用户看网页）",
-   "desc": "新巡检先写检查脚本",
-   "status": "已记录，待升级"
-  },
-  {
-   "date": "2026-11-04",
-   "kind": "rule",
-   "type": "坑",
-   "title": "用户在聊天里直接贴了钉钉 webhook access_token",
-   "desc": "只写进权限 600 的配置，不进日志、记忆、Git；撤通道时收回密钥",
    "status": "已记录，待升级"
   },
   {
