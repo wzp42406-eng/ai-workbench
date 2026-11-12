@@ -1,6 +1,15 @@
 {
- "updated_at": "2026-11-12T04:42:06+08:00",
+ "updated_at": "2026-11-13T04:41:29+08:00",
  "items": [
+  {
+   "date": "2026-11-13",
+   "kind": "skill",
+   "title": "★ animate",
+   "desc": "按是否需要动效、动效目的、实现方式、属性、曲线、时长和中断行为的顺序，为网页组件设计并实现动画。 推荐理由：网页/工作台是其高频任务，专门的动效流程能帮助做出有目的、可打断的过渡效果，而现有前端类技能侧重整体界面设计。内容已展示了清晰的决策顺序和职责边界。",
+   "url": "https://github.com/emilkowalski/skills/tree/main/skills/animate",
+   "status": "两轮审查通过 · 自动安装",
+   "action": ""
+  },
   {
    "date": "2026-11-12",
    "kind": "skill",
@@ -18,38 +27,6 @@
    "url": "https://github.com/blader/humanizer",
    "status": "思路好但有安全问题 · 要不要改成安全版？",
    "action": "值得改就跟 Claude 说“改造 skill humanizer”"
-  },
-  {
-   "date": "2026-11-05",
-   "kind": "rule",
-   "type": "坑",
-   "title": "Mac 合盖睡眠时短暂唤醒，定时检查全部失败，一夜 34 张误报卡片",
-   "desc": "提醒在发送层按醒着时间延迟，失败时先判断是不是本机没网",
-   "status": "已记录，待升级"
-  },
-  {
-   "date": "2026-11-05",
-   "kind": "rule",
-   "type": "坑",
-   "title": "launchd StartInterval 在睡眠时停表，午休后用量数据断 3 小时",
-   "desc": "要醒来补跑的任务用 StartCalendarInterval",
-   "status": "已记录，待升级"
-  },
-  {
-   "date": "2026-11-05",
-   "kind": "rule",
-   "type": "坑",
-   "title": "给前端的数据被生成脚本无提示硬截断（标题 60 字），看着像页面没写全",
-   "desc": "截断要加“…”，先查数据再查页面",
-   "status": "已记录，待升级"
-  },
-  {
-   "date": "2026-11-05",
-   "kind": "rule",
-   "type": "做法",
-   "title": "升级第三方工具时，旧版自带 update 会拉未发布的开发分支",
-   "desc": "审查过哪个 tag 就手动 checkout 哪个，记下回滚命令",
-   "status": "已记录，待升级"
   },
   {
    "date": "2026-11-01",
