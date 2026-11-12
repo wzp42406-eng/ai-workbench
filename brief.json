@@ -1,30 +1,30 @@
 {
- "date": "2026-11-12",
- "generated_at": "2026-11-11T23:19:47+00:00",
+ "date": "2026-11-13",
+ "generated_at": "2026-11-12T23:16:57+00:00",
  "items": [
   {
-   "title": "Claude 可加入会议并协作整理成果",
-   "summary": "Anthropic 于 11 月 10 日发布 Claude Meetings、Whiteboards 和 Sheets：Claude Meetings 可跟进视频会议、记录笔记并起草计划；Whiteboards 可整理讨论内容，Sheets 支持协作编辑表格。",
-   "why": "今天可挑一场内部复盘或客户需求讨论，试着让 Claude 汇总行动项，再把待跟进事项整理成表格；先核对会议记录与客户原话。",
-   "tag": "新工具",
-   "source": "TechRadar",
-   "url": "https://www.techradar.com/pro/claude-can-now-join-your-weekly-meeting-to-take-notes-and-even-start-work-for-you-and-thats-not-all-with-new-spreadsheet-whiteboard-tools-and-more-helping-conquer-the-world-of-frontier-work"
+   "title": "Gemini Decision 1 把分类变成一次性批处理",
+   "summary": "Google 于 11 月 11 日发布 Gemini Decisions API，由 Gemini Decision 1 支持；一次可处理最多 1,000 个判断题，覆盖文本、图像、音频、视频和 PDF，端到端延迟为 150–250 毫秒，输入价格为每百万 token 0.10 美元且不收输出 token 费用。",
+   "why": "可先拿一批历史线索做小试验：让它按预设标准给线索分层、判断是否符合 ICP 或为商机路由，并抽查置信度较低的结果，再评估是否接入工作流。",
+   "tag": "新模型",
+   "source": "Google 博客",
+   "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-decisions-api/"
   },
   {
-   "title": "MCP 官方服务器发布 11 月 11 日版",
-   "summary": "Model Context Protocol 官方服务器仓库发布 2026.11.11 版本，更新包含 server-everything 2.3.0、server-filesystem 2.3.0、server-memory 2.1.1，以及 fetch、git 和 time 服务器的新包。",
-   "why": "今天可检查个人工作流里使用的官方 MCP 服务器是否落后，并在隔离配置中试用新版；尤其留意 HTTP 传输默认绑定 loopback 的变化。",
-   "tag": "新工具",
-   "source": "Model Context Protocol / GitHub",
-   "url": "https://github.com/modelcontextprotocol/servers/releases"
+   "title": "Anthropic 使用政策更新于 11 月 12 日生效",
+   "summary": "Anthropic 更新后的 Usage Policy 于 11 月 12 日生效，新增统一的“禁止欺骗性活动或人为操纵”条款，涵盖虚假账号、隐瞒消息来源及搭建相关工具；同时调整了选举相关限制。",
+   "why": "今天可检查团队的 Claude 提示词、自动化内容和对外发布流程，确认没有要求模型伪装身份、制造虚假互动或误导受众；涉及选举与政治内容时，按新政策逐项核对。",
+   "tag": "行业动态",
+   "source": "Anthropic",
+   "url": "https://www.anthropic.com/news/2026-usage-policy-update"
   },
   {
-   "title": "Codex 发布 v0.167.1",
-   "summary": "OpenAI Codex 仓库于 11 月 10 日发布客户端 v0.167.1。该发布页提供完整变更记录链接，但页面未列出本版具体变更说明。",
-   "why": "今天可查看官方变更记录并更新常用开发环境，随后用一个熟悉的小任务确认现有项目工作流正常。",
-   "tag": "玩法",
-   "source": "OpenAI / GitHub",
-   "url": "https://github.com/openai/codex/releases/tag/rust-v0.167.1"
+   "title": "JetBrains IDE 2026.3 集成 Air 多代理工作区",
+   "summary": "JetBrains 2026.3 IDE 引入 Air，可在 IDE 内运行、跟踪和审查编码代理；官方说明支持多代理工作流，并能迁移 IDE skills、MCP 配置、ACP 代理、认证信息和聊天记录。",
+   "why": "若日常用 JetBrains IDE，可挑一个小型代码或个人自动化仓库，尝试让两个代理在隔离工作区并行处理任务，再通过 IDE diff 审查改动；也可先检查现有 skills 与 MCP 配置能否迁移。",
+   "tag": "新工具",
+   "source": "JetBrains",
+   "url": "https://www.jetbrains.com/ides/whatsnew/2026-3/"
   }
  ]
 }
