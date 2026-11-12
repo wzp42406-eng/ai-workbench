@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-12T17:05:05+08:00",
+ "updated_at": "2026-11-12T21:05:06+08:00",
  "note": "Codex 额度与账户累计 token 来自本机 app-server 只读 API；CLI 时长与当前周期 token 来自会话记录。会话 token 不含 cache_read_tokens，缓存读取另列。Claude、ChatGPT、Kimi 桌面对话无 token 记录",
  "quota": {
   "claude": {
@@ -15,7 +15,7 @@
     "used_percent": 2.0,
     "remaining_percent": 98.0,
     "resets_at": "2026-11-17T19:00:00.000Z",
-    "observed_at": "2026-11-12T09:06:18+08:00",
+    "observed_at": "2026-11-12T20:22:38+08:00",
     "reset_since": false,
     "source": "local_report"
    }
@@ -302,7 +302,7 @@
     "tokens": 0
    },
    "claude_code": {
-    "minutes": 1.5,
+    "minutes": 1.7,
     "tokens": 22255,
     "cache_read_tokens": 9074
    },
@@ -345,7 +345,7 @@
     "tokens": 0
    },
    "cli_total": {
-    "minutes": 1.5,
+    "minutes": 1.7,
     "tokens": 22255,
     "cache_read_tokens": 9074
    },
@@ -355,7 +355,7 @@
     "cache_read_tokens": 359272
    },
    "total": {
-    "minutes": 1.5,
+    "minutes": 1.7,
     "tokens": 28973
    },
    "from": "2026-11-12"
@@ -370,7 +370,7 @@
     "tokens": 0
    },
    "claude_code": {
-    "minutes": 26.3,
+    "minutes": 26.4,
     "tokens": 145008,
     "cache_read_tokens": 5545113
    },
@@ -413,7 +413,7 @@
     "tokens": 0
    },
    "cli_total": {
-    "minutes": 27.3,
+    "minutes": 27.4,
     "tokens": 179032,
     "cache_read_tokens": 5552537
    },
@@ -423,7 +423,7 @@
     "cache_read_tokens": 1651786
    },
    "total": {
-    "minutes": 44.5,
+    "minutes": 44.6,
     "tokens": 335119
    },
    "from": "2026-11-09"
@@ -438,7 +438,7 @@
     "tokens": 0
    },
    "claude_code": {
-    "minutes": 693.6,
+    "minutes": 693.8,
     "tokens": 6210818,
     "cache_read_tokens": 362243600
    },
@@ -481,7 +481,7 @@
     "tokens": 0
    },
    "cli_total": {
-    "minutes": 872.6,
+    "minutes": 872.7,
     "tokens": 7292719,
     "cache_read_tokens": 400918800
    },
@@ -491,7 +491,7 @@
     "cache_read_tokens": 16346213
    },
    "total": {
-    "minutes": 953.0,
+    "minutes": 953.1,
     "tokens": 8165327
    },
    "from": "2026-11-01"
@@ -506,7 +506,7 @@
     "tokens": 0
    },
    "claude_code": {
-    "minutes": 1673.0,
+    "minutes": 1673.2,
     "tokens": 11609150,
     "cache_read_tokens": 753251140
    },
@@ -549,7 +549,7 @@
     "tokens": 0
    },
    "cli_total": {
-    "minutes": 2143.7,
+    "minutes": 2143.8,
     "tokens": 16956038,
     "cache_read_tokens": 868394282
    },
@@ -559,7 +559,7 @@
     "cache_read_tokens": 460472980
    },
    "total": {
-    "minutes": 4511.9,
+    "minutes": 4512.0,
     "tokens": 29438884
    },
    "from": "2026-01-01"
@@ -574,7 +574,7 @@
     "tokens": 0
    },
    "claude_code": {
-    "minutes": 1673.0,
+    "minutes": 1673.2,
     "tokens": 11609150,
     "cache_read_tokens": 753251140
    },
@@ -617,7 +617,7 @@
     "tokens": 0
    },
    "cli_total": {
-    "minutes": 2143.7,
+    "minutes": 2143.8,
     "tokens": 16956038,
     "cache_read_tokens": 868394282
    },
@@ -627,7 +627,7 @@
     "cache_read_tokens": 460472980
    },
    "total": {
-    "minutes": 4511.9,
+    "minutes": 4512.0,
     "tokens": 29438884
    },
    "from": null
@@ -3501,7 +3501,7 @@
     "tokens": 0
    },
    "claude_code": {
-    "minutes": 1.5,
+    "minutes": 1.7,
     "tokens": 22255,
     "cache_read_tokens": 9074
    },
@@ -3544,7 +3544,7 @@
     "tokens": 0
    },
    "cli_total": {
-    "minutes": 1.5,
+    "minutes": 1.7,
     "tokens": 22255,
     "cache_read_tokens": 9074
    },
@@ -3554,7 +3554,7 @@
     "cache_read_tokens": 359272
    },
    "total": {
-    "minutes": 1.5,
+    "minutes": 1.7,
     "tokens": 28973
    }
   }
