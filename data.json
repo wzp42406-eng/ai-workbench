@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-13T23:05:00+08:00",
+ "updated_at": "2026-11-14T01:05:04+08:00",
  "note": "Codex 额度与账户累计 token 来自本机 app-server 只读 API；CLI 时长与当前周期 token 来自会话记录。会话 token 不含 cache_read_tokens，缓存读取另列。Claude、ChatGPT、Kimi 桌面对话无 token 记录",
  "quota": {
   "claude": {
@@ -302,7 +302,7 @@
     "tokens": 0
    },
    "claude_code": {
-    "minutes": 1.9,
+    "minutes": 0.0,
     "tokens": 0,
     "cache_read_tokens": 0
    },
@@ -323,7 +323,7 @@
     "tokens": null
    },
    "chatgpt_desktop": {
-    "minutes": 1.0,
+    "minutes": 0.0,
     "tokens": null
    },
    "kimi_desktop": {
@@ -345,20 +345,20 @@
     "tokens": 0
    },
    "cli_total": {
-    "minutes": 1.9,
+    "minutes": 0.0,
     "tokens": 0,
     "cache_read_tokens": 0
    },
    "desktop_total": {
-    "minutes": 1.0,
+    "minutes": 0.0,
     "tokens": 0,
     "cache_read_tokens": 0
    },
    "total": {
-    "minutes": 2.9,
+    "minutes": 0.0,
     "tokens": 0
    },
-   "from": "2026-11-13"
+   "from": "2026-11-14"
   },
   "week": {
    "claude": {
