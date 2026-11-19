@@ -1,30 +1,30 @@
 {
- "date": "2026-11-14",
- "generated_at": "2026-11-13T23:17:47+00:00",
- "items": [
-  {
-   "title": "Visual Studio Copilot 新引擎多解 21 道题",
-   "summary": "微软于 2026 年 11 月 10 日宣布，Visual Studio 2026 18.12 起 Copilot Chat 默认改用 Microsoft Copilot SDK。微软在 157 道 C# 任务中测试，新体验解决 124 道，旧体验解决 103 道，多完成 21 道。",
-   "why": "今天可在 Visual Studio 2026 18.12 打开 Copilot Chat，拿一个积压的代码问题试跑；任务中途补充要求，并查看每步结果和请求成本。",
-   "tag": "新工具",
-   "source": "Microsoft Visual Studio Blog",
-   "url": "https://devblogs.microsoft.com/visualstudio/copilot-in-visual-studio-just-got-a-major-upgrade/"
-  },
-  {
-   "title": "Claude Code 可为远程会话统一加载设置",
-   "summary": "Claude Code v2.1.321 于 2026 年 11 月 9 日发布，新增 `claude remote-control --settings <file>`，可将指定设置应用到它启动的每个会话；设置文件变更后需重启 remote-control 才会对新会话生效。",
-   "why": "今天可把常用的项目权限、工具或 MCP 配置放进设置文件，用 remote-control 启动两个任务，检查会话配置是否一致；留意改文件后要重启。",
-   "tag": "玩法",
-   "source": "Anthropic（GitHub）",
-   "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.321"
-  },
-  {
-   "title": "Google Workspace MCP 开始要求 Agent 标记",
-   "summary": "Google Workspace 开发者发布说明称，自 2026 年 11 月 11 日起，Workspace MCP 服务器会拒绝未将 OAuth 客户端标记为 AI Agent 的应用或集成请求。",
-   "why": "今天检查自己或团队的 Workspace MCP OAuth 客户端配置，确认已启用“将此客户端用于 AI 驱动的 Agent”，并试跑一次连接，避免升级后请求被拒。",
-   "tag": "行业动态",
-   "source": "Google for Developers",
-   "url": "https://developers.google.com/workspace/release-notes"
-  }
- ]
+  "date": "2026-11-19",
+  "generated_at": "2026-11-19T11:25:25+08:00",
+  "items": [
+    {
+      "title": "GPT-6.2 Astra / Sol 进入 Work 与 Codex 预览",
+      "summary": "OpenAI 于 11 月 17 日在 ChatGPT Work 与 Codex 桌面端推出 GPT-6.2 Astra 和 Sol 预览：Astra 面向复杂研究、开发和专业任务；Sol 侧重更快地处理日常多步任务。个人可选范围受套餐影响，企业工作区还取决于席位和管理员配置。",
+      "why": "先看当前模型选择器是否开放；若可用，用同一项真实任务各跑一次，比较结果质量、耗时和返工次数。",
+      "tag": "新模型",
+      "source": "OpenAI ChatGPT 发布说明",
+      "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes"
+    },
+    {
+      "title": "ChatGPT 实时听写取消 10 分钟上限",
+      "summary": "OpenAI 于 11 月 18 日更新 Live Dictation：语音会边说边转成文字，可随时显示或隐藏转写，并移除了单次 10 分钟录音上限。该功能正向 iOS、Android、网页和桌面端的所有套餐逐步开放。",
+      "why": "可用语音快速记录拜访复盘或临时想法，再让 AI 整理成客户问题、待办和跟进话术；先确认自己的端已收到更新。",
+      "tag": "新工具",
+      "source": "OpenAI ChatGPT 发布说明",
+      "url": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes"
+    },
+    {
+      "title": "Agent 365 开始把 AI 花费和业务结果放在一起看",
+      "summary": "微软在 11 月 17 日 Ignite 上介绍 Agent 365 Business Analytics，把 AI 支出、采用情况和业务结果放到同一分析视图，衡量代理完成的工作，而不只看 token；示例指标包括成功率、用户满意度和节省工时。",
+      "why": "可把这套指标变成客户访谈的三问：花费在哪里、谁在用、实际完成了什么业务工作。它能帮助把 AI 项目从“用了多少”推进到“带来什么结果”。",
+      "tag": "行业动态",
+      "source": "Microsoft Ignite 2026",
+      "url": "https://news.microsoft.com/events/ignite/2026/live-news/"
+    }
+  ]
 }
