@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-19T23:08:40+08:00",
+ "updated_at": "2026-11-20T01:07:09+08:00",
  "note": "Codex 额度与账户累计 token 来自本机 app-server 只读 API；CLI 时长与当前周期 token 来自会话记录。会话 token 不含 cache_read_tokens，缓存读取另列。Claude、ChatGPT、Kimi 桌面对话无 token 记录",
  "quota": {
   "claude": {
@@ -302,14 +302,14 @@
     "tokens": 0
    },
    "claude_code": {
-    "minutes": 5.0,
+    "minutes": 0.0,
     "tokens": 0,
     "cache_read_tokens": 0
    },
    "codex": {
-    "minutes": 72.8,
-    "tokens": 816299,
-    "cache_read_tokens": 6419840
+    "minutes": 0.0,
+    "tokens": 0,
+    "cache_read_tokens": 0
    },
    "kimi": {
     "minutes": 0.0,
@@ -323,7 +323,7 @@
     "tokens": null
    },
    "chatgpt_desktop": {
-    "minutes": 53.5,
+    "minutes": 0.0,
     "tokens": null
    },
    "kimi_desktop": {
@@ -337,28 +337,28 @@
    },
    "codex_desktop_code": {
     "minutes": 0.0,
-    "tokens": 2482053,
-    "cache_read_tokens": 32454784
+    "tokens": 0,
+    "cache_read_tokens": 0
    },
    "web_total": {
     "minutes": 0.0,
     "tokens": 0
    },
    "cli_total": {
-    "minutes": 77.8,
-    "tokens": 816299,
-    "cache_read_tokens": 6419840
+    "minutes": 0.0,
+    "tokens": 0,
+    "cache_read_tokens": 0
    },
    "desktop_total": {
-    "minutes": 53.5,
-    "tokens": 2482053,
-    "cache_read_tokens": 32454784
+    "minutes": 0.0,
+    "tokens": 0,
+    "cache_read_tokens": 0
    },
    "total": {
-    "minutes": 131.3,
-    "tokens": 3298352
+    "minutes": 0.0,
+    "tokens": 0
    },
-   "from": "2026-11-19"
+   "from": "2026-11-20"
   },
   "week": {
    "claude": {
